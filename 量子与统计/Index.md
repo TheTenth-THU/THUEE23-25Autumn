@@ -5,10 +5,24 @@ longform:
   workflow: Default Workflow
   sceneFolder: /
   scenes:
+    - 量子力学的基本假设
     - 波函数
     - Schrödinger 方程
-    - 力学量与算符
-    - - 力学量算符的本征函数
+    - - † 一维方势阱与方势垒
+      - † 一维线性谐振子
+    - 力学量算符
+    - - † 氢原子内部相对运动
+    - 矩阵表象
+    - Dirac 符号
+    - - † 电子自旋
+      - † 外磁场中的原子
+      - † 电磁场中的带电粒子
+    - 绘景
+    - 微扰理论
+    - - † 量子跃迁
+    - 全同粒子体系
+    - 热力学的基本概念
+    - 近独立粒子系统
   ignoredFiles:
     - undefined
     - undefined

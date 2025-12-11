@@ -9,5 +9,6 @@ longform:
     - - 关系代数
       - 关系演算
     - SQL
+    - 关系的规范化理论
   ignoredFiles: []
 ---

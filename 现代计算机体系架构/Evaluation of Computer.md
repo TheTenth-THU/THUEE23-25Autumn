@@ -142,7 +142,16 @@ SRAM 设计中采用**多电压线路**设计，可以根据不同区域的访�
 $$
 \text{ExTime} = \text{Instructions} \times \underbrace{ \dfrac{\text{Cycles}}{\text{Instruction}} }_{ \text{CPI} } \times \underbrace{ \frac{\text{Time}}{\text{Cycle}} }_{ \tfrac{1}{f_{\mathrm{clock}}} }
 $$
-其中，**指令平均周期数 (CPI, cycles per instruction)** 不取决于顶层程序长度和底层晶体管工艺技术，而是取决于处理器的微架构设计和指令集架构 (ISA)，因而是衡量处理器架构性能的重要指标。为遵循「越大越好」的原则，通常也使用其倒数值，即**每周期指令数 (IPC, instructions per cycle)**。
+
+| 因素                | Instructions | CPI    | Clock cycle time |
+| :---------------- | :----------- | :----- | :--------------- |
+| 程序 Program        | **相关**       |        |                  |
+| 编译器 Compiler      | **相关**       | 间接相关   |                  |
+| 指令集 Inst. set     | **相关**       | 间接相关   |                  |
+| 组织架构 Organization |              | **相关** | **相关**           |
+| 晶体管工艺 Technology  |              |        | **相关**           |
+
+**指令平均周期数 (CPI, cycles per instruction)** 不取决于顶层程序长度和底层晶体管工艺技术，而是取决于处理器的微架构设计和指令集架构 (ISA)，因而是衡量处理器架构性能的重要指标。为遵循「越大越好」的原则，通常也使用其倒数值，即**每周期指令数 (IPC, instructions per cycle)**。
 
 从处理器数据通路设计角度来看，CPI 可进一步细分为各种类型指令的比例及其对应的周期数之和，即
 $$

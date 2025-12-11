@@ -1,5 +1,35 @@
 ## Gauss 过程的引入
 
+### \[Review\] Gauss 分布
+
+称随机变量 $X$ 服从 **Gauss 分布 (Gaussian distribution)**，如果其概率密度函数为
+$$
+f_{X}(x) = \dfrac{1}{\sqrt{2\pi} \sigma} \exp\left( -\dfrac{(x - \mu)^{2}}{2\sigma^{2}} \right)
+$$
+记为 $X \sim \mathscr{N}(\mu, \sigma^{2})$，其中 $\mu \in \mathbb{R}$，$\sigma^{2} > 0$。
+
+若 $X \sim \mathscr{N}(\mu, \sigma^{2})$，则
++ $|X|$ 的均值为
+$$
+\begin{align} 
+\mathbb{E} \left[ |X| \right] &= \dint_{-\infty}^{\infty} |x| f_{X}(x) \dif x = \dfrac{1}{\sqrt{2\pi} \sigma} \left( \dint_{-\infty}^{0} -x \e^{ -\tfrac{(x - \mu)^{2}}{2\sigma^{2}} } \dif x + \dint_{0}^{\infty} x \e^{ -\tfrac{(x - \mu)^{2}}{2\sigma^{2}} } \dif x \right) \\
+&= \mu \left( 1 - 2\varPhi\left( -\dfrac{\mu}{\sigma} \right) \right) + \dfrac{2\sigma}{\sqrt{2\pi}} \exp\left( -\dfrac{\mu^{2}}{2\sigma^{2}} \right)
+\end{align}
+$$
+其中 $\varPhi(x)$ 是标准 Gauss 分布的分布函数。特别地，当 $\mu = 0$ 时，有
+$$
+\mathbb{E} \left[ |X| \right] = \dfrac{2\sigma}{\sqrt{2\pi}}
+$$
+亦即，$|X - \mu|$ 或**偏离半径**的均值为
+$$
+\mathbb{E} \left[ |X - \mu| \right] = \dfrac{2\sigma}{\sqrt{2\pi}}
+$$
+
+Gauss 分布的**特征函数 (characteristic function)** 为
+$$
+\phi_{X}(\omega) = \mathbb{E} \left[ \exp(\J \omega X) \right] = \exp\left( \J \mu \omega - \dfrac{\sigma^{2} \omega^{2}}{2} \right)
+$$
+
 ### 多元 Gauss 分布
 
 对于多维随机变量 $\v{X} = \begin{pmatrix}X_{1} & X_{2} & \cdots & X_{n}\end{pmatrix}^{\mathrm{T}}$，如果 $\mathbb{E} \left[ |X_{k}|^{2} \right] < \infty$，则其**均值向量 (mean vector)** 定义为
@@ -288,3 +318,6 @@ $$
 + 修正量与上述随机成分的**比例系数**为 $\boldsymbol{\varSigma}_{YX} \boldsymbol{\varSigma}_{XX}^{-1}$，其中 $\boldsymbol{\varSigma}_{XX}^{-1}$ 起到「标准化」的作用，而 $\boldsymbol{\varSigma}_{YX}$ 则反映了 $\v{X}$ 和 $\v{Y}$ 之间的**相关性**。
 
 因此，$\v{Y}$ 相对于 $\v{X}$ 的条件分布可看做**依据 $\v{X}$ 的随机成分在 $\v{Y}$ 上的投影 (projection)** 对 $\v{Y}$ 的分布进行调整后的结果。
+
+
+## Gauss 分布

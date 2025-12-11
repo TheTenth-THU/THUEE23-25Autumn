@@ -5,10 +5,14 @@ longform:
   workflow: Default Workflow
   sceneFolder: /
   scenes:
-    - 相关
-    - 随机过程的时域分析
-    - 随机过程的谱分析
-    - Gauss 过程
+    - 随机变量的相关
+    - 宽平稳随机过程
     - 循环平稳过程
+    - Brown 运动
+    - Gauss 过程
+    - Hilbert 变换
+    - Poisson 过程
+    - Markov 链
+    - 例题
   ignoredFiles: []
 ---

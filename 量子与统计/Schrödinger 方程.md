@@ -38,11 +38,10 @@ $$
 > [!theorem] Schrödinger 方程
 > 外势场 $V(\v{r})$ 中粒子的波函数 $\varPsi(\v{r},t)$ 满足
 > $$
-> \I \hbar \dfrac{\partial\varPsi}{\partial t} = -\dfrac{\hbar^{2}}{2m} \nabla^{2} \varPsi + V(\v{r}) \varPsi
+> \mark{ \I \hbar \dfrac{\partial\varPsi}{\partial t} = -\dfrac{\hbar^{2}}{2m} \nabla^{2} \varPsi + V\left( \v{r} \right) \varPsi }
 > $$
 > 这个方程称为 **Schrödinger 波动方程**，简称 **Schrödinger 方程**。
-
-^f53f7b
+^SchrodingerFangcheng
 
 Schrödinger 方程是量子力学的基本方程，描述了粒子波函数的时空演化规律。通过解 Schrödinger 方程，可以得到粒子的波函数，从而预测粒子的行为和性质。
 
@@ -141,11 +140,12 @@ $$
 + 空间部分的方程显然是算符 $\hat{H} = -\dfrac{\hbar^{2}}{2m} \nabla^{2} + V(\v{r})$ 的**本征值方程**，由于能量具有确定值 $E$，其称为**定态 Schrödinger 方程**。
 
 > [!definition] 定态 Schrödinger 方程
-> **Hamiltonian 算符** $\hat{H} = -\dfrac{\hbar^{2}}{2m} \nabla^{2} + V(\v{r})$ 的本征值方程
+> **Hamilton 算符** $\hat{H} = -\dfrac{\hbar^{2}}{2m} \nabla^{2} + V(\v{r})$ 的本征值方程
 > $$
 > \hat{H} \psi(\v{r}) = E \psi(\v{r})
 > $$
 > 称为**定态 Schrödinger 方程**，其中 $E$ 为**本征值**，$\psi(\v{r})$ 为对应的**本征函数**。
+^DingtaiSchrodingerFangcheng
 
 完整的**定态波函数**即为
 $$
@@ -253,8 +253,7 @@ $$
 
 > [!theorem] 宇称定理
 > 若一维势场 $V(x)$ 关于原点对称，即 $V(-x) = V(x)$，则 $V(x)$ 中的**一维束缚态波函数必有确定的宇称**。
-
-^651420
+^YuchengDingli
 
 ### 一维无限深势阱问题
 
@@ -329,7 +328,7 @@ $\xi \to \infty$ 时，$H$ 一般**发散**，且由于 $\lim\limits_{ \nu \to \
 $$
 \lambda = 2n + 1, \quad n = 0, 1, 2, \cdots
 $$
-根据[[#^651420|宇称定理]]，势场 $V(x) = \dfrac{1}{2} \mu \omega^{2} x^{2}$ 关于原点对称，则 $\psi(\xi)$ 应**有确定的宇称**，因此 $H(\xi)$ 也应有确定的宇称。由递推关系可知，$a_{0}$ 和 $a_{1}$ 可任意取值，因而
+根据[[#^YuchengDingli|宇称定理]]，势场 $V(x) = \dfrac{1}{2} \mu \omega^{2} x^{2}$ 关于原点对称，则 $\psi(\xi)$ 应**有确定的宇称**，因此 $H(\xi)$ 也应有确定的宇称。由递推关系可知，$a_{0}$ 和 $a_{1}$ 可任意取值，因而
 + $a_{0}$ 不为零时，$a_{1} = 0$，表达式为
 $$
 H_{n}(\xi) = a_{0} + a_{2}\xi^{2} + a_{4}\xi^{4} + \cdots + a_{n} \xi^{n}

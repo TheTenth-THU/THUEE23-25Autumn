@@ -1,0 +1,209 @@
+## Markov 链的定义
+
+**Markov 链**是描述**离散时间、离散状态**的随机过程的模型，是具有 [[#Markov 性]]的离散时间离散状态随机过程。
+
+### Markov 性
+
+对一个随机过程 $\left\{ X_{k} \right\}_{k=0}^{\infty}$，**Markov 性**表述为 $\forall n$
+$$
+P \left\{ X_{n} = x_{n} \mid X_{n-1} = x_{n-1}, \cdots , X_{1} = x_{1} , X_{0} = x_{0} \right\} = P \left\{ X_{n} = x_{n} \mid X_{n-1} = x_{n-1} \right\}
+$$
+
+若称 $X_{n-1}$ 为**现在**（$B$），之前的状态为**过去**（$A$），之后的状态为**未来**（$C$），则 **Markov 性**表明了条件之间的独立性
+$$
+P(CA \mid B) = P(C \mid B) P(A \mid B)
+$$
+「过去」与「未来」之间的联系，只有通过「现在」建立起来。如果掌握了现在，那么过去的信息对于推测未来不起作用。
+
+「过去」和「未来」均可以复杂化，即
++ 将未来 $X_{n}$ **泛化为集合 $A$**，有
+$$
+\begin{align} 
+&P \left\{ X_{n} \in A \mid X_{n-1} = x_{n-1}, \cdots , X_{1} = x_{1} , X_{0} = x_{0}  \right\}  \\
+&= \sum\limits_{x_{n} \in A} P \left\{ X_{n} = x_{n} \mid X_{n-1} = x_{n-1}, \cdots , X_{1} = x_{1} , X_{0} = x_{0} \right\}  \\
+&= \sum\limits_{x_{n} \in A} P \left\{ X_{n} = x_{n} \mid X_{n-1} = x_{n-1} \right\} = P \left\{ X_{n} \in A \mid X_{n-1} = x_{n-1} \right\}
+\end{align}
+$$
+仍然保持 Markov 性；
++ 将过去 $(X_{n-2}, \cdots, X_{0})$ **泛化为集合 $B$**，有
+$$
+\begin{align} 
+&P \{ X_{n} = x_{n}, (X_{n-2}, \cdots, X_{0}) \in B \mid X_{n-1} = x_{n-1} \} \\
+&= \sum\limits_{\{x_{k}\}_{k=0}^{n-2} \in B} P \{ \underbrace{ X_{n} = x_{n} }_{ \text{「未来」} }, \underbrace{ (X_{n-2}, \cdots, X_{0}) \in (x_{n-2}, \cdots, x_{0}) }_{ \text{「过去」} } \mid \underbrace{ X_{n-1} = x_{n-1} }_{ \text{「现在」} } \} \\
+&= \sum\limits_{\{x_{k}\}_{k=0}^{n-2} \in B} P \{ \underbrace{ X_{n} = x_{n} }_{ \text{「未来」} } \mid \underbrace{ X_{n-1} = x_{n-1} }_{ \text{「现在」} } \} \\
+&\hspace{4.5em} \cdot P \{ \underbrace{ (X_{n-2}, \cdots, X_{0}) \in (x_{n-2}, \cdots, x_{0}) }_{ \text{「过去」} } \mid \underbrace{ X_{n-1} = x_{n-1} }_{ \text{「现在」} } \} \\
+&= P \{ X_{n} = x_{n} \mid X_{n-1} = x_{n-1} \} \cdot P \{ (X_{n-2}, \cdots, X_{0}) \in B \mid X_{n-1} = x_{n-1} \}
+\end{align}
+$$
+即
+$$
+\begin{align}
+&P \{ X_{n} = x_{n} \mid (X_{n-2}, \cdots, X_{0}) \in B, X_{n-1} = x_{n-1} \} \\
+&= \dfrac{P \{ X_{n} = x_{n}, (X_{n-2}, \cdots, X_{0}) \in B \mid X_{n-1} = x_{n-1} \}}{P \{ (X_{n-2}, \cdots, X_{0}) \in B \mid X_{n-1} = x_{n-1} \}} 
+= P \{ X_{n} = x_{n} \mid X_{n-1} = x_{n-1} \}
+\end{align}
+$$
+仍然保持 Markov 性。
+
+但是，「现在」的复杂化将可能破坏 Markov 性。
+
+### Markov 链的迭代表示
+
+我们考虑 Markov 链的 $n$ 维联合概率分布，有
+$$
+\begin{align}
+P(X_{n}, X_{n-1}, \cdots, X_{0}) &= P(X_{n} \mid X_{n-1}, \cdots, X_{0}) \cdot P(X_{n-1}, \cdots, X_{0}) \\
+&= P(X_{n} \mid X_{n-1}) \cdot P(X_{n-1}, \cdots, X_{0}) \\
+&= \cdots  \\
+&= P(X_{n} \mid X_{n-1})  P(X_{n-1} \mid X_{n-2} ) \cdots P(X_{1} \mid X_{0}) P(X_{0})
+\end{align}
+$$
+即，其决定于一组条件概率
+$$
+P_{i,j} (m, n) = P \left\{ X_{n} = x_{j} \mid X_{m} = x_{i} \right\}
+$$
+称为 $n - m$ 步**转移概率 (transition probability)**。
+
+#### 平稳转移概率假设
+
+一般地，一个 $n$ 步的转移概率 $P_{i,j}(m, m+n)$ 与其发生的时刻 $m$ 有关。如果其**与发生时刻无关**，即
+$$
+\forall m, \qquad
+P_{i,j}(m, m+n) \equiv P_{i, j}(n)
+$$
+则称之为**平稳 (stationary)** Markov 链。
+
+在此假设下，特定步数 $n$ 的转移概率只依赖于转移的**起点状态 $i$** 和**终点状态 $j$**，计算 $P_{i,j}^{(n)}$ 只需对起点与终点之间的每一条路径的概率求和即可，尽管也不是非常简便。
+
+#### Chapman-Kolmogorov 方程
+
+> [!theorem] Chapman-Kolmogorov 方程
+> 设 Markov 链的状态空间为 $E$，$i,j,k \in E$，对时刻 $r, s, t$，有
+> $$
+> P_{i,j}(r, t) = \sum\limits_{k} P_{i,k} (r,s) P_{k,j} (s, t)
+> $$
+> 在[[#平稳转移概率假设]]下，对时间间隔 $m, n$，有
+> $$
+> P_{i,j}{(m + n)} = \sum\limits_{k} P_{i,k}{(m)} P_{k,j}{(n)}
+> $$
+^ChapmanKolmogorovIdentity
+
+[[#^ChapmanKolmogorovIdentity|C-K 方程]]的本质是将路径求和**按照中间时刻 $s$（或中间步数 $m$）的状态 $k$ 分组**，因此显然是一个恒等式。具体地，
+$$
+\begin{align}
+P_{i,j}{(m + n)} &= P \left\{ X_{m + n} = x_{j} \mid X_{0} = x_{i} \right\}  \\
+&= \sum\limits_{k} P \left\{ X_{m + n} = x_{j} , X_{m} = x_{k} \mid X_{0} = x_{i} \right\} \\
+&= \sum\limits_{k} P \left\{ X_{m + n} = x_{j} \mid X_{m} = x_{k}, X_{0} = x_{i} \right\} P \left\{ X_{m} = x_{k} \mid X_{0} = x_{i} \right\} \\
+&= \sum\limits_{k} \underbrace{ P \left\{ X_{m + n} = x_{j} \mid X_{m} = x_{k} \right\} }_{ P_{k,j}{(n)} } \underbrace{ P \left\{ X_{m} = x_{k} \mid X_{0} = x_{i} \right\} }_{ P_{i,k}{(m)} }
+\end{align}
+$$
+
+容易发现，[[#^ChapmanKolmogorovIdentity|C-K 方程]]的形式类似**矩阵乘法**，由此定义
+$$
+\boldsymbol{P}(n) = \Big( P_{i,j}{(n)} \Big)_{i,j}
+$$
+称为 **$n$ 步转移概率矩阵**，则立得
+$$
+\mark{ \boldsymbol{P}(m + n) = \boldsymbol{P}(m) \boldsymbol{P}(n) }
+$$
+
+于是，任意步数 $n$ 的转移概率矩阵为
+$$
+\boldsymbol{P}(n) = \boldsymbol{P}(n-1) \boldsymbol{P}(1) = \boldsymbol{P}(n-2) (\boldsymbol{P}(1))^{2} = \cdots (\boldsymbol{P}(1))^{n}
+$$
+因此，只要给定
++ 1 步转移概率矩阵 $\boldsymbol{P}(1) = \Big( P_{i,j}{(1)} \Big)_{i,j}$，
++ 初始概率分布 $\big\{ P \left\{ X_{0} = x_{i} \right\} \big\}_{i}$，
+
+则整个 Markov 链的概率分布就确定了。
+
+## Markov 链的常返性
+
+从 Markov 性的「精神」出发，当转移步数 $n$ 即**时间趋于无穷**时，我们希望 Markov 链达到一个**不依赖初始状态的稳定分布**，即希望有
+$$
+P_{i,j}{(n)} \quad \xrightarrow{n \to \infty} \quad P_{j}
+$$
+
+### Markov 链状态的分类
+
+我们期望深入考察 Markov 链的状态空间结构，为此**将状态值 $x_{i}$ 简记为 $i$**，并给出如下几个定义：
++ 若 $\exists n > 0$，$P_{i,j}(n) > 0$，则称 **$i$ 可达 (reachable) $j$**，记作 $i \to j$；
++ 若 $i \to j$ 且 $j \to i$，则称 **$i$、$j$ 相通 (commutative)**，记作 $i \leftrightarrow j$；
++ 如果对集合 $S \subseteq E$，$\forall i \in S$、$j \not\in S$，$i \not\to j$，则称 $S$ 为**闭集 (closed set)**。
+
+> [!def.] 不可约 Markov 链
+> 设 Markov 链的状态空间为 $E$，如果子集 $C \subseteq E$ 仅有一个闭集 $C$ 本身，即**不存在闭的真子集**，则称该子集为**不可约 (irreducible)** 的。
+> 
+> 如果状态空间 $E$ 本身是不可约的，则称该 Markov 链为**不可约**的。
+
+设 $C \subseteq E$ 不可约，我们设 $\forall i \in C$，$A_{i} = \left\{ j \in C \mid i \to j \right\}$ 为 $i$ 可达的状态集合，现在我们证明 $A_{i}$ 是闭集，从而得到 $A_{i} = C$。$\forall j \in A_{i}$，假定 $\exists k \not\in A_{i}$，使得 $j \to k$，则由 $i \to j$ 和 $j \to k$ 可知 $i \to k$，从而 $k \in A_{i}$，与假设矛盾，因此 $A_{i}$ 是闭集，只能有 $A_{i} = C$。因此，**不可约 Markov 链中任意两个状态相通**。
+
+### 常返
+
+设 Markov 链的状态空间为 $E$，对 $i, j \in E$，定义从时刻 $n = 0$ 出发到达状态 $j$ 的**首达时间 (first passage time)** 为
+$$
+\tau_{j} = \inf \left\{ n \geq 1 \mid X_{n} = j \right\}
+$$
+经 $n$ 步从状态 $i$ 到状态 $j$ 的**首达概率 (first passage probability)** 为
+$$
+\begin{align} 
+f_{i,j}(n) &= P \left\{ \tau_{j} = n \mid X_{0} = i \right\} \\
+&= P \left\{ X_{1} \neq j, X_{2} \neq j, \cdots, X_{n-1} \neq j, X_{n} = j \mid X_{0} = i \right\} 
+\end{align}
+$$
+
+显然，在哪一步首达的事件之间是互斥的，因此有
+$$
+f_{i,j} = \sum\limits_{n=1}^{\infty} f_{i,j}(n) \leq 1
+$$
+$f_{i,j}$ 即为**从状态 $i$ 出发「迟早」到达状态 $j$ 的概率**。
+
+> [!def.] 常返性
+> 对 Markov 链的状态空间 $E$ 中的状态 $i$，如果 $f_{i,i} = 1$，则称状态 $i$ 为**常返 (recurrent) 态**；否则，$f_{i,i} < 1$，称为**滑过 (transient) 态**或**非常返态**。
+
+#### 常返性的判据
+
+我们期望利用转移概率 $P_{i,j}{(n)}$ 来研究 $f_{i,j}(n)$，以判定状态 $i$ 的常返性。
+
+类比于 [[#^ChapmanKolmogorovIdentity|C-K 方程]]的推导，我们可以将 $P_{i,j}(n)$ **按照首达时间 $\tau_{j}$ 分组**，有
+$$
+\begin{align}
+P_{i,j}(n) &= P \left\{ X_{n} = j \mid X_{0} = i \right\} 
+= \sum\limits_{k=1}^{n} P \left\{ X_{n} = j, \tau_{j} = k \mid X_{0} = i \right\} \\
+&= \sum\limits_{k=1}^{n} P \left\{ X_{n} = j \mid \tau_{j} = k, X_{0} = i \right\} \cdot P \left\{ \tau_{j} = k \mid X_{0} = i \right\} \\
+&= \sum\limits_{k=1}^{n} P \left\{ X_{n} = j \mid X_{k} = j \right\} \cdot P \left\{ \tau_{j} = k \mid X_{0} = i \right\} \\
+&= \sum\limits_{k=1}^{n} P_{j,j}(n-k) f_{i,j}(k)
+\end{align}
+$$
+即
+$$
+\mark{ P_{i,j}{(n)} = \sum\limits_{k=1}^{n} P_{j,j}{(n-k)} f_{i,j}(k) }
+$$
+
+上式表现出**离散时间索引的卷积**形式，因此可做 **$z$ 变换**，定义其**生成函数**为
+$$
+\t{P}_{i,j} (z) = \sum\limits_{n=0}^{\infty} P_{i,j}{(n)} z^{n} = \delta_{i,j} + \sum\limits_{n=1}^{\infty} P_{i,j}{(n)} z^{n}, \qquad
+F_{i,j} (z) = \sum\limits_{n=1}^{\infty} f_{i,j}(n) z^{n}
+$$
+则有
+$$
+\begin{align} 
+\t{P}_{i,j} (z) &= \delta_{i,j} + \sum\limits_{n=1}^{\infty} \sum\limits_{k=1}^{n} P_{j,j}{(n-k)} f_{i,j}(k) \cdot  z^{n}  \\
+&= \delta_{i,j} + \sum\limits_{k=1}^{\infty} \sum\limits_{n=k}^{\infty} (f_{i,j}(k) z^{k}) (P_{j,j}{(n-k)} z^{n-k}) \\
+&= \delta_{i,j} + \left( \sum\limits_{k=1}^{\infty} f_{i,j}(k) z^{k} \right) \left( \sum\limits_{m=0}^{\infty} P_{j,j}{(m)} z^{m} \right) 
+= \delta_{i,j} + F_{i,j} (z) \t{P}_{j,j} (z)
+\end{align}
+$$
+即
+$$
+\mark{ \t{P}_{i,j} (z) = \delta_{i,j} + F_{i,j} (z) \t{P}_{j,j} (z) }
+$$
+从而，令 $i = j$ 并令 $z \to 1_{-}$，得
+$$
+\sum\limits_{n=0}^{\infty} P_{i,i}{(n)} = \t{P}_{i,i} (1_{-}) = \dfrac{1}{1 - \sum\limits_{n=1}^{\infty} f_{i,i}(n)} = \dfrac{1}{1 - f_{i,i}}
+$$
+$f_{i,i}$ 是否为 1 取决于左侧级数 $\sum\limits_{n=0}^{\infty} P_{i,i}{(n)}$ 的敛散性，由此给出常返性的第一判据。
+
+> [!theorem] 常返性判据 I
+> 状态 $i$ 为常返态的**充分必要条件**为级数 $\sum\limits_{n=0}^{\infty} P_{i,i}{(n)}$ 发散。
+

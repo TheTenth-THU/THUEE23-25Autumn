@@ -9,6 +9,12 @@ longform:
     - 离散时间信号与系统
     - 离散时间 Fourier 变换 (DTFT)
     - 离散 Fourier 变换 (DFT)
+    - 数字频谱分析
+    - 离散余弦变换 (DCT)
+    - 𝑧 变换
+    - 数字滤波器
+    - Hilbert 变换
+    - 多采样率处理
   ignoredFiles:
     - CONTENT
     - 

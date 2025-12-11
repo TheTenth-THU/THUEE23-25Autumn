@@ -76,7 +76,9 @@ $$
 > x[n] = \dfrac{1}{T} \sum_{k=0}^{T-1} X[k] \e^{\J 2\pi nk/T}, \quad n = 0, 1, \cdots, N-1
 > $$
 
-### DFT 与 DTFT 的关系
+### DFT 与其它变换的关系
+
+#### DFT 与 DTFT 的关系
 
 设 $x[n]$ 是长度为 $N$ 的离散时间信号，则其 DTFT 为
 $$
@@ -93,6 +95,24 @@ $$
 X[k] = \sum\limits_{n=0}^{N-1} x[n] \e^{-\J 2\pi nk/T}
 = X(\e^{\J \omega}) \Big|_{\omega = \tfrac{2\pi k}{T}},\quad
 k=0,1,\cdots,T-1
+$$
+
+#### DFT 与 FT 的关系
+
+设有**连续信号** $s(t)$，其 Fourier 变换为 $S\left( \varOmega \right)$；对 $s(t)$ 以间隔 $T_{\mathrm{s}}$ 进行冲激采样，得到**采样信号** $s_{\mathrm{s}}(t) = s(t)\sum\limits_{n=-\infty}^{\infty}\delta(t-nT_{\mathrm{s}})$ 和**离散时间信号** $s_{\mathrm{D}}[n] = s(nT_{\mathrm{s}})$，则采样信号的 Fourier 变换为
+$$
+\begin{align} 
+S_{\mathrm{s}}\left( \varOmega \right) &= \dint_{-\infty}^{\infty} s(t)\sum\limits_{n=-\infty}^{\infty}\delta(t-nT_{\mathrm{s}}) \e^{-\J \varOmega t} \dif t 
+= \sum_{n=-\infty}^{\infty} \dint_{-\infty}^{\infty} s(t) \delta(t-nT_{\mathrm{s}}) \e^{-\J \varOmega t} \dif t \\
+&= \sum\limits_{n=-\infty}^{\infty} s(nT_{\mathrm{s}}) \e^{-\J \varOmega nT_{\mathrm{s}}} = \sum\limits_{n=-\infty}^{\infty} s_{\mathrm{D}}[n] \e^{-\J \varOmega nT_{\mathrm{s}}} = S_{\mathrm{D}}\left( \omega \right) \Big|_{\omega = \varOmega T_{\mathrm{s}}} \\
+S_{\mathrm{s}}\left( \varOmega \right) &= S\left( \varOmega \right) * \mathscr{F} \left\{ \sum_{n=-\infty}^{\infty} \delta(t-nT_{\mathrm{s}}) \right\} 
+= S\left( \varOmega \right) * \dfrac{2\pi}{T_{\mathrm{s}}} \sum_{k=-\infty}^{\infty} \delta\left( \varOmega - \dfrac{2\pi k}{T_{\mathrm{s}}} \right) \\
+&= \dfrac{2\pi}{T_{\mathrm{s}}} \sum_{k=-\infty}^{\infty} S\left( \varOmega - \dfrac{2\pi k}{T_{\mathrm{s}}} \right)
+\end{align}
+$$
+进而离散时间信号的 DFT 为
+$$
+S_{\mathrm{D}}[k] = S_{\mathrm{D}}\left( \omega \right) \Big|_{\omega = \tfrac{2\pi k}{N}} = S_{\mathrm{s}}\left( \varOmega \right) \Big|_{\varOmega = \tfrac{2\pi k}{N T_{\mathrm{s}}}}
 $$
 
 ## DFT 的性质
@@ -336,3 +356,64 @@ LTI 系统的输出 $y[n]$ 可由输入 $x[n]$ 与系统冲激响应 $h[n]$ 的*
 > 其中：
 > + $L$ — 分段长度，满足 $L \geq P$。
 
+### 梳状滤波器组与短时傅里叶变换
+
+#### DFT 作为滤波器组
+
+梳状**滤波器组 (filter bank)** 由多个带通滤波器组成，每个带通滤波器提取信号的一个频段成分。
+
+考虑一个简单的低通滤波器
+$$
+y[n] = \sum\limits_{k=0}^{N-1} x[n-k] ,\qquad\text{i.e.}\qquad h[n] = R_{N}[n]
+$$
+它输出 $x[n]$ 在**直流附近**的频率分量。若希望提取 $x[n]$ 在其他频段的频率成分，可在**频域**做 $\cfrac{2k\pi}{N}$ **移位**，相当于**时域调制**
+$$
+h[n] = \e^{\J \tfrac{2k\pi}{N} n} R_{N}[n]
+$$
+则滤波器输出为
+$$
+y[n] = \sum\limits_{m=0}^{N-1} x[n-m] \e^{\J \tfrac{2k\pi}{N} m}
+$$
+此时注意到
+$$
+y[N] = \sum\limits_{m=0}^{N-1} x[N-m] \e^{\J \tfrac{2k\pi}{N} m} = \sum\limits_{m'=1}^{N} x[m'] \e^{\J \tfrac{2k\pi}{N} (N-m')} = X[k]
+$$
+其中假定 $x[0] = x[N]$，则滤波器在 $n = N$ 处的输出即为 **$x[n]$ 的 DFT 系数 $X[k]$**。因此，每个 DFT 系数 $X[k]$ 都可视为一个中心频率在 $\cfrac{2\pi k}{N}$ 的**带通滤波器**在 $N$ 时刻的输出。
+
+#### 短时傅里叶变换 (STFT)
+
+短时傅里叶变换 (STFT) 是对信号的**局部时间窗**内的信号做 Fourier 变换，得到信号在**时频平面**上的表示。
+
+> [!definition] 短时傅里叶变换 (STFT)
+> 设有离散时间信号 $x[n]$，选取长度为 $W$ 的**分析窗**，则信号 $x[n]$ 的**短时傅里叶变换 (short-time Fourier transform, STFT)** 为
+> $$
+> X[k, n] = \mathrm{DFT} \left\{ x[n - W + r + 1] \right\} = \sum_{r=0}^{W-1} x[n - W + r + 1] \e^{-\J 2\pi kr / W}
+> $$
+> 其中 $k = 0, 1, \cdots, W-1$，$n$ 为时间索引。
+
+STFT 可视为对信号 $x[n]$ 中**从 $n - W + 1$ 到 $n$** 的长度为 $W$ 的**局部时间窗**内的信号做 $W$ 点 DFT，得到该时间窗内信号的频谱表示。
+
+即使使用 FFT，直接计算 STFT 的复杂度仍为每个时间样点 $O(W\log W)$，仍然需要较大的计算量。注意到 STFT 相邻时间窗之间**有大量重叠**，可利用这一点来减少计算量。对比
+$$
+\begin{align}
+&X[k, n+1] = \sum\limits_{r=0}^{W-1} x[(n + 1) - W + r + 1] \e^{-\J 2\pi kr / W} \\
+&X[k, n] = \sum_{r=0}^{W-1} x[n - W + r + 1] \e^{-\J 2\pi kr / W} 
+\end{align}
+$$
+得到
+$$
+\begin{align}
+X[k, n+1] &= \sum\limits_{r=0}^{W-2} x[(n + 1) - W + r + 1] \e^{-\J 2\pi kr / W} + x[n + 1] \e^{-\J 2\pi k (W-1) / W} \\
+&= \sum\limits_{r'=1}^{W-1} x[n - W + r' + 1] \e^{-\J 2\pi k (r' - 1) / W} + x[n + 1] \e^{\J 2\pi k / W} \\
+&= \left( \sum\limits_{r'=0}^{W-1} x[n - W + r' + 1] \e^{-\J 2\pi k r' / W} - x[n - W + 1] \right) \e^{\J 2\pi k / W} \\
+&\hspace{1em}+ x[n + 1] \e^{\J 2\pi k / W} \\
+&= \e^{\J 2\pi k / W} \left( X[k, n] - x[n - W + 1] + x[n + 1] \right) 
+\end{align}
+$$
+即通过利用上一时刻 STFT 结果 $X[k, n]$，仅需**两次复加与一次复乘**即可得到下一时刻 STFT 结果 $X[k, n+1]$，每个时间样点的计算复杂度降为 $O(W)$。
+
+### 正交频分复用 (OFDM)
+
+正交频分复用 (orthogonal frequency-division multiplexing, OFDM) 是一种多载波调制技术，广泛应用于无线通信系统中，如 Wi-Fi、4G 和 5G 移动通信等。
+
+在 OFDM 系统中，**高速数据流**被分割成多个**低速子载波**，每个子载波使用较低的符号速率进行调制。由于子载波之间是正交的，可以有效地利用频谱资源，减少符号间干扰 (inter-symbol interference, ISI)。

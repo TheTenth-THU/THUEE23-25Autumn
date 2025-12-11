@@ -7,8 +7,14 @@ longform:
   scenes:
     - Overview
     - Evaluation of Computer
-    - MIPS Architecture
-    - Multiple Issue
+    - Control
+    - - MIPS Architecture
+      - Multiple Issue
+    - Memory
+    - - Cache
+      - Virtual Memory
+      - Disk
+    - Interconnection
   ignoredFiles: []
 ---
 ## Course Information
@@ -44,7 +50,7 @@ Prof. **Yongpan Liu, 刘勇攀**
 + **Homeworks**: 25%
 	+ 6 $\sim$ 8 assignments.
 	+ Submit to website electronically **by 17:00** on the due date. **No late** assignments will be accepted.
-+ **Final Exam**: 35%
++ **Final Exam**: 35%, open book on 1 A4 sheet (both sides).
 + **Project & Report**: 40%
 	1. 单核流水线处理器仿真: 10%, individually
 	2. 超标量处理器性能和 Cache 架构仿真: 10%, individually
