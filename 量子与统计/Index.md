@@ -23,6 +23,7 @@ longform:
     - 全同粒子体系
     - 热力学的基本概念
     - 近独立粒子系统
+    - Boltzmann 统计理论
   ignoredFiles:
     - undefined
     - undefined
