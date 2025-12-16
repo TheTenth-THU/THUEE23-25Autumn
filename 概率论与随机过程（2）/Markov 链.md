@@ -129,12 +129,13 @@ $$
 我们期望深入考察 Markov 链的状态空间结构，为此**将状态值 $x_{i}$ 简记为 $i$**，并给出如下几个定义：
 + 若 $\exists n > 0$，$P_{i,j}(n) > 0$，则称 **$i$ 可达 (reachable) $j$**，记作 $i \to j$；
 + 若 $i \to j$ 且 $j \to i$，则称 **$i$、$j$ 相通 (commutative)**，记作 $i \leftrightarrow j$；
-+ 如果对集合 $S \subseteq E$，$\forall i \in S$、$j \not\in S$，$i \not\to j$，则称 $S$ 为**闭集 (closed set)**。
++ 如果对集合 $S \subseteq E$，$\forall i \in S$、$j \not\in S$，$i \not\to j$，则称 $S$ 为**闭集 (closed set)**。 ^ClosedSet
 
 > [!def.] 不可约 Markov 链
-> 设 Markov 链的状态空间为 $E$，如果子集 $C \subseteq E$ 仅有一个闭集 $C$ 本身，即**不存在闭的真子集**，则称该子集为**不可约 (irreducible)** 的。
+> 设 Markov 链的状态空间为 $E$，如果子集 $C \subseteq E$ 仅有一个[[#^ClosedSet|闭集]] $C$ 本身，即**不存在闭的真子集**，则称该子集为**不可约 (irreducible)** 的。
 > 
 > 如果状态空间 $E$ 本身是不可约的，则称该 Markov 链为**不可约**的。
+^Bukeyue
 
 设 $C \subseteq E$ 不可约，我们设 $\forall i \in C$，$A_{i} = \left\{ j \in C \mid i \to j \right\}$ 为 $i$ 可达的状态集合，现在我们证明 $A_{i}$ 是闭集，从而得到 $A_{i} = C$。$\forall j \in A_{i}$，假定 $\exists k \not\in A_{i}$，使得 $j \to k$，则由 $i \to j$ 和 $j \to k$ 可知 $i \to k$，从而 $k \in A_{i}$，与假设矛盾，因此 $A_{i}$ 是闭集，只能有 $A_{i} = C$。因此，**不可约 Markov 链中任意两个状态相通**。
 
@@ -198,6 +199,24 @@ $$
 $$
 \mark{ \t{P}_{i,j} (z) = \delta_{i,j} + F_{i,j} (z) \t{P}_{j,j} (z) }
 $$
+
+> [!note] Markov 链的分解
+> Markov 链有两种**分解**方案：
+> + 在**空间**上分解，按照先走 $m$ 步时的中间状态 $k$ 分组，得到
+> $$
+> P_{i,j}{(n)} = \sum\limits_{k} P_{i,k}{(m)} P_{k,j}{(n - m)}
+> \quad\text{OR}\quad
+> \boldsymbol{P}{(m + n)} = \boldsymbol{P}{(m)} \boldsymbol{P}{(n)}
+> $$
+> 即 [[#^ChapmanKolmogorovIdentity|C-K 方程]]；
+> + 在**时间**上分解，按照首达时间分组，得到上式
+> $$
+> P_{i,j}{(n)} = \sum\limits_{k=1}^{n} P_{j,j}{(n-k)} f_{i,j}(k)
+> \quad\text{OR}\quad
+> \t{P}_{i,j} (z) = \delta_{i,j} + F_{i,j} (z) \t{P}_{j,j} (z)
+> $$
+^MarkovFenjie
+
 从而，令 $i = j$ 并令 $z \to 1_{-}$，得
 $$
 \sum\limits_{n=0}^{\infty} P_{i,i}{(n)} = \t{P}_{i,i} (1_{-}) = \dfrac{1}{1 - \sum\limits_{n=1}^{\infty} f_{i,i}(n)} = \dfrac{1}{1 - f_{i,i}}
@@ -206,4 +225,105 @@ $f_{i,i}$ 是否为 1 取决于左侧级数 $\sum\limits_{n=0}^{\infty} P_{i,i}{
 
 > [!theorem] 常返性判据 I
 > 状态 $i$ 为常返态的**充分必要条件**为级数 $\sum\limits_{n=0}^{\infty} P_{i,i}{(n)}$ 发散。
+^RecurrentCriterionI
 
+当 $i \neq j$ 时，令 $z \to 1_{-}$ 则得到
+$$
+\sum\limits_{n=0}^{\infty} P_{i,j}{(n)} = \t{P}_{i,j} (1_{-}) = F_{i,j} (1_{-}) \t{P}_{j,j} (1_{-}) = f_{i,j} \sum\limits_{n=0}^{\infty} P_{j,j}{(n)}
+$$
+若 $j$ **不是常返态**，则由[[#^RecurrentCriterionI|判据]]有 $\sum\limits_{n=0}^{\infty} P_{j,j}(n) < \infty$，且由 $f_{i,j} \le 1$ 亦知 $\sum\limits_{n=0}^{\infty} P_{i,j}(n) < \infty$，则二者的通项
+$$
+P_{j,j}(n) \xrightarrow{n \to \infty} 0, \qquad P_{i,j}(n) \xrightarrow{n \to \infty} 0
+$$
+这也是我们主要研究常返态的原因。
+
+#### 态的返回次数
+
+对常返态 $i$，定义其**返回次数** $N_{i} = \# \left\{ n \mid X_{n} = i, X_{0} = i \right\}$，则 $N_{i}$ 的**期望**为
+$$
+\mathbb{E} \left[ N_{i} \right] = \mathbb{E} \left[ \sum\limits_{n=0}^{\infty} \mathbb{1}_{\left\{ X_n = i \mid X_{0} = i \right\}} \right] = \sum\limits_{n=0}^{\infty} \mathbb{E} \left[ \mathbb{1}_{\left\{ X_n = i \mid X_{0} = i \right\}} \right] = \sum\limits_{n=0}^{\infty} P_{i,i}{(n)} = \infty 
+$$
+
+记从 $i$ 到达 $j$ 至少 $n$ 次的概率为
+$$
+g_{i,j}(n) = P \left\{ \#\left\{ k \mid X_{k} = j \right\} \geq n \mid X_{0} = i \right\}
+$$
+利用 Markov 链的[[#^MarkovFenjie|时间分解]]，可知
+$$
+\begin{align}
+g_{i,j}(n) &= \sum\limits_{m=1}^{\infty} P \left\{ \tau_{j} = m, \#\left\{ k > m \mid X_{k} = j \right\} \geq n - 1 \mid X_{0} = i \right\} \\
+&= \sum\limits_{m=1}^{\infty} P \left\{ \tau_{j} = m \mid X_{0} = i \right\} \cdot P \left\{ \#\left\{ k > m \mid X_{k} = j \right\} \geq n - 1 \mid X_{m} = j \right\} \\
+&= \sum\limits_{m=1}^{\infty} P \left\{ \tau_{j} = m \mid X_{0} = i \right\} \cdot P \left\{ \#\left\{ k \mid X_{k} = j \right\} \geq n - 1 \mid X_{0} = j \right\} \\
+&= \sum\limits_{m=1}^{\infty} f_{i,j}(m) \cdot g_{j,j}(n - 1) = f_{i,j} \cdot g_{j,j}(n - 1)
+\end{align}
+$$
+令 $i = j$，则有**递推关系**
+$$
+g_{i,i}(n) = f_{i,i} \cdot g_{i,i}(n - 1)
+$$
+由 $g_{i,i}(0) = 1$ 可得
+$$
+P \left\{ N_{i} = n \right\} = g_{i,i}(n) = (f_{i,i})^{n} \xrightarrow{n \to \infty} \begin{cases}
+1, & \text{if } f_{i,i} = 1, \\
+0, & \text{if } f_{i,i} < 1
+\end{cases}
+$$
+因此，**常返态几乎必然无限次返回，而非常返态则几乎必然有限次返回**。
+
+#### 常返性与连通性
+
+下面考虑 **$i \leftrightarrow j$**，即 **$i$、$j$ 相通**的情况。由 $i \to j$，可知 $\exists m$ 使得 $P_{i,j}{(m)} > 0$；由 $j \to i$，可知 $\exists n$ 使得 $P_{j,i}{(n)} > 0$。因此，对于任意 $k$，都有
+$$
+P_{i,i}{(m + n + k)} \geq P_{i,j}{(m)} P_{j,j}{(k)} P_{j,i}{(n)}
+$$
+即
+$$
+\sum\limits_{k=0}^{\infty} P_{i,i}{(m + n + k)} \geq P_{i,j}{(m)} P_{j,i}{(n)} \sum\limits_{k=0}^{\infty} P_{j,j}{(k)}
+$$
+若 **$j$ 为常返态**，则由[[#^RecurrentCriterionI|判据]]知右侧发散，因此左侧亦发散，从而 $\sum\limits_{k=0}^{\infty} P_{i,i}{(k)}$ 发散，由[[#^RecurrentCriterionI|判据]]知 **$i$ 亦为常返态**，故
+
+> [!theorem] 连通状态的常返性
+> Markov 链中连通状态的**常返性相同**。
+
+对**有限状态 Markov 链**，倘若所有状态都非常返态，则取定 $\forall i \in E$ 都有 
+$$
+\forall j \in E, \quad P_{i,j}{(n)} \xrightarrow{n \to \infty} 0
+\quad\Longrightarrow\quad
+\sum\limits_{j \in E} P_{i,j}{(n)} \xrightarrow{n \to \infty} 0
+$$
+但由概率归一性知 $\sum\limits_{j \in E} P_{i,j}{(n)} = 1$，与上式矛盾，因此**有限状态 Markov 链中至少存在一个常返态**。进而，**有限[[#^Bukeyue|不可约]] Markov 链中所有状态均为常返态**。
+
+进一步考察任意 Markov 链（也只剩无限状态的情况了），设其存在一个**常返态 $i$**，则知 $g_{i,i}(\infty) = 1$。对此概率表示的「返回无穷次」的路径加以[[#^MarkovFenjie|空间分解]]，有
+$$
+\begin{align}
+1 = g_{i,i}(\infty) &= \sum\limits_{k \in E} P_{i,k}(m) \cdot P \left\{ \#\left\{ n > m \mid X_{n} = i \right\} = \infty \mid X_{m} = k \right\} \\
+&= \sum\limits_{k \in E} P_{i,k}(m) \cdot g_{k,i}(\infty), \qquad \forall m > 0
+\end{align}
+$$
+而知 $\sum\limits_{k \in E} P_{i,k}(m) = 1$，因此 $\sum\limits_{k \in E} P_{i,k}(m) \cdot (1 - g_{k,i}(\infty)) = 0$，这一求和中每一项均非负，故必有
+$$
+\forall m > 0, \quad \forall k \in E, \quad P_{i,k}(m) \cdot (1 - g_{k,i}(\infty)) = 0
+$$
+对于 $i$ 的某一可达状态 $j$，由 $i \to j$ 可知 $\exists m$ 使得 $P_{i,j}(m) > 0$，因此 $g_{j,i}(\infty) = 1$，即 **$j \to i$**，从而 **$i \leftrightarrow j$** 且 **$j$ 亦为常返态**。
+
+> [!theorem] 可达状态的常返性
+> 若 Markov 链中存在常返态 $i$，则 $i$ 的**所有可达状态**均与 $i$ 相通，且均为常返态。
+
+## 转移概率的极限行为
+
+### Markov 链的周期性
+
+> [!def.] 周期态
+> 对状态 $i$，定义其**周期 (period)** 为
+> $$
+> d_{i} = \gcd \left\{ n \geq 1 \mid P_{i,i}{(n)} > 0 \right\}
+> $$
+> 其中 $\gcd$ 表示**最大公约数 (greatest common divisor)**。
+> 
+> 如果 $d_{i} = 1$，则称状态 $i$ 为**非周期 (aperiodic) 态**；否则，$d_{i} \geq 2$，称为**周期 (periodic) 态**。
+
+设 $i \to j$，则 $\exists m$ 使得 $P_{i,j}{(m)} > 0$；再设  $j \to i$，则 $\exists n$ 使得 $P_{j,i}{(n)} > 0$，因此
++ $P_{i,i}(m + n) \ge P_{i,j}(m) P_{j,i}(n) > 0$，故 **$d_{i} \mid (m + n)$**；
++ $\forall k \in \left\{ n \geq 1 \mid P_{j,j}{(n)} > 0 \right\}$，有 $P_{i,i}(m + k + n) \ge P_{i,j}(m) P_{j,j}(k) P_{j,i}(n) > 0$，故 **$d_{i} \mid (m + k + n)$**。
+
+由此，**$\forall k \in \left\{ n \geq 1 \mid P_{j,j}{(n)} > 0 \right\}$，$d_{i} \mid k$**，即 $d_{i}$ 是该集合的一个公约数，故 **$d_{i} \mid d_{j}$**。同理可得 $d_{j} \mid d_{i}$，因此 **$d_{i} = d_{j}$**。
