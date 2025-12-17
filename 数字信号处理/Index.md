@@ -15,6 +15,7 @@ longform:
     - 数字滤波器
     - Hilbert 变换
     - 多采样率处理
+    - 有限字长效应
   ignoredFiles:
     - CONTENT
     - 
