@@ -203,3 +203,4 @@ $$
 $$
 n_i = g_i \e^{\tfrac{\mu - \varepsilon_i}{kT}}
 $$
+
