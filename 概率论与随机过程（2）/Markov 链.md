@@ -112,8 +112,8 @@ $$
 \boldsymbol{P}(n) = \boldsymbol{P}(n-1) \boldsymbol{P}(1) = \boldsymbol{P}(n-2) (\boldsymbol{P}(1))^{2} = \cdots (\boldsymbol{P}(1))^{n}
 $$
 因此，只要给定
-+ 1 步转移概率矩阵 $\boldsymbol{P}(1) = \Big( P_{i,j}{(1)} \Big)_{i,j}$，
-+ 初始概率分布 $\big\{ P \left\{ X_{0} = x_{i} \right\} \big\}_{i}$，
++ **1 步转移概率矩阵** $\boldsymbol{P}(1) = \Big( P_{i,j}{(1)} \Big)_{i,j}$，不妨**记为 $\boldsymbol{P}$**，以及
++ **初始概率分布 $\big\{ P \left\{ X_{0} = x_{i} \right\} \big\}_{i}$**，
 
 则整个 Markov 链的概率分布就确定了。
 
@@ -322,8 +322,62 @@ $$
 > 
 > 如果 $d_{i} = 1$，则称状态 $i$ 为**非周期 (aperiodic) 态**；否则，$d_{i} \geq 2$，称为**周期 (periodic) 态**。
 
-设 $i \to j$，则 $\exists m$ 使得 $P_{i,j}{(m)} > 0$；再设  $j \to i$，则 $\exists n$ 使得 $P_{j,i}{(n)} > 0$，因此
+**非周期**带来的一个直观性质是
+$$
+\exists N, \quad \forall n \geq N, \quad P_{i,i}{(n)} > 0
+$$
+
+考虑两个相通状态 $i$、$j$，即设 $\exists m$ 使得 $P_{i,j}{(m)} > 0$，同时 $\exists n$ 使得 $P_{j,i}{(n)} > 0$，因此
 + $P_{i,i}(m + n) \ge P_{i,j}(m) P_{j,i}(n) > 0$，故 **$d_{i} \mid (m + n)$**；
 + $\forall k \in \left\{ n \geq 1 \mid P_{j,j}{(n)} > 0 \right\}$，有 $P_{i,i}(m + k + n) \ge P_{i,j}(m) P_{j,j}(k) P_{j,i}(n) > 0$，故 **$d_{i} \mid (m + k + n)$**。
 
-由此，**$\forall k \in \left\{ n \geq 1 \mid P_{j,j}{(n)} > 0 \right\}$，$d_{i} \mid k$**，即 $d_{i}$ 是该集合的一个公约数，故 **$d_{i} \mid d_{j}$**。同理可得 $d_{j} \mid d_{i}$，因此 **$d_{i} = d_{j}$**。**相通
+由此，**$\forall k \in \left\{ n \geq 1 \mid P_{j,j}{(n)} > 0 \right\}$，$d_{i} \mid k$**，即 $d_{i}$ 是该集合的一个公约数，故 **$d_{i} \mid d_{j}$**。同理可得 $d_{j} \mid d_{i}$，因此 **$d_{i} = d_{j}$**，即**相通状态的周期性相同**。
+
+这样，在[[#^Bukeyue|不可约 Markov 链]]中，所有状态的周期性均相同。若其中有一个状态为非周期态，则所有状态均为非周期态，称该 Markov 链为**非周期的**。对此类 Markov 链，有
+$$
+\lim_{n \to \infty} P_{i,j}{(n)} = \pi_{j}
+$$
+称为**遍历性 (ergodicity) 定理**，其中 $\pi_{j}$ 与初始状态 $i$ 无关。
+
+在[[#^Bukeyue|不可约 Markov 链]]中，任取两个状态 $i$、$j$，有
+$$
+\lim\limits_{ n \to \infty } \dfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)} = \dfrac{1}{a_{j}}
+$$
+称为**弱遍历性 (weak ergodicity) 定理**，其中 $a_{j} = \sum\limits_{k=1}^{\infty} f_{i,i}(k)\cdot k$ 为**状态 $j$ 的平均返回时间 (mean return time)**，且与初始状态 $i$ 无关。
+
+### 平稳分布
+
+由 [[#^ChapmanKolmogorovIdentity|C-K 方程]]，$\boldsymbol{P}(n)$ 有分解
+$$
+\boldsymbol{P}(n) = \boldsymbol{P}(n-1) \boldsymbol{P}(1) = \boldsymbol{P}(1) \boldsymbol{P}(n-1)
+$$
+因此，若**极限 $\lim\limits_{n \to \infty} \boldsymbol{P}(n) = \boldsymbol{\varPi}$ 存在**，则有
+$$
+\boldsymbol{\varPi} = \boldsymbol{\varPi} \boldsymbol{P},
+\qquad\text{and}\qquad
+\boldsymbol{\varPi} = \boldsymbol{P} \boldsymbol{\varPi}
+$$
+其中，
++ $\boldsymbol{\varPi} = \lim\limits_{n \to \infty} \boldsymbol{P}(n)$ 显然应**与初状态无关**，即形如
+$$
+\boldsymbol{\varPi} = \begin{pmatrix}\pi_{1} & \pi_{2} & \pi_{3} & \cdots \\ \pi_{1} & \pi_{2} & \pi_{3} & \cdots \\ \vdots & \vdots & \vdots & \vdots \\ \pi_{1} & \pi_{2} & \pi_{3} & \cdots \end{pmatrix} = \v{1}^{\mathrm{T}} \begin{pmatrix}\pi_{1} & \pi_{2} & \pi_{3} & \cdots \end{pmatrix} = \v{1}^{\mathrm{T}} \v{\pi}
+$$
++ 1 步转移概率矩阵 $\boldsymbol{P} = \boldsymbol{P}(1) = \Big( P_{i,j}{(1)} \Big)_{i,j}$ 的各行表示从各状态出发的概率分布，因此**各行和均为 1**，即 $\boldsymbol{P} \v{1}^{\mathrm{T}} = \v{1}^{\mathrm{T}}$。
+
+由此 $\boldsymbol{\varPi} \equiv \boldsymbol{P} \boldsymbol{\varPi}$ 成为恒等式，而 $\boldsymbol{\varPi} = \boldsymbol{\varPi} \boldsymbol{P}$ 则可展开为
+$$
+\mark{ \v{\pi} = \v{\pi} \boldsymbol{P} }
+$$
+注意此处的 $\v{\pi}$ 是行向量。
+
+首先确认 $\v{\pi}$ 非零解的存在性。对（更熟悉的列向量形式的）方程 $(\boldsymbol{P}^{\mathrm{T}} - \boldsymbol{I}) \v{\pi}^{\mathrm{T}} = \v{0}^{\mathrm{T}}$，考虑 $\boldsymbol{P}$ 的特征方程
+$$
+\det (\boldsymbol{P}^{\mathrm{T}} - \lambda \boldsymbol{I}) = \det (\boldsymbol{P} - \lambda \boldsymbol{I}) = 0
+$$
+由概率矩阵的性质知 $\boldsymbol{P} \v{1}^{\mathrm{T}} = \v{1}^{\mathrm{T}}$，即 $\lambda = 1$ 是其特征值，$\det (\boldsymbol{P}^{\mathrm{T}} - \boldsymbol{I}) = 0$，从而**齐次线性方程组有非零解**。
+
+进一步，向量中各元素 $\pi_{j} = \sum\limits_{i} \pi_{i} P_{i,j}(1)$。当**初始分布 $P(X_{0} = i)$ 即为 $\pi_{i}$** 时，有
+$$
+P(X_{1} = j) = \sum\limits_{i} P(X_{0} = i) P_{i,j}(1) = \sum\limits_{i} \pi_{i} P_{i,j}(1) = \pi_{j}
+$$
+即**经过一步转移后分布不变**，这是称 $\v{\pi}$ 为 Markov 链的**平稳分布 (stationary distribution)** 的原因。
