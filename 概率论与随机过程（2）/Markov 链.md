@@ -326,4 +326,4 @@ $$
 + $P_{i,i}(m + n) \ge P_{i,j}(m) P_{j,i}(n) > 0$，故 **$d_{i} \mid (m + n)$**；
 + $\forall k \in \left\{ n \geq 1 \mid P_{j,j}{(n)} > 0 \right\}$，有 $P_{i,i}(m + k + n) \ge P_{i,j}(m) P_{j,j}(k) P_{j,i}(n) > 0$，故 **$d_{i} \mid (m + k + n)$**。
 
-由此，**$\forall k \in \left\{ n \geq 1 \mid P_{j,j}{(n)} > 0 \right\}$，$d_{i} \mid k$**，即 $d_{i}$ 是该集合的一个公约数，故 **$d_{i} \mid d_{j}$**。同理可得 $d_{j} \mid d_{i}$，因此 **$d_{i} = d_{j}$**。
+由此，**$\forall k \in \left\{ n \geq 1 \mid P_{j,j}{(n)} > 0 \right\}$，$d_{i} \mid k$**，即 $d_{i}$ 是该集合的一个公约数，故 **$d_{i} \mid d_{j}$**。同理可得 $d_{j} \mid d_{i}$，因此 **$d_{i} = d_{j}$**。**相通
