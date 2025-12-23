@@ -235,6 +235,8 @@ $$
 $$
 P_{j,j}(n) \xrightarrow{n \to \infty} 0, \qquad P_{i,j}(n) \xrightarrow{n \to \infty} 0
 $$
+^NonRecurrentLimit
+
 这也是我们主要研究常返态的原因。
 
 #### 态的返回次数
@@ -333,17 +335,53 @@ $$
 
 由此，**$\forall k \in \left\{ n \geq 1 \mid P_{j,j}{(n)} > 0 \right\}$，$d_{i} \mid k$**，即 $d_{i}$ 是该集合的一个公约数，故 **$d_{i} \mid d_{j}$**。同理可得 $d_{j} \mid d_{i}$，因此 **$d_{i} = d_{j}$**，即**相通状态的周期性相同**。
 
-这样，在[[#^Bukeyue|不可约 Markov 链]]中，所有状态的周期性均相同。若其中有一个状态为非周期态，则所有状态均为非周期态，称该 Markov 链为**非周期的**。对此类 Markov 链，有
+这样，在[[#^Bukeyue|不可约 Markov 链]]中，所有状态的周期性均相同。若其中有一个状态为非周期态，则所有状态均为非周期态，称该 Markov 链为**非周期的**，并有
+$$
+\exists N, \quad \forall n \geq N, \quad \forall i,j \in E, \quad P_{i,j}{(n)} > 0
+$$
+
+#### 遍历性
+
+在**非周期**的[[#^Bukeyue|不可约 Markov 链]]中，有
 $$
 \lim_{n \to \infty} P_{i,j}{(n)} = \pi_{j}
 $$
 称为**遍历性 (ergodicity) 定理**，其中 $\pi_{j}$ 与初始状态 $i$ 无关。
 
-在[[#^Bukeyue|不可约 Markov 链]]中，任取两个状态 $i$、$j$，有
+若没有非周期的条件，而是在任意[[#^Bukeyue|不可约 Markov 链]]中任取两个状态 $i$、$j$，有
 $$
 \lim\limits_{ n \to \infty } \dfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)} = \dfrac{1}{a_{j}}
 $$
-称为**弱遍历性 (weak ergodicity) 定理**，其中 $a_{j} = \sum\limits_{k=1}^{\infty} f_{i,i}(k)\cdot k$ 为**状态 $j$ 的平均返回时间 (mean return time)**，且与初始状态 $i$ 无关。
+称为**弱遍历性 (weak ergodicity) 定理**，其中 $a_{j} = \sum\limits_{k=1}^{\infty} f_{i,i}(k)\cdot k$ 为状态 $j$ 的**平均返回时间 (mean return time)**，与初始状态 $i$ 无关。此处 $\cfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)}$ 可写成
+$$
+\begin{align} 
+\dfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)} &= \dfrac{1}{n} \sum\limits_{k=1}^{n} \mathbb{E} \left[ \mathbb{1}_{\left\{ X_{k} = j \mid X_{0} = i \right\}} \right] 
+= \dfrac{1}{n} \mathbb{E} \left[ \sum\limits_{k=1}^{n} \mathbb{1}_{\left\{ X_{k} = j \mid X_{0} = i \right\}} \right] \\
+&= \dfrac{\mathbb{E} \left[ \#\left\{ k \mid X_{k} = j, X_{0} = i, 1\le k \le n \right\} \right] }{n} 
+\end{align}
+$$
+其概率意义是在 $n$ 步转移中**到达状态 $j$ 的平均频率**，即 $n$ 步转移中**状态 $j$ 的平均比例**。
+
+#### 正常返、零常返
+
+考虑上述「平均到达频率」的极限 $\lim\limits_{ n \to \infty } \cfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)}$，其与初始状态无关，因此也可称为「平均返回频率」。由[[#^NonRecurrentLimit|非常返态的性质]]知，若状态 $j$ 为非常返态，则 $P_{i,j}{(n)} \xrightarrow{n \to \infty} 0$，从而 $\lim\limits_{ n \to \infty } \cfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)} = 0$，即**平均返回频率为 0**。
+
+但对于常返态，并不一定有正的平均频率，定义：
++ 若状态 $j$ 的**平均返回时间有限**，即 $a_{j} < \infty$，则 $\lim\limits_{ n \to \infty } \cfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)} = \cfrac{1}{a_{j}} > 0$，称状态 $j$ 为**正常返 (positive recurrent) 态**；
++ 若状态 $j$ 的**平均返回时间无限**，即 $a_{j} = \infty$，则 $\lim\limits_{ n \to \infty } \cfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)} = 0$，称状态 $j$ 为**零常返 (null recurrent) 态**。
+
+> [!example] 零常返的实例
+> 考虑[[例题#L19-1]] 的**一维无限制随机游走**，已知当 $p=\cfrac{1}{2}$ 时状态 0（以及其他所有状态）为常返态，但有
+> $$
+> P(z) = \sum\limits_{n=0}^{\infty} P_{0,0}{(2n)} z^{2n} = \sum\limits_{n=0}^{\infty} \binom{2n}{n} \left( \dfrac{1}{2} \right)^{2n} z^{2n} = \dfrac{1}{\sqrt{1 - z^{2}}}
+> $$
+> 于是
+> $$
+> \lim\limits_{ n \to \infty } \dfrac{1}{n} \sum\limits_{k=1}^{n} P_{0,0}{(k)} = \lim\limits_{ z \to 1_{-} } (1 - z) P(z) = \lim\limits_{ z \to 1_{-} } \dfrac{1 - z}{\sqrt{1 - z^{2}}} = 0
+> $$
+> 因此，**常返态中亦可存在平均返回频率为 0 的情况**。
+
+
 
 ### 平稳分布
 
