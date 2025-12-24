@@ -176,12 +176,14 @@ SELECT [[DISTINCT | ALL]] <select_list>
 	FROM <table_references>
 	[[WHERE <search_condition>]]
 	[[GROUP BY <group_by_list> [[HAVING <search_condition>]] ]]
-	[[ORDER BY <order_by_list>]]
+	[[ORDER BY <order_by_list> [[DESC]] ]]
 	[[LIMIT <limit_lines> [[OFFSET <offset_number>]] ]];
 ```
 `SELECT` 语句具有灵活的使用方式和丰富强大的功能。
 
 ### 简单查询
+
+ORDER BY 子句用于对查询结果进行排序，默认按升序排序，可使用 `DESC` 指定降序排序。
 
 
 ### 连接查询
