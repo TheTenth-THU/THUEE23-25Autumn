@@ -85,7 +85,7 @@ $$
 
 ### Hilbert 变换对宽平稳随机过程的作用
 
-设随机过程 $X(t)$ 是[[宽平稳随机过程]]，其均值为 $\mu_{X} = \mathbb{E}[X(t)]$，自相关函数为 $R_{X}(\tau) = \mathbb{E}[X(t) X(t+\tau)]$。则 Hilbert 变换后的随机过程 **$\check{X}(t)$ 也是宽平稳随机过程**，有
+设随机过程 $X(t)$ 是[[随机过程的平稳性]]，其均值为 $\mu_{X} = \mathbb{E}[X(t)]$，自相关函数为 $R_{X}(\tau) = \mathbb{E}[X(t) X(t+\tau)]$。则 Hilbert 变换后的随机过程 **$\check{X}(t)$ 也是宽平稳随机过程**，有
 $$
 \begin{align}
 R_{\check{X}}(\tau) &= \mathbb{E} \left[ \check{X}(t+\tau) \overline{\check{X}(t)} \right]  \\

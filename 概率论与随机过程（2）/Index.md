@@ -5,8 +5,8 @@ longform:
   workflow: Default Workflow
   sceneFolder: /
   scenes:
-    - 随机变量的相关
-    - 宽平稳随机过程
+    - 随机变量的基础概念
+    - 随机过程的平稳性
     - 循环平稳过程
     - Brown 运动
     - Gauss 过程

@@ -214,14 +214,18 @@ f_{T_{1}}(t) = \dfrac{\dif}{\dif t} F_{T_{1}}(t) = \lambda \e^{-\lambda t}, \qqu
 $$
 于是事件间隔均服从参数为 $\lambda$ 的**指数分布**，即 $\left\{ T_{k} \right\} \stackrel{\text{i.i.d}}{\sim} \text{Exp}(\lambda)$。
 
+由独立性，容易得到事件间隔 $T_{1}, \cdots, T_{k}$ 的**联合概率密度函数**为
+$$
+f_{T_{1}, T_{2}, \cdots, T_{k}}(t_{1}, t_{2}, \cdots, t_{k}) = \prod\limits_{i=1}^{k} f_{T_{i}}(t_{i}) = \lambda^{k} \e^{-\lambda \sum\limits_{i=1}^{k} t_{i}}, \qquad t_{i} \ge 0
+$$
+
 #### 等待时间分布
 
 设第 $n$ 个事件发生的时间为 $S_{n} = \sum\limits_{k=1}^{n} T_{k}$。引入**特征函数 $\phi_{X}(\omega) = \mathbb{E}\left[ \e^{\J \omega X} \right]$**，则由事件间隔的独立性，有
 $$
-\begin{align} 
-&\phi_{T_{k}}(\omega) = \int_{0}^{\infty} \lambda \e^{-\lambda t} \cdot \e^{\J \omega t} \dif t = \dfrac{\lambda}{\lambda - \J \omega}  \\
-\Longrightarrow\quad & \phi_{S_{n}}(\omega) = \left( \phi_{T_{k}}(\omega) \right)^{n} = \left( \dfrac{\lambda}{\lambda - \J \omega} \right)^{n}
-\end{align}
+\phi_{T_{k}}(\omega) = \int_{0}^{\infty} \lambda \e^{-\lambda t} \cdot \e^{\J \omega t} \dif t = \dfrac{\lambda}{\lambda - \J \omega}  
+\quad\Longrightarrow\quad 
+\phi_{S_{n}}(\omega) = \left( \phi_{T_{k}}(\omega) \right)^{n} = \left( \dfrac{\lambda}{\lambda - \J \omega} \right)^{n}
 $$
 因此可以通过逆变换求得 **$S_{n}$ 的概率密度函数**为
 $$
@@ -259,6 +263,8 @@ f_{S_{n}}(t) = \begin{cases}
 \end{cases}
 $$
 此即参数为 $(n, \lambda)$ 的 **$\boldsymbol{\varGamma}$ 分布 (Gamma distribution)**。
+
+可以用**微元法**导出 $S$
 
 ## Poisson 过程的拓广
 
@@ -341,4 +347,20 @@ $$
 G_{X(t)}(z) = \exp\left( \lambda t (P(z) - 1) \right) = \exp\left( \lambda t P(z) \right) \exp\left( -\lambda t \right) = G_{N(t)}(P(z))
 $$
 此即上述复合 Poisson 过程的矩母函数。
+
+### 过滤 Poisson 过程
+
+在复合 Poisson 过程中，若将事件「效果」看作是由 $\left\{ X_{k} \right\}_{k=1}^{\infty}$ 决定的**某个随机系统的输出**，则该过程可视为**过滤 Poisson 过程 (filtered Poisson process)**。设该随机系统的**冲激响应 (impulse response)** 为 $h(t; x)$，则系统输出为
+$$
+Y(t) = \sum\limits_{k=1}^{N(t)} h(t - S_{k}; X_{k})
+$$
+其中 $S_{k} = \sum\limits_{i=1}^{k} T_{i}$ 为第 $k$ 个事件发生的时间，$T_{i}$ 为事件间隔。
+
+$Y(t)$ 的特征函数为
+$$
+\begin{align}
+\phi_{Y(t)}(\omega) &= \mathbb{E} \left[ \e^{\J \omega Y(t)} \right] = \mathbb{E} \left[ \exp\left( \J \omega \sum\limits_{k=1}^{N(t)} h(t - S_{k}; X_{k}) \right) \right] \\
+&= \mathbb{E}_{N(t)} \left[ \mathbb{E}_{\{S_{k}, X_{k}\} \mid N(t)} \left[ \exp\left( \J \omega \sum\limits_{k=1}^{n} h(t - S_{k}; X_{k}) \right) \mathop{\Bigg|} N(t) = n \right]  \right] \\
+\end{align}
+$$
 

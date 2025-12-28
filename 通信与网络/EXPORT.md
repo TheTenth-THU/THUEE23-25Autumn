@@ -460,7 +460,7 @@ $$
 
 # 模拟信源的数字编码
 
-模拟信源是**时间连续、幅值连续**的信源，其输出 $s(t)$ 是一个连续时间的[[宽平稳随机过程#^b4e44e|随机过程]]，将其数字化的过程如下：
+模拟信源是**时间连续、幅值连续**的信源，其输出 $s(t)$ 是一个连续时间的[[随机过程的平稳性#^b4e44e|随机过程]]，将其数字化的过程如下：
 
 ![[模拟信源的数字编码.png|模拟信源的数字编码]]
 
@@ -1335,7 +1335,7 @@ $$
 
 ### 基带信号的功率谱
 
-通信信号 $x(t)$ 是一个**随机过程 (stochastic process)**，我们希望求解其**[[宽平稳随机过程#^GonglvpuMidu|功率谱密度]] (power spectral density)**
+通信信号 $x(t)$ 是一个**随机过程 (stochastic process)**，我们希望求解其**[[随机过程的平稳性#^GonglvpuMidu|功率谱密度]] (power spectral density)**
 $$
 S_{X}(\omega) = \lim_{T \to +\infty} \dfrac{1}{2T} \mathbb{E}\left[ \left| \dint_{-T}^{T} x(t) \e^{-\J 2\pi f t} \dif t \right|^2 \right]
 $$
@@ -1348,16 +1348,16 @@ $$
 &= \sum\limits_{k} \sum\limits_{m} R_{x}[k - m] p(t + \tau - kT) p(t - mT) \\
 \end{align}
 $$
-均为周期为 $T$ 的周期函数，因此 $x(t)$ 不是[[宽平稳随机过程#宽平稳随机过程|宽平稳随机过程]]。不过，可以通过**对时间 $t$ 平均**的方式，得到一个与时间无关的自相关函数
+均为周期为 $T$ 的周期函数，因此 $x(t)$ 不是[[随机过程的平稳性#宽平稳随机过程|宽平稳随机过程]]。不过，可以通过**对时间 $t$ 平均**的方式，得到一个与时间无关的自相关函数
 $$
 \overline{ R_{x} (\tau)} = \dfrac{1}{T} \int_{0}^{T} \t{R}_{x}(t + \tau, t) \dif t
 $$
-于是，据 [[宽平稳随机过程#^Wiener-Khinchin|Wiener-Khinchin 关系]]，可以定义通信信号 $x(t)$ 的**功率谱密度 (power spectral density)** 为
+于是，据 [[随机过程的平稳性#^Wiener-Khinchin|Wiener-Khinchin 关系]]，可以定义通信信号 $x(t)$ 的**功率谱密度 (power spectral density)** 为
 $$
 S_{x}(f) = \mathscr{F} \left\{ \overline{ R_{x}(\tau) } \right\}
 $$
 
-考虑**线性调制 (linear modulation)** 信号 $x(t) = \sum\limits_{k} x_{k} p(t - kT)$，其中 $x_{k}$ 平稳，相关为 $R[n]$。$x(t)$ 可视为冲激串 $x_{\delta}(t) = \sum\limits_{k} x_{k} \delta(t - kT)$ 经过成形脉冲 $p(t)$ 滤波后的结果，由[[宽平稳随机过程#LTI 系统对宽平稳随机过程的作用|功率谱密度的性质]]可知，$x(t)$ 的功率谱密度为 $S_{X}(f) = S_{X_{\delta}}(f) |P(f)|^{2}$。
+考虑**线性调制 (linear modulation)** 信号 $x(t) = \sum\limits_{k} x_{k} p(t - kT)$，其中 $x_{k}$ 平稳，相关为 $R[n]$。$x(t)$ 可视为冲激串 $x_{\delta}(t) = \sum\limits_{k} x_{k} \delta(t - kT)$ 经过成形脉冲 $p(t)$ 滤波后的结果，由[[随机过程的平稳性#LTI 系统对宽平稳随机过程的作用|功率谱密度的性质]]可知，$x(t)$ 的功率谱密度为 $S_{X}(f) = S_{X_{\delta}}(f) |P(f)|^{2}$。
 
 对冲激串 $x_{\delta}(t)$，有
 $$
