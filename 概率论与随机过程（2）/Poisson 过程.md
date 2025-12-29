@@ -291,7 +291,7 @@ $$
 $$
 \lim\limits_{ \Delta t \to 0 } \dfrac{1}{\Delta t} P \left\{ \Delta N(t) = 1 \right\} = \lambda(t)
 $$
-类似地，[[#Term 3]] 仍为 0，故得到**关于矩母函数的微分方程**
+这也使得 $\lambda(t)$ 可视为**事件发生速率**；类似地，[[#Term 3]] 仍为 0，故得到**关于矩母函数的微分方程**
 $$
 \dfrac{\dif}{\dif t} G_{N(t)}(z) = (-\lambda(t) + \lambda(t)z) G_{N(t)}(z), \qquad G_{N(0)}(z) = 1
 $$
@@ -304,6 +304,11 @@ $$
 P\left\{ N(t) = k \right\} = \dfrac{\left( \dint_{0}^{t} \lambda(\tau) \dif \tau \right)^{k}}{k!} \exp\left( - \dint_{0}^{t} \lambda(\tau) \dif \tau \right)
 $$
 当 $\lambda(t)$「齐次」为 $\lambda(t) \equiv \lambda$ 时，即得到 Poisson 分布的概率分布，故此分布称为**非齐次 Poisson 过程 (non-homogeneous Poisson Process)**。
+
+类似于参数为 $\lambda$ 齐次 Poisson 过程 $N(t)$ 服从**参数为 $\lambda t$ 的 Poisson 分布**，事件发生速率为 $\lambda(t)$ 的非齐次 Poisson 过程 $N(t)$ 服从**参数为 $\dint_{0}^{t} \lambda(\tau) \dif \tau$ 的 Poisson 分布**，有
+$$
+\mathbb{E} \left[ N(t) \right] = \mathrm{Var} \left[ N(t) \right] = \dint_{0}^{t} \lambda(\tau) \dif \tau
+$$
 
 ### 复合 Poisson 过程
 
