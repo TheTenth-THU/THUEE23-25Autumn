@@ -212,7 +212,10 @@ $$
 $$
 f_{T_{1}}(t) = \dfrac{\dif}{\dif t} F_{T_{1}}(t) = \lambda \e^{-\lambda t}, \qquad t \ge 0
 $$
-于是事件间隔均服从参数为 $\lambda$ 的**指数分布**，即 $\left\{ T_{k} \right\} \stackrel{\text{i.i.d}}{\sim} \text{Exp}(\lambda)$。
+于是事件间隔均服从参数为 $\lambda$ 的**指数分布**，即 $\left\{ T_{k} \right\} \stackrel{\text{i.i.d}}{\sim} \text{Exp}(\lambda)$，有
+$$
+\mathbb{E}[T_{k}] = \dfrac{1}{\lambda}, \qquad \mathrm{Var}[T_{k}] = \dfrac{1}{\lambda^{2}}
+$$
 
 由独立性，容易得到事件间隔 $T_{1}, \cdots, T_{k}$ 的**联合概率密度函数**为
 $$
