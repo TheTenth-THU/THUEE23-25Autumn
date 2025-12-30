@@ -204,3 +204,55 @@ $$
 n_i = g_i \e^{\tfrac{\mu - \varepsilon_i}{kT}}
 $$
 
+## 能级准连续情况的配分函数
+
+原则上，应该**由量子力学计算**单粒子能级和简并度；对于实际的统计系统，只要**温度不太低，体积足够大**，粒子的任意两个相邻能级之间的间隔 $\Delta\varepsilon_{i}$ 比起 $kT$ 将小得多，即**能级准连续 (quasi-continuous energy levels)**，满足条件
+$$
+\dfrac{\Delta \varepsilon_{i}}{kT} \ll 1
+$$
+能级准连续时，配分函数有简便解法。
+
+### $\mu$ 空间
+
+对于单粒子系统，设其有 $r$ 个自由度，则其**广义坐标 $q_1, q_2, \cdots, q_r$** 和**广义动量 $p_1, p_2, \cdots, p_r$** 构成 $2r$ 维**相空间 (phase space)**。在相空间中，引入一个新的空间——**$\mu$ 空间 (mu space)**，其坐标为单粒子态的广义坐标和广义动量 $(q_1, q_2, \cdots, q_r, p_1, p_2, \cdots, p_r)$。特别地，考察三维空间中粒子的平动时，其 $\mu$ 空间为六维空间 $(x,y,z,p_x,p_y,p_z)$。
+
+经典力学中的粒子状态用点在 $\mu$ 空间中表示，而量子力学中粒子状态的表示则**受到 [[力学量算符#Heisenberg 不确定关系|Heisenberg 不确定关系]]的限制**，每对广义坐标和广义动量都有 $\Delta q_{i} \Delta p_{i} \approx h$。因此，每个粒子状态占据 $\mu$ 空间中的一个**基本单元体积 (elementary cell volume) $h^{r}$**。
+
+### 态密度
+
+设单粒子系统的哈密顿量为 $H(q_1, q_2, \cdots, q_r, p_1, p_2, \cdots, p_r)$。在**能级准连续**的情况下，能级 $\varepsilon$ 对应一个**闭合能量曲面** $H(q_1, q_2, \cdots, q_r, p_1, p_2, \cdots, p_r) = \varepsilon$，该曲面包围的 $\mu$ 空间体积为
+$$
+\varOmega(\varepsilon) = \int_{H(q,p) \leq \varepsilon} \dif q_1 \dif q_2 \cdots \dif q_r \dif p_1 \dif p_2 \cdots \dif p_r
+$$
+能量在 $\varepsilon$ 和 $\varepsilon + \dif \varepsilon$ 之间的单粒子态数为
+$$
+g(\varepsilon) \dif \varepsilon = \dfrac{J}{h^{r}} \dif \varOmega(\varepsilon)
+$$
+其中，$J$ 为内部简并度，对基本粒子即是自旋简并度 $J = 2S + 1$；$g\left( \varepsilon \right)$ 称为**态密度 (density of states)**，表示单位能量范围内的单粒子态数。
+
+配分函数可由态密度表示为
+$$
+z = \dint \e^{-\beta \varepsilon} g(\varepsilon) \dif \varepsilon
+$$
+或者，直接在 $\mu$ 空间中积分表示为
+$$
+z = \dfrac{J}{h^{r}} \int \e^{-\beta H(q,p)} \dif q_1 \dif q_2 \cdots \dif q_r \dif p_1 \dif p_2 \cdots \dif p_r
+$$
+
+对于三维空间中粒子在体积 $V$ 内的平动，
++ 若粒子为**非相对论**粒子，能级为 $\varepsilon = \dfrac{p^{2}}{2m}$，则
+$$
+\varOmega\left( \varepsilon \right) = \dint \dif \v{r} \dint_{p \le \sqrt{2m\varepsilon}} \dif \v{p} = V \cdot \dfrac{4}{3} \pi p_{\mathrm{max}}^{3} = V \cdot \dfrac{4}{3} \pi (2m\varepsilon)^{3/2}
+$$
+进而
+$$
+g\left( \varepsilon \right) \dif \varepsilon = \dfrac{J}{h^{3}} \dfrac{\dif \varOmega\left( \varepsilon \right)}{\dif \varepsilon} \dif \varepsilon = J \dfrac{2\pi V (2m)^{3/2}}{h^{3}} \sqrt{\varepsilon} \dif \varepsilon
+$$
++ 若粒子为**超相对论**粒子，能级为 $\varepsilon = pc$，则
+$$
+\varOmega\left( \varepsilon \right) = \dint \dif \v{r} \dint_{p \le \varepsilon/c} \dif \v{p} = V \cdot \dfrac{4}{3} \pi p_{\mathrm{max}}^{3} = V \cdot \dfrac{4}{3} \pi (\varepsilon/c)^{3}
+$$
+进而
+$$
+g\left( \varepsilon \right) \dif \varepsilon = \dfrac{J}{h^{3}} \dfrac{\dif \varOmega\left( \varepsilon \right)}{\dif \varepsilon} \dif \varepsilon = J \dfrac{4\pi V}{h^{3} c^{3}} \varepsilon^{2} \dif \varepsilon
+$$

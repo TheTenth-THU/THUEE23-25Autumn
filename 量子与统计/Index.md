@@ -24,6 +24,7 @@ longform:
     - 热力学的基本概念
     - 近独立粒子系统
     - Boltzmann 统计理论
+    - - † 理想气体
     - Bose 统计和 Fermi 统计理论
   ignoredFiles:
     - undefined
