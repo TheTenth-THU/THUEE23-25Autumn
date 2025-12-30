@@ -419,3 +419,103 @@ $$
 P(X_{1} = j) = \sum\limits_{i} P(X_{0} = i) P_{i,j}(1) = \sum\limits_{i} \pi_{i} P_{i,j}(1) = \pi_{j}
 $$
 即**经过一步转移后分布不变**，这是称 $\v{\pi}$ 为 Markov 链的**平稳分布 (stationary distribution)** 的原因。
+
+## † 连续时间 Markov 链
+
+设有随机过程 $X(t)$，其状态空间记为 $E = \{1, 2, \cdots \}$，其 **Markov 性**定义为
+$$
+\begin{align} 
+\forall t_{1} \le t_{2} \le \cdots \le t_{n}, \quad &P \left\{ X(t_{n}) = x_{n} \mid X(t_{n-1}) = x_{n-1}, \cdots, X(t_{1}) = x_{1} \right\}  \\
+&= P \left\{ X(t_{n}) = x_{n} \mid X(t_{n-1}) = x_{n-1} \right\} 
+\end{align}
+$$
+满足上述性质的随机过程称为**连续时间 Markov 链 (continuous-time Markov chain, CTMC)**。
+
+### 转移概率与生成元矩阵
+
+连续时间 Markov 链的**转移概率**定义为
+$$
+P_{i,j}(t) = P \left\{ X(t + s) = j \mid X(s) = i \right\}, \quad \forall s, t \geq 0
+$$
+由于状态离散，与离散时间 Markov 链类似可定义 $\boldsymbol{P}(t) = \big( P_{i,j}(t) \big)_{i,j}$，且同样有 **Chapman-Kolmogorov 方程**
+$$
+\boldsymbol{P}(t + s) = \boldsymbol{P}(t) \boldsymbol{P}(s)
+$$
+
+不同于离散时间 Markov 链，连续时间 Markov 链没有「1 步转移」的概念，其转移概率矩阵 $\boldsymbol{P}(t)$ 随时间 $t$ **连续变化**。因此，我们考察
+$$
+\begin{align} 
+\lim\limits_{\Delta t \to 0} \dfrac{\boldsymbol{P}(t + \Delta t) - \boldsymbol{P}(t)}{\Delta t} 
+&= \lim\limits_{\Delta t \to 0} \dfrac{\boldsymbol{P}(t) \boldsymbol{P}(\Delta t) - \boldsymbol{P}(t)}{\Delta t}
+= \boldsymbol{P}(t) \cdot \lim\limits_{\Delta t \to 0} \dfrac{\boldsymbol{P}(\Delta t) - \boldsymbol{I}}{\Delta t} \\
+&= \lim\limits_{\Delta t \to 0} \dfrac{\boldsymbol{P}(\Delta t) \boldsymbol{P}(t) - \boldsymbol{P}(t)}{\Delta t}
+= \lim\limits_{\Delta t \to 0} \dfrac{\boldsymbol{P}(\Delta t) - \boldsymbol{I}}{\Delta t} \cdot \boldsymbol{P}(t) 
+\end{align}
+$$
+定义**生成元矩阵 (generator matrix)** 为
+$$
+\boldsymbol{Q} = \lim\limits_{\Delta t \to 0} \dfrac{\boldsymbol{P}(\Delta t) - \boldsymbol{I}}{\Delta t}
+$$
+则有 **Kolmogorov 前向方程与后向方程**
+$$
+\begin{cases}
+\cfrac{\dif}{\dif t} \boldsymbol{P}(t) = \boldsymbol{P}(t) \boldsymbol{Q}  & \text{（前向方程）} \\
+\cfrac{\dif}{\dif t} \boldsymbol{P}(t) = \boldsymbol{Q} \boldsymbol{P}(t)  & \text{（后向方程）}
+\end{cases} 
+$$
+于是，$\boldsymbol{P}(t)$ 的演化由 $\boldsymbol{Q}$ 决定，有
+$$
+\boldsymbol{P}(t) = \boldsymbol{P}(0) \e^{\boldsymbol{Q} t} = \boldsymbol{P}(0) \sum\limits_{n=0}^{\infty} \dfrac{(\boldsymbol{Q} t)^{n}}{n!} = \boldsymbol{P}(0) \sum\limits_{n=0}^{\infty} \dfrac{t^{n}}{n!} \boldsymbol{Q}^{n} 
+$$
+
+$\boldsymbol{Q}$ 有以下性质：
++ 其**非对角元非负**，即 $Q_{i,j} \geq 0, \forall i \neq j$，表示单位时间内从状态 $i$ 转移到状态 $j$ 的速率；
++ 其**对角元为负**，保证**行和为 0**，即 $Q_{i,i} = - \sum\limits_{j \neq i} Q_{i,j} \leq 0$，表示单位时间内**离开状态 $i$** 的速率。
+
+> [!example] Poisson 过程的生成元矩阵 
+> [[Poisson 过程]]即是一个典型的连续时间 Markov 链，由[[Poisson 过程#^XishuxingJiashe|稀疏性假设]]，其在 $\Delta t \to 0$ 间隔内的转移概率为
+> $$
+> P_{i,j}(\Delta t) = \begin{cases}
+> \e^{-\lambda \Delta t} , & j = i, \\
+> \lambda \Delta t \cdot \e^{-\lambda \Delta t} , & j = i + 1, \\
+> 0 , & \text{otherwise}
+> \end{cases}
+> $$
+> 因此，其生成元矩阵的矩阵元为
+> $$
+> Q_{i,j} = \lim\limits_{\Delta t \to 0} \dfrac{P_{i,j}(\Delta t) - \delta_{i,j}}{\Delta t} = \begin{cases}
+> -\lambda , & j = i, \\
+> \lambda , & j = i + 1, \\
+> 0 , & \text{otherwise}
+> \end{cases}
+> $$
+> 即生成元矩阵为
+> $$
+> \boldsymbol{Q} = \begin{pmatrix}
+> -\lambda & \lambda \\
+> & -\lambda & \lambda \\
+> & & -\lambda & \lambda \\
+> & & & \ddots & \ddots
+> \end{pmatrix}
+> $$
+
+### 平稳分布
+
+不同于离散时间 Markov 链，对连续时间 Markov 链，只要**不可约**，则 $P_{i,j}(t)$ 的极限 $\lim\limits_{t \to \infty} P_{i,j}(t) = \pi_{j}$ 总是存在，且与初始状态 $i$ 无关。因此，$\boldsymbol{P}(t)$ 的极限 $\lim\limits_{t \to \infty} \boldsymbol{P}(t) = \boldsymbol{\varPi}$ 亦存在，且形如
+$$
+\boldsymbol{\varPi} = \begin{pmatrix}
+\pi_{1} & \pi_{2} & \pi_{3} & \cdots \\
+\pi_{1} & \pi_{2} & \pi_{3} & \cdots \\
+\vdots & \vdots & \vdots & \vdots \\
+\pi_{1} & \pi_{2} & \pi_{3} & \cdots
+\end{pmatrix} = \v{1}^{\mathrm{T}} \v{\pi}
+$$
+由 Kolmogorov 前向方程知
+$$
+\boldsymbol{O} = \lim\limits_{t \to \infty} \dfrac{\dif}{\dif t} \boldsymbol{P}(t) = \lim\limits_{t \to \infty} \boldsymbol{P}(t) \boldsymbol{Q} = \boldsymbol{\varPi} \boldsymbol{Q}
+\quad \Longrightarrow \quad
+\v{\pi} \boldsymbol{Q} = \v{0}
+$$
+同样需注意此处向量符号默认是**行向量**。
+
+与离散时间 Markov 链类似，$\v{\pi}$ 是连续时间 Markov 链的**平稳分布**，当初始分布为 $\v{\pi}$ 时，经过任意时间 $t$ 的转移后分布仍为 $\v{\pi}$。
