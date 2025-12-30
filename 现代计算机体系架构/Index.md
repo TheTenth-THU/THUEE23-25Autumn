@@ -15,6 +15,8 @@ longform:
       - Virtual Memory
       - Disk
     - Interconnection
+    - GPU
+    - Cloud Computation
   ignoredFiles: []
 ---
 ## Course Information
