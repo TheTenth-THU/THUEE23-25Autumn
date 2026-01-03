@@ -30,7 +30,7 @@ $$
 
 #### DTFT 与 Fourier 变换的关系
 
-由 [[#DTFT 的引入]]可知，离散时间信号 $x[n]$ 的 DTFT 可以看作是其对应的连续时间信号 $f(t)$ 的采样信号频谱 $F_{\mathrm{s}}\left( \J\varOmega \right)$ 在频点 $\varOmega = \dfrac{\omega}{T}$ 处的取值，即
+由 [[#DTFT 的引入]]可知，离散时间信号 $x[n]$ 的 DTFT 可以看作是其对应的**连续时间信号 $f(t)$ 的采样信号频谱 $F_{\mathrm{s}}\left( \J\varOmega \right)$ 在频点 $\varOmega = \dfrac{\omega}{T}$ 处的取值**，即
 $$
 X(\omega) = F_{\mathrm{s}}(\J\varOmega) \Big|_{\varOmega = \omega / T}
 $$
@@ -47,25 +47,38 @@ $$
 X(\omega) = X(z) \Big|_{z = \e^{\J \omega}}
 $$
 
-### DTFT 的线性代数解释
+### DTFT 的逆变换
 
-将离散时间信号 $x[n]$ 看作是**无限维空间** $\ell^{2}$ 中的一个向量 $\v{x}$，其 DTFT $X(\omega)$ 可以看作是该向量在**另一组单位基底** $\left\{ \vu{\phi}_{\omega} \right\} = \left\{ \phi_{\omega}[n] \right\} = \{ \e^{\J \omega n} \}$ 上的**投影系数**，即
+将离散时间信号 $x[n]$ 看作是基底为 $\left\{ \delta[n-k] \right\}_{k}$ 的**无限维空间** $\ell^{2}$ 中的一个向量 $\v{x}$，其 DTFT $X(\omega)$ 可以看作是该向量在**另一组单位基底** $\left\{ \vu{\phi}_{\omega} \right\} = \left\{ \phi_{\omega}[n] \right\}_{\omega} = \{ \e^{\J \omega n} \}_{\omega}$ 上的**投影系数**，即
 $$
 X(\omega) = \left\langle  \v{x}, \vu{\phi}_{\omega}  \right\rangle = \sum_{n=-\infty}^{\infty} x[n] \e^{-\J \omega n}
+$$
+两组基底之间有对应关系
+$$
+\mathrm{DTFT}\left\{ \delta[n-k] \right\} = \e^{-\J \omega k}
+$$
+
+由于 $\left\{ \vu{\phi}_{\omega} \right\}$ 是**完备的**，因此可以通过投影系数 $X(\omega)$ 重构出原向量 $\v{x}$。考虑其基底 $\e^{\J \omega n}$ 变换回 $\delta[n-k]$ 的过程
+$$
+\dfrac{1}{2\pi} \dint_{-\pi}^{\pi} \e^{\J \omega n} \e^{-\J \omega k} \dif \omega = \delta[n-k]
+$$
+则有
+$$
+x[n] = \mathrm{IDTFT} \left\{ X(\omega) \right\} = \dfrac{1}{2\pi} \dint_{-\pi}^{\pi} X(\omega) \e^{\J \omega n} \dif \omega
 $$
 
 ### 典型信号的 DTFT
 
 一些典型离散时间信号及其 DTFT 如下表所示：
 
-| 信号类型    | 信号 $x[n]$                                                                      | DTFT 频谱 $X(\omega)$                                                                                 |
-| :------ | :----------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------- |
-| 单位样值序列  | $\delta[n]$                                                                    | $\e^{-\J \omega \cdot 0} = 1$                                                                       |
-| 矩形窗序列   | $\begin{cases} 1, & \vert n \vert \le M, \\ 0, & \text{otherwise} \end{cases}$ | $\dfrac{\sin \cfrac{(2M + 1) \omega}{2}}{\sin \cfrac{\omega}{2}}$                                   |
-| 全 1 序列  | 1                                                                              | $\sum\limits_{n=-\infty}^{\infty} \e^{\J\omega n} = 2\pi \delta(\omega)$                            |
-| 复指数序列   | $\e^{\J \omega_{0} n}$                                                         | $2\pi \delta(\omega - \omega_{0})$                                                                  |
-| 余弦序列    | $\cos \omega_{0}n$                                                             | $\pi \big( \delta(\omega - \omega_{0}) + \delta(\omega + \omega_{0}) \big)$                         |
-| sinc 序列 | $\dfrac{\sin \omega_{\mathrm{c}}n}{\pi n}$                                     | $\begin{cases} 1, & \vert \omega \vert < \omega_{\mathrm{c}}, \\ 0, & \text{otherwise} \end{cases}$ |
+| 信号类型        | 信号 $x[n]$                                                                      | DTFT 频谱 $X(\omega)$                                                                                 |
+| :---------- | :----------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------- |
+| 单位样值序列      | $\delta[n]$                                                                    | $\e^{-\J \omega \cdot 0} = 1$                                                                       |
+| **矩形窗序列**   | $\begin{cases} 1, & \vert n \vert \le M, \\ 0, & \text{otherwise} \end{cases}$ | $\cfrac{\sin \cfrac{(2M + 1) \omega}{2}}{\sin \cfrac{\omega}{2}}$                                   |
+| 全 1 序列      | 1                                                                              | $\sum\limits_{n=-\infty}^{\infty} \e^{\J\omega n} = 2\pi \delta(\omega)$                            |
+| 复指数序列       | $\e^{\J \omega_{0} n}$                                                         | $2\pi \delta(\omega - \omega_{0})$                                                                  |
+| 余弦序列        | $\cos \omega_{0}n$                                                             | $\pi \big( \delta(\omega - \omega_{0}) + \delta(\omega + \omega_{0}) \big)$                         |
+| **sinc 序列** | $\cfrac{\sin \omega_{\mathrm{c}}n}{\pi n}$                                     | $\begin{cases} 1, & \vert \omega \vert < \omega_{\mathrm{c}}, \\ 0, & \text{otherwise} \end{cases}$ |
 
 ## DTFT 的性质
 
@@ -76,12 +89,30 @@ $$
 + **时移**：$x[n - n_{0}] \xrightarrow{\text{DTFT}} \e^{-\J \omega n_{0}} X(\omega)$
 + **频移**：$\e^{\J \omega_{0} n} x[n] \xrightarrow{\text{DTFT}} X(\omega - \omega_{0})$
 + **时域差分**：$x[n] - x[n - 1] \xrightarrow{\text{DTFT}} (1 - \e^{-\J \omega}) X(\omega)$
-+ **频域微分**：$\J n x[n] \xrightarrow{\text{DTFT}} \dfrac{\dif X(\omega)}{\dif \omega}$
++ **频域微分**：$\J n x[n] \xrightarrow{\text{DTFT}} \cfrac{\dif X(\omega)}{\dif \omega}$
 
 > [!note] DTFT 性质的应用
-> 可以利用离散时间信号的**离散特性**简化部分过程，例如**序列解调**中，要将中心频率为 $\omega_{0}$ 的信号变换到基带，连续时间信号中需要乘以 $\cos(\omega_{0} n)$ 再进行低通滤波，而**数字下变频 (DDC)** 任务中限定 $\omega_{0} = \dfrac{\pi}{2}$ 时只需依次**乘以 $\e^{-\J\pi n/2} = (-\J)^{n}$** 即可。
+> 可以利用离散时间信号的**离散特性**简化部分过程，例如**序列解调**中，要将中心频率为 $\omega_{0}$ 的信号变换到基带，连续时间信号中需要乘以 $\cos(\omega_{0} n)$ 再进行低通滤波，而**数字下变频 (DDC)** 任务中限定 $\omega_{0} = \cfrac{\pi}{2}$ 时只需依次**乘以 $\e^{-\J\pi n/2} = (-\J)^{n}$** 即可。
 > 
-> 此外，也可以利用 DTFT 频谱的**连续性**补足信号序列离散的不足，如在**延时估计**中，可以通过发射波形 $s[n]$ 和接收信号 $r[n] = s[n-n_{0}]$ 的 DTFT 频谱相差 $\e^{-\J\omega n_{0}} = \dfrac{R(\omega)}{S(\omega)}$ 中拟合得到**非整数延时 $n_{0}$**。
+> 此外，也可以利用 DTFT 频谱的**连续性**补足信号序列离散的不足，如在**延时估计**中，可以通过发射波形 $s[n]$ 和接收信号 $r[n] = s[n-n_{0}]$ 的 DTFT 频谱相差 $\e^{-\J\omega n_{0}} = \cfrac{R(\omega)}{S(\omega)}$ 中拟合得到**非整数延时 $n_{0}$**。
 
+### 共轭与对称
 
+在复数域中，函数 $f(x)$ 是**共轭对称 (conjugate symmetric)** 的，当且仅当 $f(x) = f^{*}(-x)$；函数 $f(x)$ 是**共轭反对称 (conjugate anti-symmetric)** 的，当且仅当 $f(x) = -f^{*}(-x)$。
 
+任意离散时间信号 $x[n]$ 都可以分解为**共轭对称分量** $x_{\mathrm{e}}[n]$ 和**共轭反对称分量** $x_{\mathrm{o}}[n]$，即
+$$
+x[n] = x_{\mathrm{e}}[n] + x_{\mathrm{o}}[n], \qquad
+\begin{cases}
+x_{\mathrm{e}}[n] = \cfrac{1}{2} \left( x[n] + x^{*}[-n] \right), \\
+x_{\mathrm{o}}[n] = \cfrac{1}{2} \left( x[n] - x^{*}[-n] \right)
+\end{cases}
+$$
+考察其 DTFT，有
+$$
+\begin{align}
+\mathrm{DTFT} \left\{ x_{\mathrm{e}}[n] \right\} &= \sum_{n=-\infty}^{\infty} x_{\mathrm{e}}[n] \e^{-\J \omega n} = \dfrac{1}{2} \sum_{n=-\infty}^{\infty} \left( x[n] + x^{*}[-n] \right) \e^{-\J \omega n} \\
+&= \dfrac{1}{2} X(\omega) + \dfrac{1}{2} \sum_{m=-\infty}^{\infty} x^{*}[m] (\e^{-\J \omega m})^{*}  \\
+&= \dfrac{1}{2} X(\omega) + \dfrac{1}{2} X^{*}(\omega) = \Re\{ X(\omega) \}
+\end{align}
+$$
