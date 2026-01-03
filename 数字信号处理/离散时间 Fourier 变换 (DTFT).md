@@ -85,17 +85,17 @@ $$
 ### 基本性质
 
 基本变换关系：
-+ **线性**：$a x_{1}[n] + b x_{2}[n] \xrightarrow{\text{DTFT}} a X_{1}(\omega) + b X_{2}(\omega)$
-+ **时反转**：$x[-n] \xrightarrow{\text{DTFT}} X(-\omega)$
-+ **时共轭**：$x^{*}[n] \xrightarrow{\text{DTFT}} X^{*}(-\omega)$
++ **线性**，$a x_{1}[n] + b x_{2}[n] \xrightarrow{\text{DTFT}} a X_{1}(\omega) + b X_{2}(\omega)$
++ **反转**，$x[-n] \xrightarrow{\text{DTFT}} X(-\omega)$
++ **共轭**，$x^{*}[n] \xrightarrow{\text{DTFT}} X^{*}(-\omega)$
 
 延时、调制性质： 
-+ **时移**：$x[n - n_{0}] \xrightarrow{\text{DTFT}} \e^{-\J \omega n_{0}} X(\omega)$
-+ **频移**：$\e^{\J \omega_{0} n} x[n] \xrightarrow{\text{DTFT}} X(\omega - \omega_{0})$
++ **时移**，$x[n - n_{0}] \xrightarrow{\text{DTFT}} \e^{-\J \omega n_{0}} X(\omega)$
++ **频移**，$\e^{\J \omega_{0} n} x[n] \xrightarrow{\text{DTFT}} X(\omega - \omega_{0})$
 
 微分性质：
-+ **时域差分**：$x[n] - x[n - 1] \xrightarrow{\text{DTFT}} (1 - \e^{-\J \omega}) X(\omega)$
-+ **频域微分**：$\J n x[n] \xrightarrow{\text{DTFT}} \cfrac{\dif X(\omega)}{\dif \omega}$
++ **时域差分**，$x[n] - x[n - 1] \xrightarrow{\text{DTFT}} (1 - \e^{-\J \omega}) X(\omega)$
++ **频域微分**，$\J n x[n] \xrightarrow{\text{DTFT}} \cfrac{\dif X(\omega)}{\dif \omega}$
 
 > [!note] DTFT 性质的应用
 > 可以利用离散时间信号的**离散特性**简化部分过程，例如**序列解调**中，要将中心频率为 $\omega_{0}$ 的信号变换到基带，连续时间信号中需要乘以 $\cos(\omega_{0} n)$ 再进行低通滤波，而**数字下变频 (DDC)** 任务中限定 $\omega_{0} = \cfrac{\pi}{2}$ 时只需依次**乘以 $\e^{-\J\pi n/2} = (-\J)^{n}$** 即可。
