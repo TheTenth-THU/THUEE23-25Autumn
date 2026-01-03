@@ -84,10 +84,16 @@ $$
 
 ### 基本性质
 
+基本变换关系：
 + **线性**：$a x_{1}[n] + b x_{2}[n] \xrightarrow{\text{DTFT}} a X_{1}(\omega) + b X_{2}(\omega)$
-+ **周期性**：$X(\omega)$ 是 $2\pi$ 周期函数，即 $X(\omega) = X(\omega + 2k\pi),\ k \in \mathbb{Z}$
++ **时反转**：$x[-n] \xrightarrow{\text{DTFT}} X(-\omega)$
++ **时共轭**：$x^{*}[n] \xrightarrow{\text{DTFT}} X^{*}(-\omega)$
+
+延时、调制性质： 
 + **时移**：$x[n - n_{0}] \xrightarrow{\text{DTFT}} \e^{-\J \omega n_{0}} X(\omega)$
 + **频移**：$\e^{\J \omega_{0} n} x[n] \xrightarrow{\text{DTFT}} X(\omega - \omega_{0})$
+
+微分性质：
 + **时域差分**：$x[n] - x[n - 1] \xrightarrow{\text{DTFT}} (1 - \e^{-\J \omega}) X(\omega)$
 + **频域微分**：$\J n x[n] \xrightarrow{\text{DTFT}} \cfrac{\dif X(\omega)}{\dif \omega}$
 
@@ -95,6 +101,11 @@ $$
 > 可以利用离散时间信号的**离散特性**简化部分过程，例如**序列解调**中，要将中心频率为 $\omega_{0}$ 的信号变换到基带，连续时间信号中需要乘以 $\cos(\omega_{0} n)$ 再进行低通滤波，而**数字下变频 (DDC)** 任务中限定 $\omega_{0} = \cfrac{\pi}{2}$ 时只需依次**乘以 $\e^{-\J\pi n/2} = (-\J)^{n}$** 即可。
 > 
 > 此外，也可以利用 DTFT 频谱的**连续性**补足信号序列离散的不足，如在**延时估计**中，可以通过发射波形 $s[n]$ 和接收信号 $r[n] = s[n-n_{0}]$ 的 DTFT 频谱相差 $\e^{-\J\omega n_{0}} = \cfrac{R(\omega)}{S(\omega)}$ 中拟合得到**非整数延时 $n_{0}$**。
+
+信号与其 DTFT 频谱之间的能量归一化关系由 **Parseval 定理**给出：
+$$
+\sum_{n=-\infty}^{\infty} \vert x[n] \vert^{2} = \dfrac{1}{2\pi} \dint_{-\pi}^{\pi} \vert X(\omega) \vert^{2} \dif \omega
+$$
 
 ### 共轭与对称
 
@@ -108,7 +119,7 @@ x_{\mathrm{e}}[n] = \cfrac{1}{2} \left( x[n] + x^{*}[-n] \right), \\
 x_{\mathrm{o}}[n] = \cfrac{1}{2} \left( x[n] - x^{*}[-n] \right)
 \end{cases}
 $$
-考察其 DTFT，有
+考察其 DTFT，对共轭对称分量有
 $$
 \begin{align}
 \mathrm{DTFT} \left\{ x_{\mathrm{e}}[n] \right\} &= \sum_{n=-\infty}^{\infty} x_{\mathrm{e}}[n] \e^{-\J \omega n} = \dfrac{1}{2} \sum_{n=-\infty}^{\infty} \left( x[n] + x^{*}[-n] \right) \e^{-\J \omega n} \\
@@ -116,3 +127,69 @@ $$
 &= \dfrac{1}{2} X(\omega) + \dfrac{1}{2} X^{*}(\omega) = \Re\{ X(\omega) \}
 \end{align}
 $$
+类似地，对共轭反对称分量有
+$$
+\begin{align}
+\mathrm{DTFT} \left\{ x_{\mathrm{o}}[n] \right\} &= \sum_{n=-\infty}^{\infty} x_{\mathrm{o}}[n] \e^{-\J \omega n} = \dfrac{1}{2} \sum_{n=-\infty}^{\infty} \left( x[n] - x^{*}[-n] \right) \e^{-\J \omega n} \\
+&= \dfrac{1}{2} X(\omega) - \dfrac{1}{2} X^{*}(\omega) = \J \Im\{ X(\omega) \}
+\end{align}
+$$
+
+另一方面，谱 $X(\omega)$ 也可以分解为**共轭对称分量** $X_{\mathrm{e}}(\omega) = \cfrac{X(\omega) + X^{*}(-\omega)}{2}$ 和**共轭反对称分量** $X_{\mathrm{o}}(\omega) = \cfrac{X(\omega) - X^{*}(-\omega)}{2}$，对其做 IDTFT，有
+$$
+\begin{align}
+\mathrm{IDTFT} \left\{ X_{\mathrm{e}}(\omega) \right\} &= \dfrac{1}{2\pi} \dint_{-\pi}^{\pi} X_{\mathrm{e}}(\omega) \e^{\J \omega n} \dif \omega = \dfrac{1}{2\pi} \dint_{-\pi}^{\pi} \dfrac{X(\omega) + X^{*}(-\omega)}{2} \e^{\J \omega n} \dif \omega \\
+&= \dfrac{1}{2} x[n] + \dfrac{1}{2} \dfrac{1}{2\pi} \dint_{-\pi}^{\pi} X^{*}(-\omega) \e^{\J \omega n} \dif \omega \\
+&= \dfrac{1}{2} x[n] + \dfrac{1}{2} \dfrac{1}{2\pi} \dint_{-\pi}^{\pi} X^{*}(\omega') (\e^{-\J \omega' n})^{*} \dif \omega' \\
+&= \dfrac{1}{2} x[n] + \dfrac{1}{2} x^{*}[n] = \Re\{ x[n] \} \\
+\mathrm{IDTFT} \left\{ X_{\mathrm{o}}(\omega) \right\} &= \dfrac{1}{2\pi} \dint_{-\pi}^{\pi} X_{\mathrm{o}}(\omega) \e^{\J \omega n} \dif \omega = \dfrac{1}{2\pi} \dint_{-\pi}^{\pi} \dfrac{X(\omega) - X^{*}(-\omega)}{2} \e^{\J \omega n} \dif \omega \\
+&= \dfrac{1}{2} x[n] - \dfrac{1}{2} x^{*}[n] = \J \Im\{ x[n] \}
+\end{align}
+$$
+
+> [!theorem] DTFT 的共轭与对称性质
+> 离散时间信号 $x[n]$ 的**共轭对称**分量 $x_{\mathrm{e}}[n] = \cfrac{1}{2} \left( x[n] + x^{*}[-n] \right)$ 和**共轭反对称**分量 $x_{\mathrm{o}}[n] = \cfrac{1}{2} \left( x[n] - x^{*}[-n] \right)$ 的 DTFT 分别为频谱 $X(\omega)$ 的**实部**和**虚部**，即
+> $$
+> \mathrm{DTFT} \left\{ x_{\mathrm{e}}[n] \right\} = \Re\{ X(\omega) \}, \qquad
+> \mathrm{DTFT} \left\{ x_{\mathrm{o}}[n] \right\} = \J \Im\{ X(\omega) \}
+> $$
+> $x[n]$ 的**实分量** $x_{\mathrm{R}}[n] = \Re\{ x[n] \}$ 和**虚分量** $x_{\mathrm{I}}[n] = \J\Im\{ x[n] \}$ 的 DTFT 分别为频谱 $X(\omega)$ 的**共轭对称**分量和**共轭反对称**分量，即
+> $$
+> \begin{align} 
+> &\mathrm{DTFT} \left\{ x_{\mathrm{R}}[n] \right\} = X_{\mathrm{e}}(\omega) = \dfrac{X(\omega) + X^{*}(-\omega)}{2}, \\
+> &\mathrm{DTFT} \left\{ x_{\mathrm{I}}[n] \right\} = X_{\mathrm{o}}(\omega) = \dfrac{X(\omega) - X^{*}(-\omega)}{2} 
+> \end{align}
+> $$
+
+### 卷积性质
+
+类似于 Fourier 变换，DTFT 也具有卷积性质：
++ 时域两信号 $x_{1}[n]$ 和 $x_{2}[n]$ 的**线性卷积**的 DTFT 是其 **DTFT 频谱的乘积**：
+$$
+x_{1}[n] * x_{2}[n] \xrightarrow{\text{DTFT}} X_{1}(\omega) \cdot X_{2}(\omega)
+$$
++ 频域两信号 $X_{1}(\omega)$ 和 $X_{2}(\omega)$ 的**线性卷积**（的 $\cfrac{1}{2\pi}$）是其时域信号的**乘积**的 DTFT：
+$$
+x_{1}[n] \cdot x_{2}[n] \xrightarrow{\text{DTFT}} \dfrac{1}{2\pi} \dint_{-\pi}^{\pi} X_{1}(\theta) X_{2}(\omega - \theta) \dif \theta = \dfrac{1}{2\pi} X_{1}(\omega) * X_{2}(\omega)
+$$
+这里的常数因子与 Parseval 定理中的因子一致。
+
+可以引入**互相关函数** $r_{x_{1}x_{2}}[k] = \sum\limits_{n=-\infty}^{\infty} x_{1}[n] x_{2}^{*}[n-k]$，其 DTFT 为
+$$
+R_{x_{1}x_{2}}(\omega) = X_{1}(\omega) X_{2}^{*}(\omega)
+$$
+特别地，当 $x_{1}[n] = x_{2}[n] = x[n]$ 时，互相关函数即为**自相关函数** $r_{xx}[k] = \sum\limits_{n=-\infty}^{\infty} x[n] x^{*}[n-k]$，其 DTFT 为 $R_{xx}(\omega) = \vert X(\omega) \vert^{2}$。
+
+### 周期性质
+
+我们已知 $X(\omega)$ 是 **$2\pi$ 周期**函数，即 $X(\omega) = X(\omega + 2k\pi),\ k \in \mathbb{Z}$。
+
+对于周期 $T$ 信号 $x[n] = x[n + T]$，记其在一个周期内的**截断序列**为 $\t{x}[m] = x[m],\ m = 0, 1, \cdots, T-1$，则该周期信号可表示为
+$$
+x[n] = \sum_{k=-\infty}^{\infty} \t{x}[n - kT] = \t{x}[n] * \sum_{k=-\infty}^{\infty} \delta[n - kT]
+$$
+其 DTFT 为
+$$
+X(\omega) = \t{X}(\omega) \cdot \dfrac{2\pi}{T} \sum_{k=-\infty}^{\infty} \delta\left( \omega - \dfrac{2\pi}{T} k \right)
+$$
+其中 $\t{X}(\omega)$ 是有限长信号 $\t{x}[m]$ 的 DTFT。

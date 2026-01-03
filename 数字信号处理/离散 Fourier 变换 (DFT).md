@@ -56,7 +56,7 @@ $$
 
 ### DFT 的点数
 
-DFT 不一定要让频域采样点数与信号长度相同。定义间隔为 $\dfrac{2\pi}{T}$ 的频域采样函数
+DFT 不一定要让频域采样点数与信号长度相同。定义间隔为 $\cfrac{2\pi}{T}$ 的频域采样函数
 $$
 S_{T}(\omega) = \sum_{k=-\infty}^{\infty} \delta\left( \omega - \dfrac{2\pi k}{T} \right)
 $$
