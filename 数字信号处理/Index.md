@@ -13,9 +13,11 @@ longform:
       - 离散 Fourier 变换 (DFT)
       - 数字频谱分析
       - 离散余弦变换 (DCT)
-      - 𝑧 变换
+    - 滤波与系统
+    - - 𝑧 变换
+      - IIR 滤波器
+      - FIR 滤波器
       - Hilbert 变换
-    - 数字滤波器
   ignoredFiles:
     - CONTENT
     - 
