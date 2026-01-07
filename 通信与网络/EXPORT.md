@@ -1,8 +1,12 @@
+# _§1_ 信息论
 
-![[信息论的基本模型.png|信息论的基本模型]]
+信息论的基本模型：
+
+![[信息论的基本模型.png]]
 
 
-# 信源
+
+# _§1.1_ 信源
 
 ## 信源的概念
 
@@ -25,7 +29,7 @@ $$
 > x_{1} & x_{2} & \cdots & x_{N} \\
 > p_{1} & p_{2} & \cdots & p_{N}
 > \end{pmatrix}, \quad
-> p_{i} = \mathrm{Pr}\{ X = x_{i} \}
+> p_{i} = \Pr\{ X = x_{i} \}
 > $$
 
 ### 信源编码的基本要求
@@ -76,7 +80,7 @@ $H(X)$ 可以写为
 $$
 H(X) = \mathbb{E}_{X} [ - \log p(X) ]
 $$
-因而 $- \log \mathrm{Pr}\{ X = x_{i} \}$ 刻画事件 $\{ X = x_{i} \}$ 所包含的信息量，**概率越小，信息量越大**。
+因而 $- \log \Pr\{ X = x_{i} \}$ 刻画事件 $\{ X = x_{i} \}$ 所包含的信息量，**概率越小，信息量越大**。
 
 #### 熵的性质
 
@@ -90,26 +94,26 @@ $$
 #### 联合熵、条件熵
 
 > [!definition] 联合熵
-> 考虑两个离散无记忆信源 $X$ 和 $Y$，事件 $\{ X = x_{i}, Y = y_{j} \}$ 的概率为 $p_{ij} = \mathrm{Pr}\{ X = x_{i}, Y = y_{j} \}$，则 $X$ 和 $Y$ 的**联合熵 (joint entropy)** 定义为
+> 考虑两个离散无记忆信源 $X$ 和 $Y$，事件 $\{ X = x_{i}, Y = y_{j} \}$ 的概率为 $p_{ij} = \Pr\{ X = x_{i}, Y = y_{j} \}$，则 $X$ 和 $Y$ 的**联合熵 (joint entropy)** 定义为
 > $$
 > H(X, Y) = \mathbb{E}_{XY} [ - \log p(X, Y) ]
 > = - \sum\limits_{i=1}^{N} \sum\limits_{j=1}^{M} p_{ij} \log p_{ij}
 > $$
 > 在没有歧义的情况下，联合熵 $H(X,Y)$ 可记为 $H(XY)$。
 
-联合熵刻画了将 $X$ 和 $Y$ 一起编码所需的最小平均码长，即综合考虑 $X$ 和 $Y$ 的信息量。
+联合熵刻画了将 $X$ 和 $Y$ 一起编码所需的最小平均码长，即综合考虑 $X$ 和 $Y$ 的信息量。显然，$H(X,Y) \ge H(X)$。
 
 > [!definition] 条件熵
-> 考虑 $X$ 和 $Y$ 的联合分布 $p_{ij} = \mathrm{Pr}\{ X = x_{i}, Y = y_{j} \}$，在 $Y$ 已知的条件下，事件 $\{ X = x_{i} \}$ 发生的概率为
+> 考虑 $X$ 和 $Y$ 的联合分布 $p_{ij} = \Pr\{ X = x_{i}, Y = y_{j} \}$，在 $Y$ 已知的条件下，事件 $\{ X = x_{i} \}$ 发生的概率为
 > $$
-> p_{i \mid j} = \mathrm{Pr}\{ X = x_{i} \mid Y = y_{j} \} = \dfrac{\mathrm{Pr}\{ X = x_{i}, Y = y_{j} \}}{\mathrm{Pr}\{ Y = y_{j} \}} = \dfrac{p_{ij}}{p_{j}}
+> p_{i \mid j} = \Pr\{ X = x_{i} \mid Y = y_{j} \} = \dfrac{\Pr\{ X = x_{i}, Y = y_{j} \}}{\Pr\{ Y = y_{j} \}} = \dfrac{p_{ij}}{p_{j}}
 > $$
 > 则以 $Y$ 为条件的 $X$ 的**条件熵 (conditional entropy)** 定义为
 > $$
 > H(X \mid Y) = \mathbb{E}_{XY} [ - \log p(X \mid Y) ] = - \sum\limits_{i=1}^{N} \sum\limits_{j=1}^{M} p_{ij} \log p_{i \mid j}
 > $$
 
-条件熵 $H(X \mid Y)$ 刻画了在已知 $Y$ 的条件下，$X$ 所包含的信息量，即在观测 $Y$ 后 $X$ 残存的不确定度。
+条件熵 $H(X \mid Y)$ 刻画了在已知 $Y$ 的条件下，$X$ 所包含的信息量，即在观测 $Y$ 后 $X$ 残存的不确定度。显然， $0 \le H(X \mid Y) \le H(X)$。
 
 > [!note] 熵的通信意义
 > 信源的熵 $H(X)$ 刻画了信源 $X$ 所包含的信息量，其值即对 $X$ 进行无失真编码时所需的最小平均码长。
@@ -138,7 +142,7 @@ H(X \mid Y) &= - \sum\limits_{i=1}^{N} \sum\limits_{j=1}^{M} p_{ij} \log p_{i \m
 \end{align}
 $$
 $$
-H(XY) = H(X \mid Y) + H(Y) = H(X) + H(Y)
+H(X, Y) = H(X \mid Y) + H(Y) = H(X) + H(Y)
 $$
 即**独立随机变量的联合熵等于各自熵之和**。观测 $Y$ 不会减少 $X$ 的不确定性。
 
@@ -147,6 +151,11 @@ $$
 H(X, Y) = H(Y)
 $$
 即**确定性映射不会增加不确定性**。观测 $Y$ 会完全消除 $X$ 的不确定性。
+
+进而，一般地有
++ $H(X+Y \mid Y) = H(X \mid Y)$；
++ $H((X+Y), X) = H(X) + H(X + Y \mid X) = H(X) + H(Y \mid X) = H(X, Y)$。 
+
 
 #### 互信息
 
@@ -188,7 +197,7 @@ I(X; Y) = H(X) - H(X \mid Y) = H(X) - 0 = H(X)
 $$
 即**确定性映射的信源间互信息是其全部不确定度**。 
 
-+ $0 \le H(X \mid Y) \le H(X)$，因此 $I(X;Y) \ge 0$，**信源之间不存在欺骗**。
++ $0 \le H(X \mid Y) \le H(X)$，因此 $0 \le I(X;Y) \le \min \left\{ H(X), H(Y) \right\}$，**信源之间不存在欺骗**。
 
 ### 连续信源的微分熵
 
@@ -205,6 +214,13 @@ $$
 
 微分熵 $h(X)$ **刻画了信源 $X$ 的相对不确定度**，其值可以为负数。
 
+> [!example]- 均匀分布的微分熵
+> 对 $X \sim \mathcal{U}(a, b)$，有 $p_{X}(x) = \dfrac{1}{b - a}$，因此
+> $$
+> h(X) = - \dint_{a}^{b} p_{X}(x) \log p_{X}(x) \dif x = - \dint_{a}^{b} \dfrac{1}{b - a} \log \dfrac{1}{b - a} \dif x = \mark{ \log (b - a) }
+> $$
+> 这是给定**有限区间长度**约束下的最大微分熵。
+
 > [!example]- Gauss 分布的微分熵
 > 对 $X \sim \mathcal{N}(\mu, \sigma^{2})$，有 $p_{X}(x) = \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \exp \left( - \dfrac{(x - \mu)^{2}}{2 \sigma^{2}} \right)$，因此
 > $$
@@ -218,6 +234,20 @@ $$
 > &= \dfrac{\log \e}{2 \sigma^{2}} \cdot \sigma^{2} + \log \sqrt{2 \pi \sigma^{2}} = \mark{ \log \sqrt{2 \pi \e \sigma^{2}} }
 > \end{align}
 > $$
+> 这是给定**双边无限区间**约束下的最大微分熵，也是给定**有限方差**约束下的最大微分熵。 
+
+> [!example]- 指数分布的微分熵
+> 对 $X \sim \mathrm{Exponential}(\lambda)$，有 $p_{X}(x) = \lambda \e^{-\lambda x}, \quad x \geq 0$，因此
+> $$
+> \begin{align}
+> h(X) &= - \dint_{0}^{+\infty} p_{X}(x) \log p_{X}(x) \dif x \\
+> &= - \dint_{0}^{+\infty} \lambda \e^{-\lambda x} \log \left( \lambda \e^{-\lambda x} \right) \dif x \\
+> &= - \dint_{0}^{+\infty} \lambda \e^{-\lambda x} \left( \log \lambda - \lambda x \log \e \right) \dif x \\
+> &= - \lambda \log \lambda \dint_{0}^{+\infty} \e^{-\lambda x} \dif x + \lambda^{2} \log \e \dint_{0}^{+\infty} x \e^{-\lambda x} \dif x \\
+> &= - \lambda \log \lambda \cdot \dfrac{1}{\lambda} + \lambda^{2} \log \e \cdot \dfrac{1}{\lambda^{2}} = \mark{ 1 - \log \lambda }
+> \end{align}
+> $$
+> 这是给定**单边无限区间**约束下的最大微分熵。
 
 #### 联合微分熵、条件微分熵
 
@@ -251,6 +281,8 @@ $$
 > I(X; Y) = h(X) - h(X \mid Y) = h(Y) - h(Y \mid X)
 > $$
 
+仍有 $h(X) \ge h(X \mid Y)$，因此 $I(X; Y) \geq 0$。
+
 一般地，
 $$
 \begin{align}
@@ -260,7 +292,7 @@ I(X; Y) &= h(X) - h(X \mid Y) = h(X) + h(Y) - h(X, Y) \\
 $$
 
 
-# 信道
+# _§1.2_ 信道
 
 ## 离散幅值信道
 
@@ -270,11 +302,11 @@ $$
 
 当给定 $X$ 的分布 $p_{i}$ 时，可以得到联合分布
 $$
-p_{ij} = \mathrm{Pr}\{ X = x_{i}, Y = y_{j} \} = \mathrm{Pr}\{ Y = y_{j} \mid X = x_{i} \} \mathrm{Pr}\{ X = x_{i} \} = p_{i} p_{j \mid i}
+p_{ij} = \Pr\{ X = x_{i}, Y = y_{j} \} = \Pr\{ Y = y_{j} \mid X = x_{i} \} \Pr\{ X = x_{i} \} = p_{i} p_{j \mid i}
 $$
 信宿输出 $Y$ 的边缘分布为
 $$
-p_{j} = \mathrm{Pr}\{ Y = y_{j} \} = \sum\limits_{i} p_{ij} = \sum\limits_{i} p_{i} p_{j \mid i}
+p_{j} = \Pr\{ Y = y_{j} \} = \sum\limits_{i} p_{ij} = \sum\limits_{i} p_{i} p_{j \mid i}
 $$
 这样，**互信息 $I(X;Y)$ 就可以给定**为
 $$
@@ -383,7 +415,7 @@ $$
 
 ### Gauss 信道
 
-**Gauss 信道 (Gaussian channel)** 是一种特殊的连续幅值信道，假设信道输出 $Y$ 是输入 $X$ 与高斯白噪声 $Z$ 的和，即
+**Gauss 信道 (Gaussian channel)** 是一种特殊的连续幅值信道，假设信道输出 $Y$ 是输入 $X$ 与 Gauss 白噪声 $Z$ 的和，即
 $$
 Y = X + Z, \qquad \text{where} \quad Z \sim \mathcal{N}(0, \sigma^{2})
 $$
@@ -410,7 +442,7 @@ $$
 $$
 C = \log \sqrt{ 2\pi \e (E_{\mathrm{s}} + \sigma^{2}) } - \log \sqrt{ 2 \pi \e \sigma^{2} } = \mark{ \log \sqrt{ 1 + \dfrac{E_{\mathrm{s}}}{\sigma^{2}} } }
 $$
-这里 $C$ 无量纲，单位为 bit/次。
+这里 $C$ 无量纲，**单位为 bit/次**。
 
 ### 带宽受限的 Gauss 信道
 
@@ -442,7 +474,7 @@ $$
 > $$
 > C = {W} \log \left( 1 + \dfrac{P}{W n_{0}} \right)
 > $$
-> 其中 $C$ 的单位为 bit/s。
+> 其中 $C$ 的**单位为 bit/s**。
 
 信号功率与噪声功率的比值 $\cfrac{P}{Wn_{0}}$ 称为**信噪比 (signal-to-noise ratio, SNR)**，可记为 $\mathrm{SNR}$。因此，Shannon 公式也可以写为
 $$
@@ -456,11 +488,118 @@ $$
 C \to W \cdot \dfrac{\log 10}{10} \mathrm{SNR}_{\mathrm{dB}} \approx 0.3322 W \cdot \mathrm{SNR}_{\mathrm{dB}}
 $$
 
+> [!remark] 题型：Shannon 公式的能量极限
+**典型题型**　给定 AWGN 信道的带宽 $W$、噪声功率谱密度 $S_{N}(f) = \cfrac{n_{0}}{2}$，求在单位时间内传输 1 bit 所需的最小能量 $E_{\mathrm{b},\mathrm{min}}$。
+> 
+> 以容量 $C$ 传输时，**每比特耗时 $\cfrac{1}{C}$**，因此每比特能量为
+> $$
+> E_{\mathrm{b}} = \dfrac{P}{C} = \dfrac{P}{W \log \left( 1 + \cfrac{P}{W n_{0}} \right) }
+> $$
+> 对 $E_{\mathrm{b}}$ 关于 $P$ 求导，由 $\ln (1+x) \ge \cfrac{x}{1+x}$ 可知
+> $$
+> \dfrac{\partial E_{\mathrm{b}}}{\partial P} = \dfrac{ W \log \left( 1 + \cfrac{P}{W n_{0}} \right) - P W \cfrac{\cfrac{1}{W n_{0}}}{\left( 1 + \cfrac{P}{W n_{0}} \right) \ln 2} }{ \left( W \log \left( 1 + \cfrac{P}{W n_{0}} \right) \right)^{2} } \ge 0
+> 
+> $$
+> 因此，**$E_{\mathrm{b}}$ 随 $P$ 单调递增**，其最小值在 $P \to 0$ 时取得，即
+> $$
+> E_{\mathrm{b},\mathrm{min}} = \lim\limits_{P \to 0} E_{\mathrm{b}} = \lim\limits_{P \to 0} \dfrac{P}{W \log \left( 1 + \dfrac{P}{W n_{0}} \right) } = \mark{ n_{0} \ln 2 }
+> $$
+> 此时传输时长无限大。
+> 
+> 这一结果与 Shannon 公式中的**低 SNR 极限**一致，且与 $W$ 无关。
 
 
-# 模拟信源的数字编码
 
-模拟信源是**时间连续、幅值连续**的信源，其输出 $s(t)$ 是一个连续时间的[[随机过程的平稳性#^b4e44e|随机过程]]，将其数字化的过程如下：
+# _§1.3_ 加性白 Gauss 噪声 (AWGN)
+
+在实际通信系统中，信道通常受到各种噪声的影响，其中最常见和重要的一种噪声类型是**加性白 Gauss 噪声 (Additive White Gaussian Noise, AWGN)**。AWGN 噪声具有以下几个特点：
++ **加性 (additive)**，即噪声直接叠加在信号上，接收信号为发送信号与噪声的和。
++ **白 (white)**，即噪声在整个频谱上均匀分布，具有恒定的功率谱密度 $S_{Z}(f) = \cfrac{n_{0}}{2}$。
++ **Gaussian**，即噪声服从 Gauss 分布，具有均值为零的正态分布特性。
+
+## 离散时间 AWGN
+
+### 离散时间 AWGN 信源
+
+一个离散时间 AWGN 信源可以表示为
+$$
+Z_{i} \sim \mathcal{N}(0, \sigma^{2}), \quad i = 1, 2, 3, \cdots
+$$
+其中 $\sigma^{2} = \dfrac{n_{0}}{2}$。该信源的每个样本 $Z_{i}$ **独立同分布**，服从均值为 0、方差为 $\sigma^{2}$ 的 Gauss 分布，因此可只考虑单个样本 $Z$ 的性质。
+
+对 $Z \sim \mathcal{N}(\mu, \sigma^{2})$，有 $p_{Z}(z) = \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \exp \left( - \dfrac{(z - \mu)^{2}}{2 \sigma^{2}} \right)$，因此其**微分熵**为
+$$
+\begin{align}
+h(Z) &= - \dint_{-\infty}^{+\infty} p_{Z}(z) \log p_{Z}(z) \dif z \\
+&= - \dint_{-\infty}^{+\infty} p_{Z}(z) \log \left( \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \exp \left( - \dfrac{(z - \mu)^{2}}{2 \sigma^{2}} \right) \right) \dif z \\
+&= - \dint_{-\infty}^{+\infty} p_{Z}(z) \left( - \dfrac{(z - \mu)^{2}}{2 \sigma^{2}} \log \e - \log \sqrt{2 \pi \sigma^{2}} \right) \dif z \\
+&= \dfrac{\log \e}{2 \sigma^{2}} \dint_{-\infty}^{+\infty} (z - \mu)^{2} p_{Z}(z) \dif z + \log \sqrt{2 \pi \sigma^{2}} \dint_{-\infty}^{+\infty} p_{Z}(z) \dif z \\
+&= \dfrac{\log \e}{2 \sigma^{2}} \mathbb{E}[(Z - \mu)^{2}] + \log \sqrt{2 \pi \sigma^{2}} \\
+&= \dfrac{\log \e}{2 \sigma^{2}} \left( \mathbb{E}^{2}\left[ (Z - \mu) \right] + \mathrm{Var}\left[ (Z - \mu) \right]  \right) + \log \sqrt{2 \pi \sigma^{2}} \\
+&= \dfrac{\log \e}{2 \sigma^{2}} \cdot \sigma^{2} + \log \sqrt{2 \pi \sigma^{2}} = \mark{ \log \sqrt{2 \pi \e \sigma^{2}} }
+\end{align}
+$$
+
+### 离散时间 AWGN 信道
+
+离散时间 AWGN 信道即 [[#电平信道#^AWGNDianpingXindao|AWGN 电平信道]]，其噪声源是离散时间 AWGN 信源 $z \sim \mathscr{N}(0, \sigma^{2})$。信道输入 $x$ 和输出 $y$ 之间有条件概率关系
+$$
+p(y \mid x) = \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \exp \left( - \dfrac{(y - x)^{2}}{2 \sigma^{2}} \right)
+$$
+因此，在给定 $x$ 下输出 $y$ 向单侧偏移 $A$ 以上的概率为
+$$
+\begin{align}
+\Pr \left\{ y < x - A \mid x \right\} &= \dint_{-\infty}^{x - A} p(y \mid x) \dif y 
+= \dint_{-\infty}^{-A} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{ - \tfrac{z^{2}}{2 \sigma^{2}} } \dif z \\
+&= \int_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{-\tfrac{z^{2}}{2 \sigma^{2}}} \dif z 
+= \dint_{A/\sigma}^{+\infty} \dfrac{1}{\sqrt{2 \pi}} \e^{-\tfrac{z^{2}}{2}} \dif z = Q\left( \dfrac{A}{\sigma} \right) \\
+\Pr \left\{ y > x + A \mid x \right\} &= \dint_{x + A}^{+\infty} p(y \mid x) \dif y
+= \dint_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{ - \tfrac{z^{2}}{2 \sigma^{2}} } \dif z = Q\left( \dfrac{A}{\sigma} \right)
+\end{align}
+$$
+这里 $Q(x)$ 是 **Q 函数 (Q-function)**，定义为
+$$
+Q(x) = \dint_{x}^{+\infty} \dfrac{1}{\sqrt{2 \pi}} \e^{-\tfrac{z^{2}}{2}} \dif z
+$$
+在 CASIO fx-991CN X 计算器中，可以通过「统计」页面「单变量统计计算」中的「`正态分布`」>「`R(`」选项计算 $Q(x)$。
+
+## 连续时间 AWGN
+
+### 连续时间 AWGN 信源
+
+一个连续时间 AWGN 信源 $z(t)$ 满足
+1. 对任意时刻 $t$，$z(t)$ 服从均值为 0 的 Gauss 分布；
+2. 对任意时刻序列 $t_{1}, t_{2}, \cdots, t_{n}$，随机变量组 $\{ z(t_{1}), z(t_{2}), \cdots, z(t_{n}) \}$ 服从均值为 $\v{0}$ 的 $n$ 元 Gauss 分布；
+3. **功率谱密度函数 $S_{z}(f) \equiv \cfrac{n_{0}}{2}$**，其中 $n_{0}$ 为常数。
+
+即，$z(t)$ 是一个 [[Gauss 过程]]，其自相关函数为
+$$
+R_{z}(\tau) = \mathbb{E}\left[ z(t) z(t + \tau) \right] = \dint_{-\infty}^{+\infty} S_{z}(f) \e^{j 2 \pi f \tau} \dif f = \dint_{-\infty}^{+\infty} \dfrac{n_{0}}{2} \e^{j 2 \pi f \tau} \dif f = \dfrac{n_{0}}{2} \delta(\tau)
+$$
+任意时刻其方差都为 $\mathbb{E}\left[ z^{2}(t) \right] = R_{z}(0) = +\infty$。
+
+### 连续时间 AWGN 信道
+
+连续时间 AWGN 信道即 [[#波形信道#^AWGNBoXingXindao|AWGN 波形信道]]，其噪声源是连续时间 AWGN 信源 $z(t)$。信道输入 $x(t)$ 和输出 $y(t)$ 之间满足
+$$
+y(t) = x(t) + z(t)
+$$
+
+其化归为[[#波形信道#标准等价电平信道|标准等价电平信道]]的过程中，将对 $z(t)$ 做线性处理 $z = \dint_{-\infty}^{\infty} z(t) g(t) \dif t$，所得 $z$ 的方差为
+$$
+\begin{align}
+\mathbb{E}\left[ z^{2} \right] &= \mathbb{E} \left[ \left( \dint_{-\infty}^{+\infty} z(t) g(t) \dif t \right)^{2} \right] 
+= \dint_{-\infty}^{+\infty} \dint_{-\infty}^{+\infty} g(t) g(s) \mathbb{E}\left[ z(t) z(s) \right] \dif t \dif s \\
+&= \dint_{-\infty}^{+\infty} \dint_{-\infty}^{+\infty} g(t) g(s) R_{z}(t - s) \dif t \dif s \\
+&= \dint_{-\infty}^{+\infty} \dint_{-\infty}^{+\infty} g(t) g(s) \cdot \dfrac{n_{0}}{2} \delta(t - s) \dif t \dif s \\
+&= \dint_{-\infty}^{+\infty} g^{2}(t) \cdot \dfrac{n_{0}}{2} \dif t = \dfrac{n_{0}}{2} \dint_{-\infty}^{+\infty} g^{2}(t) \dif t
+\end{align}
+$$
+即 $z \sim \mathscr{N}\left( 0, \cfrac{n_{0}}{2} \dint_{-\infty}^{\infty} g^{2}(t) \dif t \right)$。当 $g(t)$ 能量归一化时，$z \sim \mathscr{N}\left( 0, \cfrac{n_{0}}{2} \right)$。
+
+# _§2_ 模拟信源的数字编码
+
+模拟信源是**时间连续、幅值连续**的信源，其输出 $s(t)$ 是一个连续时间的[[随机过程的平稳性#^SuijiGuocheng|随机过程]]，将其数字化的过程如下：
 
 ![[模拟信源的数字编码.png|模拟信源的数字编码]]
 
@@ -520,7 +659,11 @@ $$
 $$
 Q(x) = y_{i}, \quad x \in (x_{i}, x_{i + 1}], \quad i = 1, 2, \cdots, L
 $$
-其中，$y_{i}$ 是**表示电平**，$x_{i}$ 是**分层电平**，$I_{i} = (x_{i}, x_{i+1}]$ 称为第 $i$ 个**量化区间 (quantization interval)**，其长度 $\varDelta_{i} = x_{i+1} - x_{i}$ 称为第 $i$ 个**量化间隔 (quantization step)**。当对每个 $i = 1, 2, \cdots, L$ 有 $\varDelta_{i} \equiv \varDelta$ 时，称为**均匀量化 (uniform quantization)**，否则称为**非均匀量化 (non-uniform quantization)**。
+其中，
++ $x_{i}$ 是**分层电平**，$y_{i}$ 是**表示电平**，直接用于重建时即**重建电平**；
++ $I_{i} = (x_{i}, x_{i+1}]$ 称为第 $i$ 个**量化区间 (quantization interval)**，其长度 $\varDelta_{i} = x_{i+1} - x_{i}$ 称为第 $i$ 个**量化间隔 (quantization step)**。
+
+当对每个 $i = 1, 2, \cdots, L$ 有 $\varDelta_{i} \equiv \varDelta$ 时，可有**[[#均匀量化]] (uniform quantization)**，否则只能为**[[#非均匀量化]] (non-uniform quantization)**。
 
 量化器 $Q$ 对输入 $x$ 的**量化误差 (quantization error)** 定义为
 $$
@@ -557,13 +700,13 @@ $$
 
 ### 均匀量化
 
-对于均匀量化器，量化间隔 $\varDelta_{i} \equiv \varDelta$，且通常取表示电平为区间中点
+对于均匀量化器，量化间隔 $\varDelta_{i} \equiv \varDelta$，且取**重建电平为区间中点**
 $$
 y_{i} = \dfrac{x_{i} + x_{i+1}}{2}, \qquad i = 1, 2, \cdots, L
 $$
 **均匀量化一定限制在有限范围 $[x_\mathrm{min}, x_\mathrm{max}]$ 内**，量化区间长度为 $\varDelta = \cfrac{x_{\mathrm{max}}-x_{\mathrm{min}}}{L}$。我们常令 $x_{\mathrm{min}} = -V$，$x_{\mathrm{max}} = V$，则 $\varDelta = \cfrac{2V}{L}$。
 
-若假设量化输入 $X$ 均匀分布于 $[-V, V]$，则**量化噪声**为
+若假设**量化输入 $X$ 均匀分布**于 $[-V, V]$，则 $n$-bit 均匀量化的**量化噪声**为
 $$
 \sigma^{2} = \dfrac{L}{2V} \dint_{-\varDelta/2}^{\varDelta/2} x^{2} \dif x = \dfrac{\varDelta^{2}}{12} = \dfrac{(2V)^{2}}{12 L^{2}} = \dfrac{V^{2}}{3 \cdot 4^{n}}
 $$
@@ -573,7 +716,15 @@ $$
 $$
 即每增加 1 bit 的量化精度，信噪比提高约 6.02 dB。
 
-**均匀量化对均匀分布最优。**
+对一般的量化输入 $X$，当 $\varDelta$ 足够小时，可近似认为均匀量化器**每个量化区间内的 $X$ 服从均匀分布**，此时 $n$-bit 均匀量化的量化噪声近似为
+$$
+\begin{align} 
+\sigma^{2} &= \sum\limits_{i=1}^{L} \dint_{x_{i}}^{x_{i+1}} (x - y_{i})^{2} p_{X}(x) \dif x
+\approx \sum\limits_{i=1}^{L} \dint_{x_{i}}^{x_{i+1}} (x - y_{i})^{2} \dif x \dint_{x_{i}}^{x_{i+1}} p_{X}(x) \dif x  \\
+&= \dfrac{\varDelta^{2}}{12} \sum\limits_{i=1}^{L} \dint_{x_{i}}^{x_{i+1}} p_{X}(x) \dif x = \dfrac{V^{2}}{3 \cdot 4^{n}} \dint_{-V}^{V} p_{X}(x) \dif x 
+\end{align}
+$$
+噪声功率与信源在量化范围内的分布关联不大，但**信噪比**将依赖于 $\cfrac{\mathbb{E} \left[ X^{2} \right]}{V^{2}}$，信源分布越不均匀，信噪比越低。**均匀量化对均匀分布最优。**
 
 ### 非均匀量化
 
@@ -590,7 +741,7 @@ $$
 \quad \Longrightarrow \quad
 x_{i} = \dfrac{y_{i} + y_{i-1}}{2}
 $$
-由此导出**最近邻居准则**：每个分层电平 $x_{i}$ 应取为相邻两个表示电平 $y_{i-1}$ 和 $y_{i}$ 的中点，这**与 $x$ 的分布无关**。
+由此导出**最近邻居准则**：每个分层电平 $x_{i}$ 应取为相邻两个重建电平 $y_{i-1}$ 和 $y_{i}$ 的中点，这**与 $x$ 的分布无关**。
 
 + 对 $y_{i}$ 求偏导，得
 $$
@@ -598,22 +749,22 @@ $$
 \quad \Longrightarrow \quad
 y_{i} = \dfrac{\dint_{x_{i}}^{x_{i+1}} x p_{X}(x) \dif x}{\dint_{x_{i}}^{x_{i+1}} p_{X}(x) \dif x}
 $$
-由此导出**重心准则**：每个表示电平 $y_{i}$ 应取为对应量化区间内 $x$ 的条件期望，这**与 $x$ 的分布有关**。
+由此导出**重心准则**：每个重建电平 $y_{i}$ 应取为对应量化区间内 $x$ 的条件期望，这**与 $x$ 的分布有关**。
 
 > [!algo.] Lloyd-Max 算法 
-> Lloyd-Max 算法综合考虑**最近邻居准则**和**重心准则**，通过迭代优化非均匀量化器的分层电平 $\{ x_{i} \}$ 和表示电平 $\{ y_{i} \}$。
+> Lloyd-Max 算法综合考虑**最近邻居准则**和**重心准则**，通过迭代优化非均匀量化器的分层电平 $\{ x_{i} \}$ 和重建电平 $\{ y_{i} \}$。
 > 
 > ---
 > 
 > **GIVEN —** 
-> 初始表示电平 $y_1^{(0)} < y_2^{(0)} < \cdots < y_L^{(0)}$
+> 初始重建电平 $y_1^{(0)} < y_2^{(0)} < \cdots < y_L^{(0)}$
 > 
 > **REPEAT —**
 > 1. 更新分层电平：
 > $$
 > x_{i}^{(k)} = \dfrac{y_{i}^{(k)} + y_{i+1}^{(k)}}{2}, \quad i = 1, 2, 3, \cdots, L-1
 > $$
-> 2. 更新表示电平：
+> 2. 更新重建电平：
 > $$
 > y_{i}^{(k+1)} = \dfrac{\dint_{x_{i-1}^{(k)}}^{x_{i}^{(k)}} x p_{X}(x) \dif x}{\dint_{x_{i-1}^{(k)}}^{x_{i}^{(k)}} p_{X}(x) \dif x}, \quad i = 1, 2, 3, \cdots, L
 > $$
@@ -621,15 +772,19 @@ $$
 > 　**UNTIL —** 量化噪声 $\sigma_{(k+1)}^{2}$ 小于预设阈值
 > 
 > **OUTPUT —**
-> 最终分层电平 $\{ x_{i}^{*} \}$ 和表示电平 $\{ y_{i}^{*} \}$
+> 最终分层电平 $\{ x_{i}^{*} \}$ 和重建电平 $\{ y_{i}^{*} \}$
 
 #### 压扩量化
 
 对于幅值分布高度集中的信源，如语音信号，其幅值通常服从 **Laplace 分布**或 **Gauss 分布**，均匀量化器难以取得较好的量化效果。注意到**非线性映射**可以改变随机变量的分布形状，因此可以先对信源进行**压扩 (companding)** 处理，再进行均匀量化，从而达到非均匀量化的效果。
 
+常用的压扩函数有：
++ **$\mu$ 律压扩**函数 $g(x) = x_{\mathrm{max}} \sgn(x) \dfrac{\log\left( 1 + \mu \cfrac{|x|}{x_{\mathrm{max}}} \right)}{\log(1 + \mu)}$，其中 $\mu > 0$ 是压扩参数；
++ **A 律压扩**函数 $g(x) = \begin{cases} A \sgn(x) \dfrac{|x|}{1 + \ln A}, & 0 \leq |x| \leq \dfrac{x_{\mathrm{max}}}{A}, \\ x_{\mathrm{max}} \sgn(x) \dfrac{1 + \ln \left( A \cfrac{|x|}{x_{\mathrm{max}}} \right)}{1 + \ln A}, & \dfrac{x_{\mathrm{max}}}{A} < |x| \leq x_{\mathrm{max}} \end{cases}$，其中 $A > 1$ 是压扩参数。
+
 #### 高分辨率量化
 
-当量化级数 $L$ 很大时，量化间隔 $\varDelta_{i}$ 很小，可以近似认为在量化区间 $I_{i} = (x_{i}, x_{i+1}]$ 上，信源概率密度函数 $p_{X}(x)$ 近似为常数 $p_{X}(x_{i}^{*})$，其中 $x_{i}^{*} \in I_{i}$。此时，量化噪声可近似为
+当量化级数 $L$ 很大时，量化间隔 $\varDelta_{i}$ 很小，可以近似认为在量化区间 $I_{i} = (x_{i}, x_{i+1}]$ 上，**信源概率密度函数 $p_{X}(x)$ 近似为常数 $p_{X}(x_{i}^{*})$**，其中 $x_{i}^{*} \in I_{i}$。此时，量化噪声可近似为
 $$
 \sigma^{2} \approx \sum\limits_{i=1}^{L} p_{X}(x_{i}^{*}) \dint_{x_{i}}^{x_{i+1}} (x - y_{i})^{2} \dif x = \sum\limits_{i=1}^{L} p_{X}(x_{i}^{*}) \dfrac{\varDelta_{i}^{3}}{12}
 $$
@@ -637,7 +792,7 @@ $$
 $$
 \sigma^{2} \approx \dfrac{1}{12} \sum\limits_{i=1}^{L} P_{i} \varDelta_{i}^{2} \stackrel{\varDelta_{i} \equiv \varDelta}{=\!=\!=} \dfrac{\varDelta^{2}}{12}
 $$
-对其做无损压缩，最小码长为
+对其做无损压缩，**最小码长**为
 $$
 \begin{align} 
 H(Q(X)) &= - \sum\limits_{i=1}^{L} \left( p_{X}(x_{i}^{*}) \varDelta \right) \log \left( p_{X}(x_{i}^{*}) \varDelta \right) \\
@@ -651,9 +806,7 @@ $$
 
 
 
-# 数字调制
-
-## 数字调制概论
+# _§3_ 数字调制
 
 我们希望在实际物理信道中有效、可靠地传输 0/1 比特。为此，需要将离散的数字信号映射为适合物理信道传输的连续幅值信号，这一过程称为**数字调制 (digital modulation)**。
 
@@ -665,7 +818,7 @@ $$
 ![[数字调制的基本结构.png|数字调制的基本结构]]
 
 
-# 电平信道
+# _§3.1_ 电平信道
 
 ## 电平信道的建模
 
@@ -673,8 +826,8 @@ $$
 
 假定信道无记忆，电平信道可以建模为**条件概率分布 $p(y \mid x)$**，表示在输入电平 $x$ 时输出电平 $y$ 的概率密度函数 (PDF)。
 
-> [!example] 加性白 Gauss 噪声电平信道
-> **加性白 Gauss 噪声 (Additive White Gaussian Noise, AWGN) 电平信道**是一种常见的电平信道模型，其输入输出关系为
+> [!definition] 加性白 Gauss 噪声电平信道
+> **加性白 Gauss 噪声 (Additive White Gaussian Noise, AWGN) 电平信道**是[[#加性白 Gauss 噪声 (AWGN)#离散时间 AWGN 信道|离散时间 AWGN 信道]]，其输入输出关系为
 > $$
 > y = x + z, \qquad \text{其中} \quad z \sim \mathcal{N}(0, \sigma^{2})
 > $$
@@ -682,7 +835,7 @@ $$
 > $$
 > p(y \mid x) = \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \exp\left( -\dfrac{(y - x)^{2}}{2 \sigma^{2}} \right)
 > $$
-^2d771b
+^AWGNDianpingXindao
 
 ## 二进制电平传输
 
@@ -690,13 +843,13 @@ $$
 $$
 p(A) = p(-A) = \dfrac{1}{2}
 $$
-这里简记 $p(A) = \mathrm{Pr} \{x = A\}$，$p(-A) = \mathrm{Pr} \{x = -A\}$。
+这里简记 $p(A) = \Pr \{x = A\}$，$p(-A) = \Pr \{x = -A\}$。
 
 这样，对于给定的电平信道 $p(y \mid x)$，可以计算输出 $y$ 的分布为
 $$
 p(y) = p(y \mid A) p(A) + p(y \mid -A) p(-A) 
 $$
-如对上述[[#^2d771b|加性白 Gauss 噪声电平信道]]，有
+如对上述[[#^AWGNDianpingXindao|加性白 Gauss 噪声电平信道]]，有
 $$
 \begin{align} 
 p(y) &= \dfrac{1}{2} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \exp\left( -\dfrac{(y - A)^{2}}{2 \sigma^{2}} \right) + \dfrac{1}{2} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \exp\left( -\dfrac{(y + A)^{2}}{2 \sigma^{2}} \right)  \\
@@ -706,7 +859,7 @@ $$
 
 ### 最佳判决
 
-由于一般的信道（如上述[[#^2d771b|加性白 Gauss 噪声电平信道]]）上噪声是随机的，电平信道的输出也是随机的，而且
+由于一般的信道（如上述[[#^AWGNDianpingXindao|加性白 Gauss 噪声电平信道]]）上噪声是随机的，电平信道的输出也是随机的，而且
 $$
 \forall y \in \mathbb{R}, \quad p(y \mid A) > 0, \quad p(y \mid -A) > 0
 $$
@@ -716,12 +869,12 @@ $$
 
 直观上，对于观测到的输出电平 $y$，如果给出 $y$ 的条件为 $+A$ 的概率更大，则判定发送的是「1」；如果给出 $y$ 的条件为 $-A$ 的概率更大，则判定发送的是「0」。这一直观准则可以形式化为**最大后验概率 (maximum a posteriori, MAP) 判决准则**：
 $$
-\mark{ \hat{x} = \arg\limits_{x \in \{ -A, +A \}}\max \mathrm{Pr}\{x \mid y\} }
+\mark{ \hat{x} = \arg\limits_{x \in \{ -A, +A \}}\max \Pr\{x \mid y\} }
 $$
 
 #### 最大似然判决准则
 
-由 **Bayes 公式**，有 $\mathrm{Pr}\{x = A \mid y\} = \dfrac{p(y \mid A) p(A)}{p(y)}$，$\mathrm{Pr}\{x = -A \mid y\} = \dfrac{p(y \mid -A) p(-A)}{p(y)}$，而有**等概条件** $p(A) = p(-A)$，因此 MAP 判决准则等价于
+由 **Bayes 公式**，有 $\Pr\{x = A \mid y\} = \dfrac{p(y \mid A) p(A)}{p(y)}$，$\Pr\{x = -A \mid y\} = \dfrac{p(y \mid -A) p(-A)}{p(y)}$，而有**等概条件** $p(A) = p(-A)$，因此 MAP 判决准则等价于
 $$
 \mark{ p(y \mid A) \mathop\gtrless\limits_{\hat{x}=-A}^{\hat{x}=A} p(y \mid -A) }
 $$
@@ -729,7 +882,7 @@ $$
 
 #### 最小 Euclid 距离判决准则
 
-对上述[[#^2d771b|加性白 Gauss 噪声电平信道]]，据 ML 判决准则有：
+对上述[[#^AWGNDianpingXindao|加性白 Gauss 噪声电平信道]]，据 ML 判决准则有：
 + $y = 0$ 时，$p(y \mid A) > p(y \mid -A)$，判决 $\hat{x} = A$；
 + $y = 0$ 时，$p(y \mid A) < p(y \mid -A)$，判决 $\hat{x} = -A$。
 
@@ -746,13 +899,13 @@ $$
 
 设实际发送的电平为 $x$，最佳判决的输出为 $\hat{x}$，则**误符号率 (symbol error rate, SER)** 定义为
 $$
-P_{\mathrm{s}} = \mathrm{Pr}\{ \hat{x} \neq x \}
+P_{\mathrm{s}} = \Pr\{ \hat{x} \neq x \}
 $$
-对于上述[[#^2d771b|加性白 Gauss 噪声电平信道]]，误符号率为
+对于上述[[#^AWGNDianpingXindao|加性白 Gauss 噪声电平信道]]，误符号率为
 $$
 \begin{align}
-P_{\mathrm{s}} &= \mathrm{Pr}\{ \hat{x} \neq x \} \\
-&= p(A) \mathrm{Pr}\{ y<0 \mid x = A \} + p(-A) \mathrm{Pr}\{ y > 0 \mid x = -A \} \\
+P_{\mathrm{s}} &= \Pr\{ \hat{x} \neq x \} \\
+&= p(A) \Pr\{ y<0 \mid x = A \} + p(-A) \Pr\{ y > 0 \mid x = -A \} \\
 &= \dfrac{1}{2} \int_{-\infty}^{0} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{-\tfrac{(y - A)^{2}}{2 \sigma^{2}}} \dif y + \dfrac{1}{2} \int_{0}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{-\tfrac{(y + A)^{2}}{2 \sigma^{2}}} \dif y \\
 &= \dfrac{1}{2} \dint_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{-\tfrac{y^{2}}{2 \sigma^{2}}} \dif y + \dfrac{1}{2} \int_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{-\tfrac{y^{2}}{2 \sigma^{2}}} \dif y \\
 &= \int_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{-\tfrac{y^{2}}{2 \sigma^{2}}} \dif y 
@@ -792,7 +945,7 @@ $$
 A, 3A, \cdots, (M-3)A, (M-1)A \} 
 \end{align}
 $$
-$\mathscr{A}$ 中相邻两个电平的距离均为 $2A$，且电平关于 0 对称分布。
+$\mathscr{A}$ 中相邻两个电平的距离均为 $2A$，且电平关于 0 对称分布。一般取 $M$ 为 2 的整数次幂，因此为偶数，但以下分析的结果也适用于奇数 $M$。
 
 > [!example] 多进制电平的编码
 > 对每个电平编码时，通常采用 **Gray 编码**，使得相邻电平仅有 1 bit 不同，以降低误码率。
@@ -837,7 +990,7 @@ $$
 对 $M$ 进制传输，电平与判决门限之间的距离仍为 $A$，但不同于[[#二进制电平传输#误符号率|二进制情形]]的是，**中间 $(M - 2)$ 个输入电平有两个方向可能判错**，因此误符号率为
 $$
 \begin{align}
-P_{\mathrm{s}} &= \sum\limits_{x \in \mathscr{A}} p(x) \mathrm{Pr}\{ \hat{x} \neq x \mid x \} \\
+P_{\mathrm{s}} &= \sum\limits_{x \in \mathscr{A}} p(x) \Pr\{ \hat{x} \neq x \mid x \} \\
 &= 2 \times \dfrac{1}{M} \times Q\left( \dfrac{A}{\sigma} \right) + (M - 2) \times \dfrac{1}{M} \times 2 Q\left( \dfrac{A}{\sigma} \right) \\
 &= \dfrac{2(M - 1)}{M} Q\left( \dfrac{A}{\sigma} \right)
 \end{align}
@@ -851,13 +1004,13 @@ $$
 P_{\mathrm{s}} = \dfrac{2(M - 1)}{M} Q\left( \sqrt{ \dfrac{3}{M^{2} - 1} \mathrm{SNR} } \right)
 $$
 
-#### 误 bit 率
+#### 误比特率
 
 当 $M$ 很大时，近似取
 $$
 P_{\mathrm{s}} \approx 2 Q\left( \sqrt{ \dfrac{3}{M^{2} - 1} \mathrm{SNR} } \right)
 $$
-误符号率 $P_{\mathrm{s}}$ 并不能直接反映通信系统的性能，因为每个符号承载 $n = \log_{2} M$ 个 bit 信息，需要计算**误 bit 率 (bit error rate, BER)** $P_{\mathrm{b}}$。在 Gray 编码下，可认为只有相邻电平之间的判决错误才会导致误 bit，因此近似有
+误符号率 $P_{\mathrm{s}}$ 并不能直接反映通信系统的性能，因为每个符号承载 $n = \log_{2} M$ 个 bit 信息，需要计算**误 bit 率 (bit error rate, BER)** $P_{\mathrm{b}}$。在 Gray 编码下，**高信噪比时**可认为只有**相邻电平**之间的判决错误，即每个符号错误只错 1 bit。因此近似有
 $$
 P_{\mathrm{b}} \approx \dfrac{P_{\mathrm{s}}}{\log_{2} M} \approx \dfrac{2}{\log_{2} M} Q\left( \sqrt{ \dfrac{3}{M^{2} - 1} \mathrm{SNR} } \right)
 $$
@@ -868,8 +1021,26 @@ $$
 
 一般地，保留原始误符号率表达式，有
 $$
-P_{\mathrm{b}} \approx \dfrac{P_{\mathrm{s}}}{\log_{2} M} = \dfrac{2(M - 1)}{M \log_{2} M} Q\left( \sqrt{ \dfrac{3}{M^{2} - 1} \mathrm{SNR} } \right)
+\begin{align} 
+P_{\mathrm{b}} \approx \dfrac{P_{\mathrm{s}}}{\log_{2} M} &= \dfrac{2(M - 1)}{M \log_{2} M} Q\left( \sqrt{ \dfrac{3}{M^{2} - 1} \mathrm{SNR} } \right) \\
+&= \dfrac{2(M - 1)}{M \log_{2} M} Q\left( \sqrt{ \dfrac{3 \log_{2} M}{M^{2} - 1} \dfrac{\t{\sigma}_{x}^{2}}{\sigma^{2}} } \right) 
+\end{align}
 $$
+
+> [!note] 含直流偏置的多进制电平传输
+> 若存在**直流偏置 $D$**，即电平集合为 
+> $$
+> \begin{align}
+> \mathscr{A} = \{ D - (M-1)A, D - (M-3)A, \cdots, D - 3A, D - A, \\
+> D + A, D + 3A, \cdots, D + (M-3)A, D + (M-1)A \}
+> \end{align}
+> $$
+> 则**符号能量 $\mathbb{E} \left[ x^{2} \right] = \cfrac{M^{2} - 1}{3} A^{2} + D^{2}$**。
+> 
+> 差错概率并不建立在符号能量上，而是建立在**符号间距 $2A$** 上，因此引入 $\zeta = \cfrac{D}{A\sqrt{ \cfrac{M^{2}-1}{3} }}$，则 $\mathbb{E} \left[ x^{2} \right] = \cfrac{M^{2} - 1}{3} A^{2} (1 + \zeta^{2})$，**误符号率**为
+> $$
+> P_{\mathrm{s}} = \dfrac{2(M - 1)}{M} Q\left( \cfrac{A}{\sigma} \right) = \dfrac{2(M - 1)}{M} Q\left( \sqrt{ \dfrac{3}{M^{2} - 1} \dfrac{1}{1 + \zeta^{2}} \dfrac{\mathbb{E} \left[ x^{2} \right] }{\sigma^{2}} } \right)
+> $$
 
 ## 复电平传输
 
@@ -904,7 +1075,7 @@ $$
 两路信道相互独立，出现差错的情况是**任意一路实 AWGN 电平信道出现差错**。因此，信道的误符号率为
 $$
 \begin{align}
-P_{\mathrm{s}} &= 1 - \mathrm{Pr}\{ \hat{x}_{\mathrm{I}} = x_{\mathrm{I}} \} \times \mathrm{Pr} \{ \hat{x}_{\mathrm{Q}} = x_{\mathrm{Q}} \} \\
+P_{\mathrm{s}} &= 1 - \Pr\{ \hat{x}_{\mathrm{I}} = x_{\mathrm{I}} \} \times \Pr \{ \hat{x}_{\mathrm{Q}} = x_{\mathrm{Q}} \} \\
 &= 1 - \left( 1 - P_{\mathrm{s, I}} \right) (1 - P_{\mathrm{s, Q}}) 
 = P_{\mathrm{s, I}} + P_{\mathrm{s, Q}} - P_{\mathrm{s, I}} P_{\mathrm{s, Q}}
 \end{align}
@@ -926,7 +1097,7 @@ $$
 $$
 P_{\mathrm{s}} \approx \dfrac{4(\sqrt{ M } - 1)}{\sqrt{ M }} Q\left( \sqrt{ \dfrac{3}{2(M - 1)} \mathrm{SNR} } \right)
 $$
-类似地，取 **Gray 映射**，近似误 bit 率为
+类似地，取 **Gray 映射**，近似误比特率为
 $$
 P_{\mathrm{b}} \approx \dfrac{4}{\log_{2} M} \left( 1 - \dfrac{1}{\sqrt{ M }} \right) Q\left( \sqrt{ \dfrac{3 \log_{2} M}{2(M - 1)} \dfrac{\t{\sigma}_{x}^{2}}{\sigma^{2}} } \right)
 $$
@@ -943,25 +1114,25 @@ $$
 对于 PSK 星座图，MED 判决给出的**判决门限**为相邻复电平之间的角平分线，判决域张角为 $\theta$。由**对称性**，其差错分析只用分析任一个电平的差错概率，我们选 $x = A$ 进行分析。设判决输出为 $\hat{x}$，则误符号率为
 $$
 \begin{align}
-P_{\mathrm{s}} &= \mathrm{Pr}\{ \hat{x} \neq A \mid x = A \}  \\
-&= \mathrm{Pr}\left\{ \arg(A + z) > \dfrac{\theta}{2} = \dfrac{\pi}{M} \,\Bigg|\, x = A \right\}
+P_{\mathrm{s}} &= \Pr\{ \hat{x} \neq A \mid x = A \}  \\
+&= \Pr\left\{ \arg(A + z) > \dfrac{\theta}{2} = \dfrac{\pi}{M} \,\Bigg|\, x = A \right\}
 \end{align}
 $$
 求解比较困难。考虑 $M$ 较大、$\cfrac{A}{\sigma}$ 较大的情形，可近似认为 $x = A$ 点附近的判决域边界为两条**平行直线**，此时**只有 $z_{\mathrm{Q}}$ 引起差错**，因此有近似误符号率为
 $$
 \begin{align}
-P_{\mathrm{s}} &\approx 2 \times \mathrm{Pr}\left\{ z_{\mathrm{Q}} > A \sin \dfrac{\pi}{M} \right\} = 2 Q\left( \cfrac{A \sin \dfrac{\pi}{M}}{\sigma} \right) \\
+P_{\mathrm{s}} &\approx 2 \times \Pr\left\{ z_{\mathrm{Q}} > A \sin \dfrac{\pi}{M} \right\} = 2 Q\left( \cfrac{A \sin \dfrac{\pi}{M}}{\sigma} \right) \\
 &= 2 Q\left( \sin \dfrac{\pi}{M} \sqrt{\mathrm{SNR}} \right)
 \end{align}
 $$
-类似地，取 **Gray 映射**，近似误 bit 率为
+类似地，取 **Gray 映射**，近似误比特率为
 $$
 P_{\mathrm{b}} \approx \dfrac{2}{\log_{2} M} Q\left( \sin \dfrac{\pi}{M} \sqrt{ \log_{2} M \cdot \dfrac{\t{\sigma}_{x}^{2}}{\sigma^{2}} } \right)
 \approx \dfrac{2}{\log_{2} M} Q\left( \dfrac{\pi}{M} \sqrt{ \log_{2} M \cdot \dfrac{\t{\sigma}_{x}^{2}}{\sigma^{2}} } \right)
 $$
 
 
-# 波形信道
+# _§3.2_ 波形信道
 
 ## 波形传输
 
@@ -991,10 +1162,10 @@ $$
 
 ### 波形信道模型
 
-本课程重点关注**加性白 Gauss 噪声**对数字通信的影响，因此引入如下波形信道模型：
+本课程重点关注**[[#加性白 Gauss 噪声 (AWGN)]]** 对数字通信的影响，因此引入如下波形信道模型：
 
 > [!def.] 加性白 Gauss 噪声波形信道
-> 波形信道的输入为波形 $x(t)$，输出为波形 $y(t)$，满足
+> **加性白 Gauss 噪声波形信道**是[[#加性白 Gauss 噪声 (AWGN)#连续时间 AWGN 信道|连续时间 AWGN 信道]]，信道输入为波形 $x(t)$，输出为波形 $y(t)$，满足
 > $$
 > y(t) = x(t) + z(t)
 > $$
@@ -1002,6 +1173,7 @@ $$
 > 1. 对任意时刻 $t$，$z(t)$ 服从均值为 0 的 Gauss 分布；
 > 2. 对任意时刻序列 $t_{1}, t_{2}, \cdots, t_{n}$，随机变量组 $\{ z(t_{1}), z(t_{2}), \cdots, z(t_{n}) \}$ 服从均值为 $\v{0}$ 的 $n$ 元 Gauss 分布；
 > 3. 功率谱密度函数 $S_{z}(f) \equiv \cfrac{n_{0}}{2}$，其中 $n_{0}$ 为常数。
+^AWGNBoXingXindao
 
 ## 二元波形的最佳接收
 
@@ -1197,11 +1369,11 @@ $$
 $$
 当可**确定 $f(t) = g(t)$** 时，即知 $\beta_{1} = \sqrt{ h(0) } = \sqrt{ \dint_{-\infty}^{+\infty} H(f) \dif f }$，可由此确定信噪比；否则，只能确定波形能量与电平能量的比值。
 
-# 载波传输
+# _§3.3_ 载波传输
 
 ## 无失真传输的 Nyquist 准则
 
-我们会在一个[[#波形信道]]上**前后传输多个符号**，因此希望**前后符号之间互不干扰**。考虑在收发联合模型中传输一系列符号 $\left\{ x_{k} \right\}$，符号调制的冲激串 $\sum\limits_{k=-\infty}^{\infty} x_{k} \delta(t - kT)$ 间隔为 $T$。
+我们会在一个[[#波形信道]]上**前后传输多个符号**，因此希望**前后符号之间互不干扰**。考虑在[[#波形信道#波形传输的收发联合模型|收发联合模型]]中传输一系列符号 $\left\{ x_{k} \right\}$，符号调制的冲激串 $\sum\limits_{k=-\infty}^{\infty} x_{k} \delta(t - kT)$ 间隔为 $T$。
 
 ![[载波传输 收发联合等效.png|载波传输的收发联合等效模型]]
 
@@ -1236,7 +1408,7 @@ $$
 $$
 
 > [!theorem] Nyquist 准则
-> 要实现**无失真传输**，收发联合滤波器的频率响应 $H(f)$ 需满足
+> 要实现**无失真传输**，[[#波形信道#波形传输的收发联合模型|收发联合滤波器]]的频率响应 $H(f)$ 需满足
 > $$
 > \sum_{n=-\infty}^{\infty} H\left( f - nR_{\mathrm{s}} \right) = T
 > $$
@@ -1274,6 +1446,11 @@ Nyquist 准则表明，为实现无失真传输，收发联合滤波器的频率
 > 其中，$R_{\mathrm{b}}$ 为**比特率 (bit rate)**，$R_{\mathrm{s}}$ 为**符号速率 (symbol rate)**，$W$ 为信道带宽，$M = |\mathscr{A}|$ 为每个符号所承载的电平集合大小。
 ^PinpuXiaolv
 
+对于带限波形信道，Nyquist 准则对频谱效率的限制为
+$$
+\eta = \dfrac{R_{\mathrm{s}}}{W} \cdot \log_{2} M < 2 \log_{2} M
+$$
+
 ### 过渡带的残留对称条件
 
 考虑 $H(f)$ 在过渡带内的形式，设符号速率为 $R_{\mathrm{s}}$，则 Nyquist 准则要求
@@ -1284,7 +1461,7 @@ $$
 $$
 H(f) + H(R_{\mathrm{s}} - f) = T, \qquad f \in \left[ 0, R_{\mathrm{s}} \right] 
 $$
-即 $H(f)$ 在过渡带内关于 $f = \dfrac{R_{\mathrm{s}}}{2}$ 对称，称为**残留对称条件 (residual symmetry condition)**。
+即 $H(f)$ 在过渡带内**关于 $f = \cfrac{R_{\mathrm{s}}}{2}$ 对称**，称为**残留对称条件 (residual symmetry condition)**。
 
 ## 数字基带传输
 
@@ -1296,11 +1473,11 @@ $$
 $$
 H(f) = \begin{cases}
 T, & |f| \leq \cfrac{1-\alpha}{2} R_{\mathrm{s}}, \\
-\cfrac{T}{2} \left[ 1 + \cos \left( \cfrac{\pi T}{\alpha} \left( |f| - \cfrac{1-\alpha}{2T} \right) \right) \right], & \cfrac{1-\alpha}{2} R_{\mathrm{s}} < |f| \leq \cfrac{1+\alpha}{2} R_{\mathrm{s}}, \\
+\cfrac{T}{2} \left( 1 + \cos \left( \cfrac{\pi T_{\mathrm{s}}}{\alpha} \left( |f| - \cfrac{1-\alpha}{2T_{\mathrm{s}}} \right) \right) \right), & \cfrac{1-\alpha}{2} R_{\mathrm{s}} < |f| \leq \cfrac{1+\alpha}{2} R_{\mathrm{s}}, \\
 0, & |f| > \cfrac{1+\alpha}{2} R_{\mathrm{s}}
 \end{cases}
 $$
-其中，$\alpha \in [0, 1]$ 为**滚降系数 (roll-off factor)**，决定过渡带的宽度；升余弦滤波器的带宽为 $W = \cfrac{1+\alpha}{2} R_{\mathrm{s}}$，频谱效率为
+其中，$\alpha \in [0, 1]$ 为**滚降系数 (roll-off factor)**，决定过渡带的宽度；升余弦滤波器的带宽为 $W = \cfrac{1+\alpha}{2} R_{\mathrm{s}} = \cfrac{1+\alpha}{2T_{\mathrm{s}}}$，频谱效率为
 $$
 \eta = \dfrac{R_{\mathrm{s}}}{W} \cdot \log_{2} M = \dfrac{2 \log_{2} M}{1+\alpha}
 $$
@@ -1308,8 +1485,8 @@ $$
 + 当 $\alpha = 0$ 时，升余弦滤波器退化为**理想低通滤波器**，带宽为 $W = \cfrac{R_{\mathrm{s}}}{2}$；
 + 当 $\alpha = 1$ 时，升余弦滤波器的过渡带宽度最大，带宽为 $W = R_{\mathrm{s}}$。
 
-> [!note] 升余弦基带信道的典型考法
-> 升余弦滤波器是通信系统课程的经典考点，常见的考法是**给定 $R_{\mathrm{b}}$ 和 $W$（即给定 $\eta$），求满足无失真传输的 $M$ 和对应的 $\alpha$**。
+> [!remark] 题型：升余弦基带信道
+> **典型题型**　给定 $R_{\mathrm{b}}$ 和 $W$（即给定 $\eta$），求满足无失真传输的 $M$ 和对应的 $\alpha$。
 > 
 > 这个问题的约束条件为
 > $$
@@ -1322,13 +1499,19 @@ $$
 > 此时，可通过枚举 $k$ 的方式求解该问题。
 > 
 > ![[k-eta-BB.png|不同进制下频谱效率随滚降系数的变动范围]]
-^ShengyuxianLvboqiDianxingkaofa
+^ShengyuxianJidaiDianxingkaofa
 
-另外，可以推导求出升余弦滤波器的时域**冲激响应**为
+另外，可以推导求出
++ 升余弦滤波器的时域**冲激响应**为
 $$
 h(t) = \dfrac{ \sin \left( \pi R_{\mathrm{s}} t \right) }{ \pi R_{\mathrm{s}} t } \cdot \dfrac{ \cos \left( \pi \alpha R_{\mathrm{s}} t \right) }{ 1 - \left( 2 \alpha R_{\mathrm{s}} t \right)^{2} }
+= \sinc \left( R_{\mathrm{s}} t \right) \cdot \dfrac{ \cos \left( \pi \alpha R_{\mathrm{s}} t \right) }{ 1 - \left( 2 \alpha R_{\mathrm{s}} t \right)^{2} }
 $$
-升余弦滤波系统的**功率**为
++ 升余弦滤波器对应成形脉冲 $p(t)$ 的**能量**为 
+$$
+\|p(t)\|^{2} = \dint_{-\infty}^{+\infty} |P(f)|^{2} \dif f = \dint_{-\infty}^{+\infty} H(f) \dif f = 1
+$$
++ 升余弦滤波系统的**功率**为
 $$
 P = E_{\mathrm{s}} R_{\mathrm{s}} = \dfrac{2W E_{\mathrm{s}}}{1 + \alpha}
 $$
@@ -1398,7 +1581,7 @@ $$
 > 其中，$m_{X} = \mathbb{E}[x_{k}]$，$\mathrm{Var}(X) = \mathbb{E}[(x_{k} - m_{X})^{2}]$ 分别为符号的均值和方差，$P(f) = \mathscr{F} \{ p(t) \}$ 为成形脉冲的频谱。
 ^JidaiGonglvpu
 
-当符号电平 $x_{k}$ 均值为 0 时，功率谱仅包含连续谱部分。
+当符号电平 $x_{k}$ **均值为 0** 时，功率谱仅包含连续谱部分。
 
 ## 矩形包络载波传输
 
@@ -1620,19 +1803,24 @@ $$
 
 即其**最佳接收**过程可等效为[[#电平信道#复电平传输|复电平信道]]，QAM、PSK 等调制方式下的误符号率和误 bit 率分别由 [[#电平信道#复电平传输#QAM 输入的分析|QAM]] 输入和 [[#电平信道#复电平传输#PSK 输入的分析|PSK]] 输入的复电平信道的分析给出。
 
+> [!note] I、Q 路带限载波传输的噪声
+> 在 I、Q 路带限载波传输系统中，信道中的 AWGN $z(t)$ 仍是 $S_{z}(f) \equiv \cfrac{n_{0}}{2}$ 的实 Gauss 过程，但经过最佳接收得到的噪声电平 $z_{k} = z_{k}^{\mathrm{I}} + \J z_{k}^{\mathrm{Q}}$ 是**复 Gauss 随机变量**，且$z_{k}^{\mathrm{I}}, z_{k}^{\mathrm{Q}} \stackrel{\text{i.i.d.}}{\sim} \mathscr{N}\left( 0, \cfrac{n_{0}}{2} \right)$，通常记 $z_{k} \sim \mathscr{CN}(0, n_{0})$。
+> 
+> 若载波下变频过程中使用的解调波形不能量归一化，则噪声方差会相应地放大或缩小。例如，若**解调波形为 $\beta \cos(2 \pi f_{\mathrm{c}} t)$、$\beta \sin(2 \pi f_{\mathrm{c}} t)$**，则各路噪声将**放大为 $\cfrac{\beta^{2}}{2}$ 倍**，即 $z_{k} \sim \mathscr{CN}\left( 0, \cfrac{\beta^{2}}{2} n_{0} \right)$。此变化不影响信噪比、误符号率等性能指标的计算。
+
 ### 带限载波传输的频谱效率
 
 在带限于 $\big\lvert |f| - f_{\mathrm{c}} \big\rvert \le W$ 的频率范围内传输信号时，**占用带宽**为 $B = 2W$。定义**频谱效率 (spectral efficiency)** 为每单位带宽传输的比特率，即
 $$
 \eta = \dfrac{R_{\mathrm{b}}}{B} = \dfrac{R_{\mathrm{b}}}{2W} = \dfrac{R_{\mathrm{s}}}{2W} \cdot \log_{2} M
 $$
-若用[[#升余弦滤波系统]]作为成形脉冲，则有 $W = \dfrac{1 + \alpha}{2T}$，其中 $\alpha$ 为滚降系数 (roll-off factor)，则频谱效率可写为
+若用[[#升余弦滤波系统]]作为成形脉冲，则有 $W = \cfrac{1 + \alpha}{2T}$，其中 $\alpha$ 为滚降系数 (roll-off factor)，则频谱效率可写为
 $$
 \eta = \dfrac{ \log_{2} M }{1+\alpha}
 $$
 
-> [!note] 升余弦带通信道的典型考法
-> 类似于[[#^ShengyuxianLvboqiDianxingkaofa|基带的升余弦滤波系统]]，升余弦的带限载波传输的常见考法是**给定 $R_{\mathrm{b}}$ 和带通范围 $[f_{\mathrm{min}}, f_{\mathrm{max}}]$，求满足无失真传输的 $M$ 和对应的 $\alpha$**。
+> [!remark] 题型：升余弦带通信道
+> **典型题型**　类似于[[#^ShengyuxianJidaiDianxingkaofa|基带的升余弦滤波系统]]，给定 $R_{\mathrm{b}}$ 和带通范围 $[f_{\mathrm{min}}, f_{\mathrm{max}}]$，求满足无失真传输的 $M$ 和对应的 $\alpha$。
 > 
 > 一般地，只在正频轴上讨论，居中取**载频 $f_{\mathrm{c}} = \cfrac{f_{\mathrm{min}} + f_{\mathrm{max}}}{2}$**，两侧分别有**基带带宽 $W = \cfrac{f_{\mathrm{max}} - f_{\mathrm{min}}}{2}$**，占用带宽 $B=2W$。此时，数字载波传输系统的**频谱效率**为
 > $$
@@ -1646,6 +1834,7 @@ $$
 > 此时，可通过枚举 $k$ 的方式求解该问题。
 > 
 > ![[k-eta.png|不同进制下频谱效率随滚降系数的变动范围]]
+^ShengyuxianDaitongDianxingKaofa
 
 ### 带限载波传输信号的功率谱
 
@@ -1662,3 +1851,549 @@ S_{X}(f) &= \dfrac{1}{2} \left( S_{X_{\mathrm{BB}}}(f - f_{\mathrm{c}}) + S_{X_{
 \end{align}
 $$
 由于 $\sqrt{2} \cos(2 \pi f_{\mathrm{c}} t)$ 能量归一化，因此频谱搬移**能量守恒**。
+
+
+# _§4_ 差错控制
+
+## 差错控制概述
+
+### 差错控制的位置
+
+差错控制的位置可以分为两类：
++ 在**物理层**、**链路层**实现的差错控制，主要用于检测和纠正**点到点**传输过程中产生的随机差错。
++ 在**传输层**实现的差错控制，主要用于检测和纠正**端到端**传输过程中产生的差错。
+
+下面主要讨论**传输层**的差错控制，即默认**中间一系列节点不可靠**，在发端和收端之间进行差错控制。
+
+### 典型的差错控制方案
+
+#### 反馈确认
+
+在收端 $D$ 收到数据后，将收到的 bit 原样返回给发端 $S$，发端 $S$ 将收到的 bit 与发送的 bit 进行比较，如果一致则认为数据正确接收，发送下一个 bit 组；否则认为数据出错，重新发送该 bit 组。
+
+这种方案的问题在于：
+1. 反馈确认需要额外的带宽资源；
+2. 反馈确认增加了传输延迟，时间效率低；
+3. 反馈信道本身也可能出错，导致误判。
+
+#### 检错重发 (Automatic Repeat reQuest, ARQ)
+
+在发端 $S$ 发送数据时，附加一些冗余信息（如**校验和、CRC 校验码**等），收端 $D$ 在收到数据后进行检错，如果发现数据有误，则请求发端重发该数据。典型的 ARQ 协议有**[[#「停—等」重传机制|停—等 ARQ]]**、**连续 ARQ**等。
+
+#### 前向纠错 (Forward Error Correction, FEC)
+
+在发端 $S$ 发送数据时，附加足够的冗余信息，使得收端 $D$ 即使在部分数据出错的情况下，也能通过冗余信息恢复出正确的数据，而无需请求重发。
+
+### 码本的检错、纠错能力
+
+信息 bit 串经过编码映射为传输**码字 (codeword)**，码字的集合连同其编码的映射关系构成**码本 (codebook)**。本课程中，将信息 bit 串和码字均视为 $GF_{2}$ 上的**行向量**，以 $\v{m}$、$\v{c}$ 标记。此后的向量记号亦均指行向量。
+
+> [!example] $(1,3)$ 冗余码本的检错、纠错能力
+> 考虑如下码本：
+> $$
+> 1 \longrightarrow 111 = \v{1}_{3}, \qquad
+> 0 \longrightarrow 000 = \v{0}_{3}
+> $$
+> + 以 ARQ 方式处理，110、101、011、100、001、010 均可被检测为出错，但无法纠正，即**检 2 位错**而不纠错；
+> + 以 FEC 方式处理，110、101、011 认为是 1，100、001、010 认为是 0，即**纠 1 位错**。
+> 
+> 对同一个串的处理不同，其检错、纠错能力也不同，检错与纠错不完全兼容。
+
+两个 bit 串之间对应位相异 bit 的个数体现了其「相似」的程度，称为 **Hamming 距离 (Hamming distance)**，记为 $d$。上述检错、纠错的位数，实际也是指 Hamming 距离。
+
+![[码本的检错、纠错能力.png]]
+
+在一般码本中，考虑任意两个码字之间 Hamming 距离的**最小值** $d_{\text{min}} = \min\limits_{\v{c}_{1} \neq \v{c}_{2}} d(\v{c}_{1}, \v{c}_{2})$，即**最小 Hamming 距离**或**码距 (code distance)**。这个距离上，码本的检错、纠错能力与上图类似，即有
+
+> [!theorem] 码本的纠错位数、检错位数与码距的关系
+> 给定码距 $d_{\text{min}}$ 的码本，其纠错位数 $t$ 和检错位数 $e$ 满足
+> $$
+> t + e \leq d_{\text{min}} - 1
+> $$
+> 进而，
+> + 纠错位数 $t$ 满足 $2t + 1 \leq d_{\text{min}}$，
+> + 检错位数 $e$ 满足 $e + 1 \leq d_{\text{min}}$。
+
+## 检错码的构造与应用
+
+### 奇偶校验
+
+#### 简单奇偶校验
+
+最简单的**检错**方式是**奇偶校验 (parity check)**，即在信息 bit 串后附加一个**校验位 (parity bit)**，使得整个码字中 1 的个数为偶数。
+
+设给定 $k$ bits 长信息 $\v{m} = \begin{pmatrix}m_{1} & m_{2} & \cdots & m_{k}\end{pmatrix}$，则编码后的码字为
+$$
+c_{i} = \begin{cases}
+m_{i}, & i = 1, 2, \cdots, k, \\
+\sum\limits_{j=1}^{k} m_{j}, & i = k + 1
+\end{cases}
+\quad \text{i.e.} \quad
+\v{c} = \v{m} \begin{pmatrix}
+1 & 0 & \cdots & 0 & 1 \\
+0 & 1 & \cdots & 0 & 1 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & 1 & 1
+\end{pmatrix}
+$$
+即 $\v{c} = \v{m} \boldsymbol{G}$，**生成矩阵 (generator matrix)** $\boldsymbol{G} = \begin{pmatrix}\boldsymbol{I}_{k}  & \v{1}_{k}\end{pmatrix}$。解码时，应有
+$$
+\sum\limits_{i=1}^{k+1} c_{i} = \v{c} \cdot \v{1}_{k+1} = \v{c} \v{1}_{k+1}^{\mathrm{T}} = 0
+$$
+即**校验矩阵 (parity-check matrix)** $\boldsymbol{H} = \v{1}_{k+1}$，当接收码字 $\v{y}$ 满足 $\v{y} \boldsymbol{H}^{\mathrm{T}} \neq 0$ 时，认为码字出错。
+
+该码字的**码距 $d_{\text{min}} = 2$**，因此必有 $t = 0$，只能**检 1 位错**，**不能纠错**。同时，还有发生差错但无法检出的情况，**漏检概率**为
+$$
+p_{\mathrm{m}} = \sum\limits_{i=1}^{\lfloor (k+1)/2 \rfloor} \binom{k+1}{2i} P_{\mathrm{b}}^{2i} (1 - P_{\mathrm{b}})^{k + 1 - 2i}
+$$
+
+#### 循环冗余校验
+
+**循环冗余校验 (cyclic redundancy check, CRC)** 是奇偶校验的推广，通过**多项式除法**实现**检错**。
+
+[[#简单奇偶校验]]因其只有 1 位校验位，检错能力有限。我们希望通过增加更多的校验位，提高检错能力。设信息 bit 串 $\v{m}$ 可表示为**信息多项式 (message polynomial)**
+$$
+m(x) = m_{0} + m_{1} x + m_{2} x^{2} + \cdots + m_{k-1} x^{k-1}
+$$
+我们选择一个**生成多项式 (generator polynomial)** $g(x)$，其次数为**校验位长度** $n - k$，即
+$$
+g(x) = g_{0} + g_{1} x + g_{2} x^{2} + \cdots + x^{n-k}
+$$
+编码后的码字 $\v{c}$ 对应的**码字多项式 (codeword polynomial)** 设为
+$$
+c(x) = \underbrace{ m(x) x^{n-k} }_{ \alpha(x) } + \underbrace{ m(x) x^{n-k} \bmod g(x) }_{ \gamma(x) }
+$$
+其中 $\gamma(x)$ 为**校验多项式 (check polynomial)**，即移位后的信息多项式 $\alpha(x)$ 除以生成多项式 $g(x)$ 的**余数**。
+
+由此，存在多项式 $\beta(x)$ 使得
+$$
+\alpha(x) = \beta(x) g(x) + \gamma(x) \quad \Longrightarrow \quad c(x) = \beta(x) g(x)
+$$
+即**码字多项式 $c(x)$ 可被生成多项式 $g(x)$ 整除**。解码时，收端收到 $\v{y}$ 对应码字多项式 $y(x) = c(x) + e(x)$，只需计算 $y(x) \bmod g(x)$，若结果不为零，则认为码字出错。
+
+### ARQ 传输方案
+
+[[#检错重发 (Automatic Repeat reQuest, ARQ)]] 是一大类典型差错控制方案，其通过**检错码**实现。
+
+#### 「停—等」重传机制
+
+在 ARQ 差错控制中，常用的重传机制是**停—等 (stop-and-wait)** 机制，即每发送一个数据包后，必须等待确认收到该数据包的反馈后，才能发送下一个数据包。
+
+不妨设码本将 $k$ bits 信息映射为 $n$ bits 码字，ARQ 过程为：
+1. 发端 $S$ 将信息编码为码字 $\v{c}$ 并发送，**发送用时 $T_{\mathrm{m}} = \cfrac{n}{R_{\mathrm{b}}}$**；
+2. 信息从发端 $S$ 传输到收端 $D$，**传输时延为 $T_{\mathrm{d}}$**；
+3. 收端 $D$ **经 $T_{\mathrm{c}}$ 时间检测**出码字 $\v{c}$ 是否正确接收，若正确则发送 **ACK (acknowledgement) 报文**，否则发送 **NACK (negative acknowledgement) 报文**，**发送用时 $T_{\mathrm{a}} = \cfrac{n_{\mathrm{a}}}{R_{\mathrm{b}}}$**；
+4. ACK/NACK 报文从收端 $D$ 经同样的传输时延 $T_{\mathrm{d}}$ 传输到发端 $S$，发端据此决定是否重传该码字，决定用时忽略不计。
+
+![[停等重传.png]]
+
+一个 ARQ 轮次中，除开发送码字的时间 $T_{\mathrm{m}}$ 外，其余时间均为等待时间，**总等待时间**为 $T_{\mathrm{dca}} = 2 T_{\mathrm{d}} + T_{\mathrm{c}} + T_{\mathrm{a}}$。因此，即使一轮次传输成功，其时间效率也为
+$$
+\xi' = \frac{T_{\mathrm{m}}}{T_{\mathrm{m}} + T_{\mathrm{dca}}} = \frac{T_{\mathrm{m}}}{T_{\mathrm{m}} + 2 T_{\mathrm{d}} + T_{\mathrm{c}} + T_{\mathrm{a}}}
+$$
+未检出错误即为「成功」，概率为
+$$
+p_{\mathrm{suc}} = (1 - P_{\mathrm{b}})^{n} + p_{\mathrm{m}}
+$$
+其中 $p_{\mathrm{m}}$ 为**漏检概率 (missed detection probability)**，即发生差错但未被检出的概率。
+
+成功所需轮次服从**几何分布 (geometric distribution)**，其期望为 $\cfrac{1}{p_{\mathrm{suc}}}$，因此实际时间效率为
+$$
+\xi = \cfrac{T_{\mathrm{m}}}{(T_{\mathrm{m}} + T_{\mathrm{dca}}) \cdot \dfrac{1}{p_{\mathrm{suc}}}} = \xi' p_{\mathrm{suc}}
+$$
+对上层**信息 bit 流**的整体**服务速率**即为
+$$
+r = \cfrac{k}{\dfrac{n}{R_{\mathrm{b}}} \cdot \dfrac{1}{\xi}} = \dfrac{k}{n} \xi R_{\mathrm{b}} = \dfrac{k ((1-P_{\mathrm{b}})^{n} + p_{m})}{n} \cdot \dfrac{R_{\mathrm{b}} T_{\mathrm{m}}}{T_{\mathrm{m}} + 2 T_{\mathrm{d}} + T_{\mathrm{c}} + T_{\mathrm{a}}}
+$$
+
+#### 选择重传机制
+
+在[[#「停—等」重传机制]]下，发端在等待 ACK/NACK 报文期间**处于闲置状态**，时间效率较低。为提高时间效率，可采用**选择重传 (selective repeat)** 机制，即发端在等待 ACK/NACK 报文的同时，**继续发送**后续码字。
+
+![[选择重传.png]]
+
+选择重传机制将码字的传输与 ACK/NACK 报文的传输拆分为**独立信道**，从而**并行**进行，提高时间效率。对**固定、已知的 $T_{\mathrm{d}}$、$T_{\mathrm{c}}$**，发端可由 NACK 时间反推出出错的码字，收端由自身的报文发送记录也可推知哪个码字是重传码字，**无需序号**。
+
+选择重传中每个码字传输的差错性能与[[#「停—等」重传机制]]相同，同样有
+$$
+p_{\mathrm{suc}} = (1 - P_{\mathrm{b}})^{n} + p_{\mathrm{m}}
+$$
+因为发端**持续发送**码字，单位时间内成功发送的消息 bit 数为 $\cfrac{k}{n} R_{\mathrm{b}} p_{\mathrm{suc}}$，即对信息 bit 流的整体服务速率为
+$$
+r = \dfrac{k}{n} ( (1 - P_{\mathrm{b}})^{n} + p_{\mathrm{m}} ) R_{\mathrm{b}}
+$$
+若**不忽略 ACK/NACK 报文的传输开销**，则服务速率为 
+$$
+r = \dfrac{T_{\mathrm{m}}}{T_{\mathrm{m}} + T_{\mathrm{a}}} \cdot \dfrac{k}{n} ( (1 - P_{\mathrm{b}})^{n} + p_{\mathrm{m}} ) R_{\mathrm{b}}
+$$
+
+#### 回溯 $N$ 重传机制
+
+选择重传需要差错分组的序号判断和乱序重排，不仅复杂，而且在 $T_{\mathrm{d}}$ 未知或时变时无法正确工作。为此，可采用**回溯 $N$ 重传 (go-back-$N$ ARQ)** 机制，即发端持续发送码字，但一旦收到 NACK 报文，则**回溯重传**从该码字开始的后续 $N$ 个码字。
+
+> [!note] 重传机制在链路层、传输层的使用
+> 重传机制在链路层（单跳）和传输层（多跳）都有使用，但从发出一个分组到接收其 ACK/NACK 的**往返时间 (RTT)** 的分布特性不同。
+> + 链路层通常采用**停—等 ARQ**，因为链路层传输距离短，时延小，且链路层设备通常较简单，适合使用简单的停—等 ARQ；
+> + 传输层通常采用**选择重传 ARQ** 或混合 ARQ 机制，因为传输层传输距离长，时延大，且传输层设备通常较复杂，适合使用复杂的重传策略。
+
+## 纠错码的构造与应用
+
+### FEC 传输方案
+
+除 ARQ 外，[[#前向纠错 (Forward Error Correction, FEC)]] 是另一大类典型差错控制方案，其通过**纠错码**（又称信道编码）实现。
+
+依据对信息流的处理方式的不同，FEC 所构造的纠错码可分为两类：
++ **分组码 (block code)**，即将信息 bit 流划分为若干个**固定长度**的信息 bit 组，分别进行编码，形成固定长度的码字进行传输，各个码字之间编、译码相互独立。$(k, n)$ 分组码本质上是从 $GF_{2}^{k}$ 到 $GF_{2}^{n}$ 的映射，将信息分散到更大的离散空间中，从而提高抗差错能力。
+	分组码又分为：
+	+ **线性分组码 (linear block code)**，即编码映射是**线性映射**。线性分组码存在**生成矩阵 (generator matrix)** $\boldsymbol{G}$ 使得码字 $\v{c} = \v{m} \boldsymbol{G}$。
+		线性分组码的一个重要性质是其码字集合构成 $GF_{2}^{n}$ 的**子空间 (subspace)**，从而可通过**校验矩阵 (parity-check matrix)** $\boldsymbol{H}$ 定义合法码字的集合，即 $\v{c} \boldsymbol{H}^{\mathrm{T}} = \v{0}$。
+		线性分组码又可进一步分出：
+		+ **线性系统码 (linear systematic code)**，其码字 $\v{c}$ 固定后 $n-k$ 位为校验位，前 $k$ 位与信息 $\v{m}$ 相同，即**生成矩阵 $\boldsymbol{G}_{k\times n} = \begin{pmatrix}\boldsymbol{I}_{k}  & \boldsymbol{P}_{k\times(n-k)}\end{pmatrix}$**，**校验矩阵 $\boldsymbol{H}_{(n-k)\times n} = \begin{pmatrix}\boldsymbol{P}_{(n-k)\times k}^{\mathrm{T}} & \boldsymbol{I}_{n-k}\end{pmatrix}$**。
+		+ 线性非系统码，如 $\boldsymbol{G} = \begin{pmatrix}1 & 1 & 0 & 1 & 0 & 1 \\ 1 & 0 & 1 & 0 & 1 & 0 \\ 0 & 1 & 0 & 1 & 0 & 1\end{pmatrix}$。
+	+ 非线性码，即编码映射不是线性映射，如「以 1 的计数为校验位」的码字映射。
++ **非分组码**，即对信息 bit 流进行**连续**编码，形成连续的码字流进行传输，码字之间编、译码相互关联。
+	非分组码的例子有：
+	+ **卷积码 (convolutional code)**，即通过有限状态机对信息 bit 流进行编码，将整个信息流与某 bit 串进行卷积运算；
+	+ **Turbo 码**（或译为**涡轮码**），即通过两个或多个卷积码并行编码，并通过**交织 (interleaver)** 实现码字之间的关联，提高纠错能力。
+
+> [!remark] 题型：线性系统码
+> **典型题型**　给出 $(k, n)$ 线性系统码的若干个 $\v{m} \mapsto \v{c}$ 映射对，求其生成矩阵 $\boldsymbol{G}$ 和校验矩阵 $\boldsymbol{H}$，再由未知信息串计算码字，或由未知码字校验是否为合法码字。
+> 
+> 由于 $(k, n)$ 线性系统码的生成矩阵 $\boldsymbol{G}_{k\times n} = \begin{pmatrix}\boldsymbol{I}_{k}  & \boldsymbol{P}_{k\times(n-k)}\end{pmatrix}$ 中只有 $\boldsymbol{P}$ 未知，可由给出的映射对求出 $\boldsymbol{P}$，进而求出 $\boldsymbol{G}$ 和 $\boldsymbol{H}$。
+
+### Hamming 码
+
+#### Hamming 码的构造
+
+我们希望构造一种**简洁的代数运算方式**，从 $\v{y} = \v{x} + \v{e}$ 中在某一条件下确定 $\v{e}$，从而恢复 $\v{x}$。
+
+假定 $\v{e}$ 中最多只有 1 位错，即我们讨论的目标就是**纠 1 位错**，不考虑多于 1 位错的情况。由线性码性质 $\boldsymbol{G}\boldsymbol{H}^{\mathrm{T}} = \v{0}$，有
+$$
+\v{m} \boldsymbol{G} \boldsymbol{H}^{\mathrm{T}} = \v{c} \boldsymbol{H}^{\mathrm{T}} = \v{0}
+$$
+于是，因合法码字 $\v{x} \in \left\{ \v{c} \mid \v{c} \in \mathcal{C} \right\}$，有
+$$
+\v{y} \boldsymbol{H}^{\mathrm{T}} = (\v{x} + \v{e}) \boldsymbol{H}^{\mathrm{T}} = \v{x} \boldsymbol{H}^{\mathrm{T}} + \v{e} \boldsymbol{H}^{\mathrm{T}} = \v{0} + \v{e} \boldsymbol{H}^{\mathrm{T}} = \v{e} \boldsymbol{H}^{\mathrm{T}}
+$$
+即**接收码字的综合 (syndrome)** 或称**校正子 (syndrome)** $\v{s} = \v{y} \boldsymbol{H}^{\mathrm{T}}$ 仅与误码 $\v{e}$ 有关，与原码字 $\v{x}$ 无关，显然有
+$$
+\v{s} = \v{e} \boldsymbol{H}^{\mathrm{T}}
+$$
+
+我们希望通过 $\v{s}$ 唯一确定 $\v{e}$，从而恢复 $\v{x}$。由于我们假定 $\v{e}$ 中最多只有 1 位错，$\v{e}$ 只能是如下形式之一：
++ **无错**，$\v{e} = \v{0}$，$\v{s} = \v{0} \boldsymbol{H}^{\mathrm{T}} = \v{0}$；
++ **第 $i$ 位错**，$\v{e} = \vu{u}_i$，$\v{s} = \vu{u}_{i} \boldsymbol{H}^{\mathrm{T}} = \boldsymbol{H}^{\mathrm{T}}(i,:)$ 为矩阵 $\boldsymbol{H}^{\mathrm{T}}$ 的第 $i$ 行。
+
+为了使 $\v{s}$ 能唯一对应 $\v{e}$，矩阵 $\boldsymbol{H}^{\mathrm{T}}$ 的各行必须互不相同，且不能为零行。注意到，$\boldsymbol{H}$ 是一个 $(n-k) \times n$ 矩阵，因此 $\boldsymbol{H}^{\mathrm{T}}$ 有 $n$ 行，每行有 $n-k$ 位，可表示的非零行共有 $2^{n-k} - 1$ 种，因此必须满足
+$$
+2^{n-k} - 1 = n\quad\Longrightarrow\quad n + 1 = 2^{n-k}
+$$
+即 $n$ 和 $k$ 必须满足上述关系，才能构造出能够纠 1 位错的线性码。这类码称为**Hamming 码**，其校验位个数为 $m = n - k$。
+
+| $m = n - k$ | $(n, k)$ 组合 |
+| :---------- | ----------- |
+| 2           | $(3, 1)$    |
+| 3           | $(7,4)$     |
+| 4           | $(15,11)$   |
+| 5           | $(31, 26)$  |
+
+#### Hamming 码的码距
+
+我们讨论 Hamming 码的码距 $d^{\text{min}}_{\mathrm{H}}$。任何满足 $\v{c} \boldsymbol{H}^{\mathrm{T}} = \v{0}$ 都是**合法码字**，据此知：
++ 显然 $\v{0}$ 是合法码字；
++ 不存在**只有 1 位为 1** 的合法码字，因为 $\boldsymbol{H}^{\mathrm{T}}$ 的各行均不为零；
++ 不存在**只有 2 位为 1** 的合法码字，因为任意两行之和均不为零。
+
+另一方面，$\boldsymbol{H}^{\mathrm{T}}$ 的行遍历了 $GF_{2}^{n-k}$ 中的非零点，任意两行之和也在其中，因此 $\forall i, j$，$\exists l$ 满足 $\boldsymbol{H}^{\mathrm{T}}(l,:) = \boldsymbol{H}^{\mathrm{T}}(i,:) + \boldsymbol{H}^{\mathrm{T}}(j,:)$，即
+$$
+(\vu{u}_{i} + \vu{u}_{j} + \vu{u}_{l}) \boldsymbol{H}^{\mathrm{T}} = \boldsymbol{H}^{\mathrm{T}}(i,:) + \boldsymbol{H}^{\mathrm{T}}(j,:) + \boldsymbol{H}^{\mathrm{T}}(l,:) = \v{0}
+$$
+故存在 $\vu{u}_{i} + \vu{u}_{j} + \vu{u}_{l}$ 是一个**有 3 位为 1** 的合法码字。
+
+因此，任何非零码字与 $\v{0}$ 的汉明距离最小为 3，又由于 $d_{\mathrm{H}}\left( \v{c}_{1}, \v{c}_{2} \right) = d_{\mathrm{H}}\left( \v{0}, \v{c}_{1} + \v{c}_{2} \right)$，故任意两个不同码字之间的汉明距离最小也为 3，即 Hamming 码的码距为 3。
+
+> [!theorem] Hamming 码的码距
+> Hamming 码的码距 $d^{\text{min}}_{\mathrm{H}} = 3$。
+
+> [!remark] 题型：Hamming 码
+> **典型题型 1**　给定信源的消息 bit 速率 $R_{\mathrm{b}}$，求 $(n,k)$ Hamming 码编码后的滚降系数 $\alpha$ 和许用电平数 $M$。
+> 
+> 编码后，需要的 bit 速率提升为 $R'_{\mathrm{b}} = \cfrac{n}{k} R_{\mathrm{b}}$，然后将 $R'_{\mathrm{b}}$ 代入[[#载波传输#^ShengyuxianJidaiDianxingkaofa|基带升余弦系统]]或[[#载波传输#^ShengyuxianDaitongDianxingKaofa|带通升余弦系统]]相关公式中，求出相应的滚降系数 $\alpha$ 和许用电平数 $M$。
+> 
+> ---
+> 
+> **典型题型 2**　给定 $P_{\mathrm{b}}$，求 $(n,k)$ Hamming 码纠错失败的概率，即误块率 $P_{\mathrm{e}}$。
+> 
+> 误块率 $P_{\mathrm{e}}$ 即为**发生 2 位或以上差错**的概率
+> $$
+> P_{\mathrm{e}} = 1 - (1 - P_{\mathrm{b}})^{n} - n P_{\mathrm{b}} (1 - P_{\mathrm{b}})^{n-1} = \sum\limits_{i=2}^{n} \binom{n}{i} P_{\mathrm{b}}^{i} (1 - P_{\mathrm{b}})^{n-i}
+> $$
+
+### 交织
+
+当出现突发差错时，单个码字中可能出现多位差错，超出纠错码的纠错能力，导致纠错失败。为此，可通过**交织 (interleaving)** 技术将突发差错扩散到多个码字中，从而提高纠错码的有效性。
+
+![[交织.png]]
+
+通常使用**块交织 (block interleaver)**，即将若干个码字**按行填入**一个矩阵，然后**按列读出**形成交织后的码字流。
++ 交织块的宽度或列数 $N$ 通常取**分组码的码长 $n$**；
++ 交织块的高度或行数 $M$ 称为**交织深度 (interleaving depth)**，通常取决于信道的突发差错特性，决定了相邻码元交织后的间隔。
+
+若分组码的纠错能力为 $n = N$ 位中的 $t$ 位错，交织后纠错能力提升为 $MN$ 位中的 $Mt$ 位错。
+
+
+# _§5_ 多用户通信
+
+## 资源切分
+
+多用户通信专注于讨论简单拓扑结构下**多个信息流（收发对）共享通信资源（时，频等）的方法**，包括多址（局域网）和复接（广域网）。
+
+**多址 (multi access) 通信**是局域网的核心知识，典型的局域网拓扑包括：
+
+![[局域网拓扑.png]]
+
+广域网的长距离传输，为提效、降成本，常把多个用户的信息流通过共同的光纤、铜缆、卫星、微波中继传输，称为**复接 (multiplexing)**。
+
+![[广域网拓扑.png]]
+
+无论是多址，还是复接，本质上都依赖于对通信资源的划分，又称**信道化 (channelization)**。
+
+### 时分与频分多址
+
+**时分多址 (time division multiple access, TDMA)** 是将时间划分为多个时隙，不同用户在不同的时隙内发送数据，从而实现多个用户共享同一频带；**频分多址 (frequency division multiple access, FDMA)** 是将频带划分为多个子信道，不同用户在不同的子信道内发送数据，从而实现多个用户同时传输数据。
+
+TD 与 FD 实现简洁，且可以混用，如第 2 代移动通信中的 D-AMPS 系统。
+
+> [!remark] 题型：TDMA、FDMA 与物理层参数
+> **典型题型**　给定多址系统的部分网络层参数（用户数 $N$、用户数据速率 $R_{\mathrm{b}}$）和物理层参数（总带宽 $B$、滚降系数 $\alpha$），求 TDMA/FDMA 方案（载频 $f_{i}$、调制阶数 $M$）。
+> 
+> 仍然是欠定问题，不妨先分解 $N = n_{\mathrm{T}}n_{\mathrm{F}}$，每个 $\cfrac{B}{n_{\mathrm{F}}}$ 宽的频带有 $n_{\mathrm{T}}$ 个时隙，需要承载 $n_{\mathrm{T}}R_{\mathrm{b}}$ 的速率。由[[#载波传输#^ShengyuxianDaitongDianxingKaofa|带通升余弦系统]]的知识可知，调制阶数 $M$ 满足
+> $$
+> \cfrac{n_{\mathrm{T}} R_{\mathrm{b}}}{\dfrac{\log M}{1+\alpha}} \le \dfrac{B}{n_{\mathrm{F}}} \implies \log M \ge \dfrac{n_{\mathrm{T}} n_{\mathrm{F}} R_{\mathrm{b}} (1+\alpha)}{B} = \dfrac{N R_{\mathrm{b}} (1+\alpha)}{B}
+> $$
+> 由此可确定调制阶数 $M$，且其与 $N$ 的分解方式无关。
+> 
+> $M$ 确定后，对应于 $n_{\mathrm{T}}$ 可得升余弦的实际带宽 $B_{n_{\mathrm{T}}} = \cfrac{n_{\mathrm{T}} R_{\mathrm{b}}}{\log M} (1+\alpha)$，从而可确定各载频 $f_{i}$ 使得各频带尽量分散。
+> 
+> 反过来，如果已知对各子频带的带宽有要求，则可以据此确定所能支持的用户数 $n_{\mathrm{T}}$，从而确定总用户数 $N$ 的分解方式。
+
+### 时分复接
+
+**时分复接 (time division multiplexing, TDM)** 是将时间划分为多个时隙，不同用户在不同的时隙内发送数据，从而实现多个用户共享同一频带。TDM 与 TDMA 的区别在于，TDM 强调**多个用户的信息流分时隙接入同一个设备**，而 TDMA 强调**多个用户分时隙共享同一个信道**。
+
+## 访问控制
+
+### Aloha
+
+#### 纯 Aloha
+
+Aloha 是夏威夷大学开发的无线多址协议，基本思想是**随机接入 (random access)**，即用户在有数据发送时**随机选择时间**发送数据。发送后，
++ 若无冲突，接收方发送确认 (ACK)，发送方收到 ACK 后结束传输；
++ 若有冲突，发送方在**随机等待一段时间**后重新发送数据。
+
+![[Aloha.png]]
+
+由于 Aloha 中采用**定长分组**，记帧长为 $b$ 个 bit，传输速率为 $R_{\mathrm{b}}$ (bit/s)，则每帧传输时间为 $T_{\mathrm{fr}} = \cfrac{b}{R_{\mathrm{b}}}$。定义 Aloha 系统的**供给业务量** $G$ 为**每帧**时间内「尝试传输」的平均次数，则单位时间内「尝试传输」的平均次数即**总帧生成率**为 $\lambda_{\mathrm{t}} = \cfrac{G}{T_{\mathrm{fr}}}$；再记**成功传输概率**（无任何碰撞的概率）为 $p_{\mathrm{suc}}$，则单位时间内成功传输的平均次数为 $\lambda_{\mathrm{t}} p_{\mathrm{suc}}$。
+
+给出一个引理：大量独立同分布更新过程的叠加为一个 Poisson 过程。因此，对于海量用户，记每个用户单位时间内尝试接入的次数即**用户帧生成率**为 $\lambda_{\mathrm{u}}$，则所有用户的**总帧生成率**为 $\lambda_{\mathrm{t}} = N \lambda_{\mathrm{u}}$。换言之，
++ 单个用户的尝试（帧）到达率 $\lambda_{\mathrm{u}} = \cfrac{\lambda _\mathrm{t}}{N} \xrightarrow{N \to +\infty} 0$；
++ 对任意一个给定的用户来说，其看到的「背景业务」（其他用户的尝试）到达率为 $(N - 1) \lambda_{\mathrm{u}} \approx \cfrac{N-1}{N} \lambda_{\mathrm{t}} \xrightarrow{N \to +\infty} \lambda_{\mathrm{t}}$。
+
+这样，对于任意一个给定的用户来说，其看到的**背景业务到达过程**为**参数为 $\lambda_{\mathrm{t}}$ 的 Poisson 过程**。本用户在时间 $t$ 发送一帧数据，若在**脆弱时间 (vulnerable time) $[t - T_{\mathrm{fr}}, t + T_{\mathrm{fr}}]$** 内有其他用户发送数据，则会发生碰撞，导致发送失败。由于背景业务到达过程为参数为 $\lambda_{\mathrm{t}}$ 的 Poisson 过程，因此在该时间段内没有其他用户发送数据的概率为
+$$
+p_{\mathrm{suc}} = \Pr \left\{ N(2T_{\mathrm{fr}}) = 0 \right\} = \e^{-2 \lambda_{\mathrm{t}} T_{\mathrm{fr}}} = \e^{-2G}
+$$
+
+> [!theorem] Aloha 系统的吞吐量
+> 海量用户 Aloha 系统在单位时间内成功传输的帧数即**帧吞吐量**为
+> $$
+> \lambda = \lambda_{\mathrm{t}} \e^{-2\lambda_{\mathrm{t}} T_{\mathrm{fr}}} = \dfrac{G}{T_{\mathrm{fr}}} \cdot \e^{-2G}
+> $$
+> **比特吞吐量**为
+> $$
+> \lambda_{\mathrm{b}} = \lambda b = R_{\mathrm{b}} G \e^{-2G}
+> $$
+> 其传输速率 $R_{\mathrm{b}}$ 中被有效利用的比例即**归一化吞吐量**为
+> $$
+> \rho = \dfrac{\lambda_{\mathrm{b}}}{R_{\mathrm{b}}} = G \e^{-2G}
+> $$
+
+#### 时隙 Aloha
+
+**时隙 Aloha (slotted Aloha)** 是对 Aloha 的改进，假设所有用户**时间同步**，将时间划分为多个时隙，用户只能在**时隙开始**时发送数据。
+
+![[时隙 Aloha.png]]
+
+这样，脆弱时间缩短为 $T_{\mathrm{fr}}$，成功传输概率变为
+$$
+p_{\mathrm{suc}} = \Pr \left\{ N(T_{\mathrm{fr}}) = 0 \right\} = \e^{-\lambda_{\mathrm{t}} T_{\mathrm{fr}}} = \e^{-G}
+$$
+或者，每个用户在一个时隙内的发送概率为 $p = \lambda_{\mathrm{u}} T_{\mathrm{fr}} = \cfrac{\lambda_{\mathrm{t}}T_{\mathrm{fr}}}{N} = \cfrac{G}{N}$，则在该时隙内有且仅有一个用户发送数据的概率为
+$$
+N p_{\mathrm{u},\mathrm{suc}} = N \cdot p (1 - p)^{N - 1} = G \left( 1 - \dfrac{G}{N} \right)^{N-1} \xrightarrow{N \to +\infty} G \e^{-G}
+$$
+
+> [!theorem] 时隙 Aloha 系统的吞吐量
+> 海量用户时隙 Aloha 系统的**帧吞吐量**为
+> $$
+> \lambda = \lambda_{\mathrm{t}} \e^{-\lambda_{\mathrm{t}} T_{\mathrm{fr}}} = \dfrac{G}{T_{\mathrm{fr}}} \cdot \e^{-G}
+> $$
+> **比特吞吐量**为
+> $$
+> \lambda_{\mathrm{b}} = \lambda b = R_{\mathrm{b}} G \e^{-G}
+> $$
+> 其**归一化吞吐量**为
+> $$
+> \rho = \dfrac{\lambda_{\mathrm{b}}}{R_{\mathrm{b}}} = G \e^{-G}
+> $$
+
+> [!remark] 题型：Aloha 与时隙 Aloha
+> **典型题型 1**　对于海量用户 Aloha 与时隙 Aloha 系统，求最能有效利用信息速率 $R_{\mathrm{b}}$ 的供给业务量 $G$、帧生成率 $\lambda_{\mathrm{t}}$、帧长 $b$ 或帧传输时间 $T_{\mathrm{fr}}$。
+> 
+> + 纯 Aloha 对 $\rho = G\e^{-2G}$ 求导得到 $G^{*} = \cfrac{1}{2}$，此时 $\rho_{\mathrm{max}} = \cfrac{1}{2\e} \approx 0.184$。
+> + 时隙 Aloha 对 $\rho = G\e^{-G}$ 求导得到 $G^{*} = 1$，此时 $\rho_{\mathrm{max}} = \cfrac{1}{\e} \approx 0.368$。
+> 
+> 确定 $G$ 后，可由约束 $\lambda_{\mathrm{t}} T_{\mathrm{fr}} = G$、$T_{\mathrm{fr}} = \cfrac{b}{R_{\mathrm{b}}}$ 求解出相应的参数。
+> 
+> ---
+> 
+> **典型题型 2**　给定 Aloha 或时隙 Aloha 系统的部分参数（如单用户帧生成率 $\lambda_{\mathrm{u}}$、帧长 $b$ 等）与部分物理层参数（如工作频率），求对通信链路速率 $R_{\mathrm{b}}$ 利用率最高的物理层参数（如滚降系数 $\alpha$、调制阶数 $M$）。
+> 
+> 由 $G^{*} = 0.5$ 或 $1$，结合 $\lambda_{\mathrm{t}} = N \lambda_{\mathrm{u}}$ 和 $T_{\mathrm{fr}} = \cfrac{b}{R_{\mathrm{b}}}$ 可得
+> $$
+> R_{\mathrm{b}}^{*} = \dfrac{N \lambda_{\mathrm{u}} b}{G^{*}}
+> $$
+> 结合物理层速率表达式（如带宽 $B$、调制阶数 $M$、滚降系数 $\alpha$ 等），即可求解出最优物理层参数。
+
+### 载波侦听 (CSMA)
+
+**载波侦听多址 (carrier sense multiple access, CSMA)** 是对 Aloha 的进一步改进，用户在发送数据前**先监听信道**，若信道空闲则发送数据，若信道忙碌则等待一段随机时间后重新监听。CSMA 可分为三种类型：
++ **非坚持 CSMA (non-persistent CSMA)**：信道忙碌时，用户等待一段随机时间后重新监听信道；
++ **1-坚持 CSMA (1-persistent CSMA)**：信道忙碌时，用户持续监听信道，直至信道空闲后立即发送数据；
++ **$p$-坚持 CSMA ($p$-persistent CSMA)**：适用于时隙化信道，信道空闲时，用户以概率 $p$ 发送数据，以概率 $1-p$ 等待下一个时隙。
+
+#### CSMA/CD 与以太网
+
+以太网的核心协议**带冲突检测的载波侦听 (CSMA with collision detection, CSMA/CD)** 是基于 CSMA 的改进。其基本思想是，用户在发送数据时**持续监听信道**，若检测到冲突，则**立即停止发送**。
+
+为了更好地「通知」全网发生了冲突，在检测到冲突时发送一个**冲突信号 (jamming signal)**。以太网**有线媒介的封闭特性**决定了对于网中任意节点发送的信号在其它各节点处侦听的功率近似相同，这使得可以很容易地区分**信道空闲**、**信道忙碌**和**信道冲突** 3 种状态，从而实现载波侦听。
+
+设网络中最大传播时间为 $\tau$，则
++ 为了确保发送节点能够检测到冲突，需有**帧长 $T_{\mathrm{fr}} > 2\tau$**；
++ 自上一帧传完起，**经过 $\tau$ 时间**后最远的节点也**确认信道空闲**，此时才开始竞争；
++ 每次竞争耗时 $2\tau$ （从发送节点发送信号到最远节点，再从最远节点返回发送节点），可设**经过 $k$ 次竞争**后成功。
+
+这样，传输 1 帧的平均耗时为
+$$
+\mathbb{E} \left[ T \right] = \mathbb{E} \left[ T_{\mathrm{fr}} + \tau + 2\tau k \right] = T_{\mathrm{fr}} + \tau + 2\tau \mathbb{E} \left[ k \right]
+$$
+可记 $a = \cfrac{\tau}{T_{\mathrm{fr}}}$，则（总有用户试图尝试接入时）**CSMA/CD 的效率**为
+$$
+\eta = \dfrac{T_{\mathrm{fr}}}{\mathbb{E} \left[ T \right]} = \dfrac{1}{1 + a (1 + 2 \mathbb{E} \left[ k \right])}
+$$
+
+设用户尝试接入的概率为 $q$，则一个竞争时隙内有且仅有一个用户发送数据的概率为
+$$
+\gamma = N q (1 - q)^{N - 1}
+$$
+知 $q = \cfrac{1}{N}$ 时，$\gamma$ 取最大值 $\gamma_{\mathrm{max}} = \left( 1 - \cfrac{1}{N} \right)^{N - 1} \xrightarrow{N \to +\infty} \cfrac{1}{\e}$。因此，**平均竞争次数**为
+$$
+\mathbb{E} \left[ k \right] = \sum_{k=1}^{+\infty} k \cdot (1 - \gamma)^{k-1} \gamma = \dfrac{1}{\gamma} \xrightarrow{N \to +\infty} \e
+$$
+代入效率表达式，得到 **CSMA/CD 的效率极限**为
+$$
+\eta_{\mathrm{max}} = \dfrac{1}{1 + a (1 + 2\e)} \approx \dfrac{1}{1 + 6.44a}
+$$
+
+#### CSMA/CA 与无线局域网
+
+**带冲突避免的载波侦听 (CSMA with collision avoidance, CSMA/CA)** 是对 CSMA 的改进，适用于无线局域网。由于无线信道的**开放特性**，节点难以区分**信道忙碌**和**信道冲突**，因此 CSMA/CD 不适用于无线局域网。CSMA/CA 通过引入**确认机制 (acknowledgment)** 和**随机退避 (random backoff)** 来避免冲突。
+
+具体而言，CSMA/CA 的工作流程如下：
+1. 发送方监听信道，若信道忙碌则等待一段随机时间后重新监听，若信道空闲则发送**请求发送 (RTS, Request to Send)** 帧；
+2. 接收方收到 RTS 帧后，若信道空闲则发送**允许发送 (CTS, Clear to Send)** 帧，通知发送方可以发送数据；
+3. 发送方收到 CTS 帧后，发送数据帧；
+4. 接收方收到数据帧后，发送确认 (ACK) 帧；
+5. 发送方收到 ACK 帧后结束传输。
+
+在 CSMA/CA 中，RTS、CTS 和 ACK 帧帮助网络内用户**虚拟侦听 (virtual carrier sensing)**，从而避免冲突的发生。
+
+### 交换
+
+交换任务是星型网络上、下行链路的核心。为了提高链路利用率，常采用**多级交换结构**，使用多个小规模的交叉开关 (crossbar) 组成大规模交换机。
+
+设有一 $N$ 进 $N$ 出的交换需求，则
++ **完全交叉开关 (full crossbar switch)** 需要 $N^{2}$ 个交叉点 (crosspoint)，成本高昂。
++ 若 $N = n^{2}$，则可采用**两级交换结构**，使用 $n$ 个 $n$ 进 $n$ 出的交叉开关作为第一阶段，另 $n$ 个 $n$ 进 $n$ 出的交叉开关作为第二阶段，总共需要 $2n \cdot n^{2} = 2N^{1.5}$ 个交叉点，成本大幅降低。
++ 若 $N$ 被正整数 $n$ 整除，则可采用**三级交换结构**，使用 $\cfrac{N}{n}$ 个 $n$ 进 $k$ 出交叉开关作为第一阶段，$k$ 个 $\cfrac{N}{n}$ 进 $\cfrac{N}{n}$ 出交叉开关作为第二阶段，另 $\cfrac{N}{n}$ 个 $k$ 进 $n$ 出交叉开关作为第三阶段，总共需要 $2kN + k \cfrac{N^{2}}{n^{2}}$ 个交叉点，成本进一步降低。
+
+![[交换.png]]
+
+## 广域组网
+
+人们希望在大的空间尺度 (Tele-) 上实现广泛 (anywhere, anytime, anyone, anything) 的连接 (communication)，从而形成**广域网 (wide area network, WAN)**。广域网通常由多个局域网通过路由器互联而成，覆盖范围广泛，支持长距离通信。
+
+广域网的拓扑结构相对时域网复杂而多样，可以用有权（甚至有向）图 $G = (V,E)$ 来表示，边 $(i,j)$ 的权重 $C(i,j)$ 表示从节点 $i$ 到节点 $j$ 的**传输开销 (cost)**，如时延、跳数、带宽消耗、经济费用等。
+
+无论是电话网抑或计算机网，因为**鲁棒性需要**和**自组织建设**而常**有环**，于是从信源到信宿可能有大量可行的路径，需要找寻一条最优路径。要求这一寻路算法：
+1. 易扩展（面向生长中的大型网络）；
+2. 分布式（尽量减少信令交互）；
+3. 动态自适应（于网络状态变化）；
+4. 收敛快。
+
+### Bellman-Ford 算法与距离矢量协议
+
+**Bellman-Ford 算法**是一种分布式的最短路径算法，其基本思想是通过**动态规划**的方式，逐步更新各节点到目标节点的最短路径估计值，直到收敛为止。每个节点仅需**与其直接邻居交换信息**，从而实现分布式计算。基于 Bellman-Ford 算法，设计提出了**距离矢量路由协议 (distance vector routing protocol)**，如 RIP（路由信息协议）。
+
+> [!algo.] 基于 Bellman-Ford 的距离矢量路由
+> 距离矢量协议的基本思想是每个节点 $i$ 维护一个**距离矢量 (distance vector)** $\v{D}_{i} = ( D_{i}(1), D_{i}(2), \ldots, D_{i}(|V|) )$，其中 $D_{i}(j)$ 表示节点 $i$ 到节点 $j$ 的当前最短路径估计值。
+> 
+> ---
+> 
+> **GIVEN —** 
+> + 图 $G = (V,E)$ 及其边权重 $C(i,j)$；
+> + 本地节点 $a$。
+>   
+> **INITIALIZE —**
+> 1. 对每个节点 $i \in V$，设置 $D_{a}(i) = \begin{cases} 0, & i = a, \\ C(a,i), & (a,i) \in E, \\ +\infty, & \text{otherwise} \end{cases}$。
+> 2. 将 $\v{D}_{a}$ 发送给所有邻居节点。
+> 
+> **REPEAT —**
+> 当收到邻居节点 $b$ 发送的距离矢量 $\v{D}_{b}$ 时，
+> 1. 对每个节点 $i \in V$，计算通过邻居 $b$ 到达节点 $i$ 的路径长度 $D_{a}^{\text{new}}(i) = C(a,b) + D_{b}(i)$；
+> 2. 若 $D_{a}^{\text{new}}(i) < D_{a}(i)$，则更新 $D_{a}(i) = D_{a}^{\text{new}}(i)$，同时对应记录下一跳节点为 $b$。
+> 
+> 若有变化，将更新后的距离矢量 $\v{D}_{a}$ 发送给所有邻居节点。
+> 
+> **OUTPUT —**
+> 最终的距离矢量 $\v{D}_{a}$，表示节点 $a$ 到所有节点的最短路径估计值，以及对应目标节点的下一跳节点。
+
+Bellman-Ford 算法的优点在于其**分布式**和**易扩展**的特性，适用于大型动态网络。然而，其缺点也很明显：当网络链路变化甚至断线后，可能出现**计数发散 (count to infinity)**，即距离估计值不断增大，导致收敛缓慢。
+
+### Dijkstra 算法与链路状态协议
+
+**Dijkstra 算法**是一种集中式的最短路径算法，其基本思想是通过**贪心策略**，逐步扩展已知最短路径的节点集合，直到找到从源节点到所有节点的最短路径。基于 Dijkstra 算法，设计提出了**链路状态路由协议 (link state routing protocol)**，如 OSPF（开放最短路径优先）。
+
+> [!algo.] 基于 Dijkstra 的链路状态路由
+> 链路状态协议的基本思想是每个节点 $i$ 维护一个**链路状态数据库 (link state database)**，包含网络中所有节点及其连接关系和边权重信息。
+> 
+> ---
+> 
+> **GIVEN —**
+> + 图 $G = (V,E)$ 及其边权重 $C(i,j)$；
+> + 本地节点 $a$。
+> 
+> **INITIALIZE —**
+> 1. 设置已知最短路径节点集合 $S = \{ a \}$；
+> 2. 对每个节点 $i \in V$，设置 $D_{a}(i) = \begin{cases} 0, & i = a, \\ C(a,i), & (a,i) \in E, \\ +\infty, & \text{otherwise} \end{cases}$。
+> 
+> **REPEAT —**
+> 1. 从 $V \setminus S$ 中选择距离 $D_{a}(j)$ 最小的节点 $j$，将其加入集合 $S$；
+> 2. 对每个节点 $i \in V \setminus S$，计算通过节点 $j$ 到达节点 $i$ 的路径长度 $D_{a}^{\text{new}}(i) = D_{a}(j) + C(j,i)$；
+> 3. 若 $D_{a}^{\text{new}}(i) < D_{a}(i)$，则更新 $D_{a}(i) = D_{a}^{\text{new}}(i)$，同时对应记录下一跳节点为 $j$。
+> 
+> 　**UNTIL —** $S = V$。
+> 
+> **OUTPUT —**
+> 最终的距离矢量 $\v{D}_{a}$，表示节点 $a$ 到所有节点的最短路径估计值，以及对应目标节点的下一跳节点。
+
