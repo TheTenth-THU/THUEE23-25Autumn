@@ -21,6 +21,7 @@ longform:
   ignoredFiles:
     - CONTENT
     - 
+    - EXPORT
 ---
 ## 教师信息
 
