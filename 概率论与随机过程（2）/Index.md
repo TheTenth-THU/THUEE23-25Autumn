@@ -11,8 +11,8 @@ longform:
     - Brown 运动
     - Gauss 过程
     - Hilbert 变换
+    - - Markov 链
     - Poisson 过程
-    - Markov 链
     - 例题
   ignoredFiles: []
 ---
