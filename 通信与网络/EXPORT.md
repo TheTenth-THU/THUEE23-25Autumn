@@ -217,7 +217,10 @@ $$
 > [!example]- 均匀分布的微分熵
 > 对 $X \sim \mathcal{U}(a, b)$，有 $p_{X}(x) = \dfrac{1}{b - a}$，因此
 > $$
-> h(X) = - \dint_{a}^{b} p_{X}(x) \log p_{X}(x) \dif x = - \dint_{a}^{b} \dfrac{1}{b - a} \log \dfrac{1}{b - a} \dif x = \mark{ \log (b - a) }
+> \begin{align} 
+> h(X) &= - \dint_{a}^{b} p_{X}(x) \log p_{X}(x) \dif x  \\
+> &= - \dint_{a}^{b} \dfrac{1}{b - a} \log \dfrac{1}{b - a} \dif x = \mark{ \log (b - a) } 
+> \end{align}
 > $$
 > 这是给定**有限区间长度**约束下的最大微分熵。
 
@@ -254,7 +257,10 @@ $$
 > [!definition] 联合微分熵
 > 考虑两个连续随机变量 $X$ 和 $Y$，其联合概率密度函数为 $p_{X, Y}(x, y)$，则 $X$ 和 $Y$ 的**联合微分熵 (joint differential entropy)** 定义为
 > $$
-> h(X, Y) = \mathbb{E}_{X, Y} [ - \log p_{X, Y}(X, Y) ] = - \dint_{-\infty}^{+\infty} \dint_{-\infty}^{+\infty} p_{X, Y}(x, y) \log p_{X, Y}(x, y) \dif x \dif y
+> \begin{align} 
+> h(X, Y) &= \mathbb{E}_{X, Y} [ - \log p_{X, Y}(X, Y) ]  \\
+> &= - \dint_{-\infty}^{+\infty} \dint_{-\infty}^{+\infty} p_{X, Y}(x, y) \log p_{X, Y}(x, y) \dif x \dif y 
+> \end{align}
 > $$
 > 在没有歧义的情况下，联合微分熵 $h(X,Y)$ 可记为 $h(XY)$。
 
@@ -265,7 +271,10 @@ $$
 > $$
 > 则以 $Y$ 为条件的 $X$ 的**条件微分熵 (conditional differential entropy)** 定义为
 > $$
-> h(X \mid Y) = \mathbb{E}_{X, Y} [ - \log p_{X \mid Y}(X, Y) ] = - \dint_{-\infty}^{+\infty} \dint_{-\infty}^{+\infty} p_{X, Y}(x, y) \log p_{X \mid Y}(x, y) \dif x \dif y
+> \begin{align} 
+> h(X \mid Y) &= \mathbb{E}_{X, Y} [ - \log p_{X \mid Y}(X, Y) ]  \\
+> &= - \dint_{-\infty}^{+\infty} \dint_{-\infty}^{+\infty} p_{X, Y}(x, y) \log p_{X \mid Y}(x, y) \dif x \dif y 
+> \end{align}
 > $$
 
 类似地，微分熵也有**链式法则**
@@ -315,8 +324,8 @@ I(X; Y) &= H(X) + H(Y) - H(X, Y) \\
 &= - \sum\limits_{i} p_{i} \log p_{i} - \sum\limits_{j} p_{j} \log p_{j} + \sum\limits_{i} \sum\limits_{j} p_{ij} \log p_{ij} \\
 &= - \sum\limits_{i} \sum\limits_{j} p_{ij} \log p_{i} - \sum\limits_{i} \sum\limits_{j} p_{ij} \log p_{j} + \sum\limits_{i} \sum\limits_{j} p_{ij} \log p_{ij} \\
 &= \sum\limits_{i} \sum\limits_{j} p_{ij} \log \dfrac{p_{ij}}{p_{i} p_{j}} 
-= \sum\limits_{i} \sum\limits_{j} p_{ij} \log \dfrac{p_{j \mid i}}{p_{j}} 
-= \mark{ \sum\limits_{i} \sum\limits_{j} p_{i} p_{j \mid i} \log \dfrac{p_{j \mid i}}{\sum\limits_{i} p_{i} p_{j \mid i}}  }
+= \sum\limits_{i} \sum\limits_{j} p_{ij} \log \dfrac{p_{j \mid i}}{p_{j}} \\
+&= \mark{ \sum\limits_{i} \sum\limits_{j} p_{i} p_{j \mid i} \log \dfrac{p_{j \mid i}}{\sum\limits_{i} p_{i} p_{j \mid i}}  }
 \end{align}
 $$
 
@@ -391,10 +400,12 @@ $$
 对 MSC，有
 $$
 \begin{align}
-I(X; Y) &= H(Y) - H(Y \mid X) = - \sum\limits_{j=1}^{M} p_{j} \log p_{j} + \sum\limits_{i=1}^{M} p_{i} \sum\limits_{j=1}^{M} p_{j \mid i} \log p_{j \mid i} \\
+I(X; Y) &= H(Y) - H(Y \mid X)  \\
+&= - \sum\limits_{j=1}^{M} p_{j} \log p_{j} + \sum\limits_{i=1}^{M} p_{i} \sum\limits_{j=1}^{M} p_{j \mid i} \log p_{j \mid i} \\
 &= - \sum\limits_{j=1}^{M} p_{j} \log p_{j} + \sum\limits_{i=1}^{M} p_{i} \big( (1 - (M-1)\epsilon) \log (1 - (M-1)\epsilon)  \\[-1em]
 &\hspace{11.5em} + (M-1) \epsilon \log \epsilon \big) \\
-&= - \sum\limits_{j=1}^{M} p_{j} \log p_{j} + \underbrace{ (1 - (M-1)\epsilon) \log (1 - (M-1)\epsilon) + (M-1) \epsilon \log \epsilon }_{ \text{const} } \\
+&= - \sum\limits_{j=1}^{M} p_{j} \log p_{j} + \underbrace{ (1 - (M-1)\epsilon) \log (1 - (M-1)\epsilon) }_{ \text{const} } \\
+&\hspace{7.3em}  + \underbrace{ (M-1) \epsilon \log \epsilon }_{ \text{const} }  \\
 &\le \log M + \text{const}
 \end{align}
 $$
@@ -552,9 +563,11 @@ $$
 \Pr \left\{ y < x - A \mid x \right\} &= \dint_{-\infty}^{x - A} p(y \mid x) \dif y 
 = \dint_{-\infty}^{-A} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{ - \tfrac{z^{2}}{2 \sigma^{2}} } \dif z \\
 &= \int_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{-\tfrac{z^{2}}{2 \sigma^{2}}} \dif z 
-= \dint_{A/\sigma}^{+\infty} \dfrac{1}{\sqrt{2 \pi}} \e^{-\tfrac{z^{2}}{2}} \dif z = Q\left( \dfrac{A}{\sigma} \right) \\
+= \dint_{A/\sigma}^{+\infty} \dfrac{1}{\sqrt{2 \pi}} \e^{-\tfrac{z^{2}}{2}} \dif z  \\
+&= Q\left( \dfrac{A}{\sigma} \right) \\
 \Pr \left\{ y > x + A \mid x \right\} &= \dint_{x + A}^{+\infty} p(y \mid x) \dif y
-= \dint_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{ - \tfrac{z^{2}}{2 \sigma^{2}} } \dif z = Q\left( \dfrac{A}{\sigma} \right)
+= \dint_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{ - \tfrac{z^{2}}{2 \sigma^{2}} } \dif z  \\
+&= Q\left( \dfrac{A}{\sigma} \right)
 \end{align}
 $$
 这里 $Q(x)$ 是 **Q 函数 (Q-function)**，定义为
@@ -637,8 +650,8 @@ $$
 其中 $\mathbb{1}_{P}$ 为事件 $P$ 的指示函数。由此，时域恢复的信源为
 $$
 \begin{align}
-\hat{s}(t) &= \mathcal{F}^{-1}\left\{ \hat{S}(f) \right\} = \dint_{-\infty}^{+\infty} \hat{S}(f) \e^{\J 2 \pi f t} \dif f 
-= \dint_{-W}^{W} \dfrac{1}{f_{\mathrm{s}}} \sum\limits_{k} s(kT_{\mathrm{s}}) \e^{-\J 2 \pi f k T_{\mathrm{s}}} \e^{\J 2 \pi f t} \dif f \\
+\hat{s}(t) &= \mathcal{F}^{-1}\left\{ \hat{S}(f) \right\} = \dint_{-\infty}^{+\infty} \hat{S}(f) \e^{\J 2 \pi f t} \dif f \\
+&= \dint_{-W}^{W} \dfrac{1}{f_{\mathrm{s}}} \sum\limits_{k} s(kT_{\mathrm{s}}) \e^{-\J 2 \pi f k T_{\mathrm{s}}} \e^{\J 2 \pi f t} \dif f \\
 &= \dfrac{1}{f_{\mathrm{s}}} \sum\limits_{k} s(kT_{\mathrm{s}}) \dint_{-W}^{W} \e^{\J 2 \pi f (t - kT_{\mathrm{s}})} \dif f 
 = \sum\limits_{k} s(kT_{\mathrm{s}}) \dfrac{\sin (2\pi W(t-kT_{\mathrm{s}}))}{\pi f_{\mathrm{s}} (t-kT_{\mathrm{s}})}
 \end{align}
@@ -686,7 +699,7 @@ $$
 
 若信源 $x$ 超出量化器的表示范围 $[x_{1}, x_{L+1}]$，则会发生**过载失真 (saturation distortion)**，此时量化误差相当于将过载部分全部映射为 $y_{1}$ 或 $y_{L}$，量化误差可拆分为
 $$
-\sigma^{2} = \sigma^{2}_{\mathrm{q}} + \sigma^{2}_{\mathrm{o}}, \qquad
+\sigma^{2} = \sigma^{2}_{\mathrm{q}} + \sigma^{2}_{\mathrm{o}}, \quad
 \begin{cases}
 \sigma^{2}_{\mathrm{q}} = \sum\limits_{i=1}^{L} \dint_{x_{i}}^{x_{i+1}} (x - y_{i})^{2} p_{X}(x) \dif x, \\
 \sigma^{2}_{\mathrm{o}} = \dint_{-\infty}^{x_{1}} (x - y_{1})^{2} p_{X}(x) \dif x + \dint_{x_{L+1}}^{\infty} (x - y_{L})^{2} p_{X}(x) \dif x
@@ -738,7 +751,7 @@ $$
 + 对 $x_{i}$ 求偏导，得
 $$
 \dfrac{\partial \sigma^{2}}{\partial x_{i}} = (x_{i} - y_{i})^{2} p_{X}(x_{i}) - (x_{i} - y_{i-1})^{2} p_{X}(x_{i}) = 0
-\quad \Longrightarrow \quad
+\implies
 x_{i} = \dfrac{y_{i} + y_{i-1}}{2}
 $$
 由此导出**最近邻居准则**：每个分层电平 $x_{i}$ 应取为相邻两个重建电平 $y_{i-1}$ 和 $y_{i}$ 的中点，这**与 $x$ 的分布无关**。
@@ -746,10 +759,20 @@ $$
 + 对 $y_{i}$ 求偏导，得
 $$
 \dfrac{\partial \sigma^{2}}{\partial y_{i}} = -2 \dint_{x_{i}}^{x_{i+1}} (x - y_{i}) p_{X}(x) \dif x = 0
-\quad \Longrightarrow \quad
+\implies
 y_{i} = \dfrac{\dint_{x_{i}}^{x_{i+1}} x p_{X}(x) \dif x}{\dint_{x_{i}}^{x_{i+1}} p_{X}(x) \dif x}
 $$
 由此导出**重心准则**：每个重建电平 $y_{i}$ 应取为对应量化区间内 $x$ 的条件期望，这**与 $x$ 的分布有关**。
+
+> [!example] 非均匀量化器设计示例
+> 设信源 $X$ 服从概率密度函数 $p_{X}(x) = \begin{cases}1+x, & -1 \le x \le 0, \\ 1 - x, & 0 \le x \le 1\end{cases}$，一个 2-bit 量化器若将**分层电平**设置在 $-1$、$-\cfrac{1}{2}$、0、$\cfrac{1}{2}$、1 处，则根据重心准则，对应的**重建电平**应为
+> $$
+> \begin{align}
+> y_{1} &= \dfrac{\dint_{-1}^{-1/2} x (1+x) \dif x}{\dint_{-1}^{-1/2} (1+x) \dif x} = - \dfrac{2}{3}, && y_{4} = -y_{1} = \dfrac{2}{3},\\
+> y_{2} &= \dfrac{\dint_{-1/2}^{0} x (1+x) \dif x}{\dint_{-1/2}^{0} (1+x) \dif x} = - \dfrac{2}{9}, && y_{3} = -y_{2} = \dfrac{2}{9}
+> \end{align}
+> $$
+> 显然，这组重建电平不满足最近邻居准则，因此需要重新调整分层电平，迭代进行直到收敛。
 
 > [!algo.] Lloyd-Max 算法 
 > Lloyd-Max 算法综合考虑**最近邻居准则**和**重心准则**，通过迭代优化非均匀量化器的分层电平 $\{ x_{i} \}$ 和重建电平 $\{ y_{i} \}$。
@@ -773,6 +796,14 @@ $$
 > 
 > **OUTPUT —**
 > 最终分层电平 $\{ x_{i}^{*} \}$ 和重建电平 $\{ y_{i}^{*} \}$
+
+在此部分计算中，常见到如下积分：
+$$
+\begin{align} 
+& \dint x(kx + b) \dif x = \dfrac{k x^{3}}{3} + \dfrac{b x^{2}}{2} + C, \\
+& \dint (x - y_{0})^{2}(k x + b) \dif x = \dfrac{b\,\left({x-y}\right)^{3}}{3}+k\,\left(\dfrac{{x}^{4}}{4}-\dfrac{2\,y\,{x}^{3}}{3}+\dfrac{{y}^{2}\,{x}^{2}}{2}\right)+C
+\end{align}
+$$
 
 #### 压扩量化
 
@@ -1127,8 +1158,10 @@ P_{\mathrm{s}} &\approx 2 \times \Pr\left\{ z_{\mathrm{Q}} > A \sin \dfrac{\pi}{
 $$
 类似地，取 **Gray 映射**，近似误比特率为
 $$
-P_{\mathrm{b}} \approx \dfrac{2}{\log_{2} M} Q\left( \sin \dfrac{\pi}{M} \sqrt{ \log_{2} M \cdot \dfrac{\t{\sigma}_{x}^{2}}{\sigma^{2}} } \right)
-\approx \dfrac{2}{\log_{2} M} Q\left( \dfrac{\pi}{M} \sqrt{ \log_{2} M \cdot \dfrac{\t{\sigma}_{x}^{2}}{\sigma^{2}} } \right)
+\begin{align} 
+P_{\mathrm{b}} &\approx \dfrac{2}{\log_{2} M} Q\left( \sin \dfrac{\pi}{M} \sqrt{ \log_{2} M \cdot \dfrac{\t{\sigma}_{x}^{2}}{\sigma^{2}} } \right) \\
+&\approx \dfrac{2}{\log_{2} M} Q\left( \dfrac{\pi}{M} \sqrt{ \log_{2} M \cdot \dfrac{\t{\sigma}_{x}^{2}}{\sigma^{2}} } \right) 
+\end{align}
 $$
 
 
@@ -1568,7 +1601,8 @@ $$
 于是
 $$
 \begin{align} 
-S_{X_{\delta}}(f) &= \dfrac{1}{T} \left(  \mathrm{Var}(X) + m_{X}^{2} + m_{X}^{2} \sum\limits_{n \ne 0} \e^{-\J 2 \pi f nT} \right) = \dfrac{\mathrm{Var}(X)}{T} + \dfrac{m_{X}^{2}}{T} \sum\limits_{n=-\infty}^{\infty} \e^{-\J 2 \pi f nT}  \\
+S_{X_{\delta}}(f) &= \dfrac{1}{T} \left(  \mathrm{Var}(X) + m_{X}^{2} + m_{X}^{2} \sum\limits_{n \ne 0} \e^{-\J 2 \pi f nT} \right)  \\
+&= \dfrac{\mathrm{Var}(X)}{T} + \dfrac{m_{X}^{2}}{T} \sum\limits_{n=-\infty}^{\infty} \e^{-\J 2 \pi f nT}  \\
 &= \dfrac{\mathrm{Var}(X)}{T} + \dfrac{m_{X}^{2}}{T^{2}} \sum\limits_{n=-\infty}^{\infty} \delta \left( f - \dfrac{n}{T} \right)
 \end{align}
 $$
@@ -1732,7 +1766,8 @@ $$
 再对 $y_{\mathrm{BB}}(t)$ 进行**最佳接收**，得到
 $$
 \begin{align} 
-\t{y}(kT) &= \dint_{-\infty}^{+\infty} y_{\mathrm{BB}}(\tau) p(\tau - kT) \dif \tau = \big( y(t) \cdot \sqrt{2} \cos(2 \pi f_{\mathrm{c}} t) \big) * h_{\mathrm{LPF}_{W}}(t) * p(-t) \Big|_{t = kT}  \\
+\t{y}(kT) &= \dint_{-\infty}^{+\infty} y_{\mathrm{BB}}(\tau) p(\tau - kT) \dif \tau  \\
+&= \big( y(t) \cdot \sqrt{2} \cos(2 \pi f_{\mathrm{c}} t) \big) * h_{\mathrm{LPF}_{W}}(t) * p(-t) \Big|_{t = kT}  \\
 &= \big( y(t) \cdot \sqrt{2} \cos(2 \pi f_{\mathrm{c}} t) \big) * (h_{\mathrm{LPF}_{W}}(t) * p(-t)) \Big|_{t = kT} \\
 &= \big( y(t) \cdot \sqrt{2} \cos(2 \pi f_{\mathrm{c}} t) \big) * p(-t) \Big|_{t = kT}
 \end{align}
@@ -1753,7 +1788,7 @@ $$
 \begin{align}
 y_{k} = \t{y}(kT) &= \dint_{-\infty}^{+\infty} y(t) \cdot \sqrt{2} \cos(2 \pi f_{\mathrm{c}} t) \cdot p(t - kT) \dif t \\
 &= \dint_{-\infty}^{+\infty} \big( x(t) + z(t) \big) p(t - kT) \cdot \sqrt{2} \cos(2 \pi f_{\mathrm{c}} t) \dif t \\
-&= \dint_{-\infty}^{+\infty} \left( \sum\limits_{i} x_{i}p(t - iT) \right) p(t - kT) \cdot 2 \cos^{2}(2 \pi f_{\mathrm{c}} t) \dif t \hspace{-1.5em}&\text{（信号）}  \\
+&= \dint_{-\infty}^{+\infty} \left( \sum\limits_{i} x_{i}p(t - iT) \right) p(t - kT) \cdot 2 \cos^{2}(2 \pi f_{\mathrm{c}} t) \dif t \hspace{-2em}&\text{（信号）}  \\
 &\hspace{1em}+ \dint_{-\infty}^{+\infty} z(t) p(t - kT) \cdot \sqrt{2} \cos(2 \pi f_{\mathrm{c}} t) \dif t & \text{（噪声）} \\
 \end{align}
 $$
@@ -1761,8 +1796,8 @@ $$
 + 信号项中，$p(t - ik)p(t - kT)$ 与 $\cos(4 \pi f_{\mathrm{c}} t)$ 亦正交，因此
 $$
 \begin{align}
-\text{（信号）}\hspace{-0.5em} &= \sum\limits_{i} x_{i} \dint_{-\infty}^{+\infty} p(t - iT) p(t - kT) \dif t
-= \sum\limits_{i} x_{i} \dint p(t) p(t - (k - i)T) \dif t  \\
+\text{（信号）}\hspace{-0.5em} &= \sum\limits_{i} x_{i} \dint_{-\infty}^{+\infty} p(t - iT) p(t - kT) \dif t \\
+&= \sum\limits_{i} x_{i} \dint p(t) p(t - (k - i)T) \dif t  \\
 &= \sum\limits_{i} x_{i} h((k-i)T) = \sum\limits_{i} x_{i} \delta[k - i] = x_{k}
 \end{align}
 $$
@@ -1792,9 +1827,12 @@ $$
 \begin{align}
 y_{k}^{\mathrm{Q}} &= \dint_{-\infty}^{+\infty} y(t) \cdot \sqrt{2} \sin(2 \pi f_{\mathrm{c}} t) \cdot p(t - kT) \dif t \\
 &= \dint_{-\infty}^{+\infty} \big( x^{\mathrm{I}}(t) + x^{\mathrm{Q}}(t) + z(t) \big) p(t - kT) \cdot \sqrt{2} \sin(2 \pi f_{\mathrm{c}} t) \dif t \\
-&= \dint_{-\infty}^{+\infty} \left( \sum\limits_{i} x_{i}^{\mathrm{I}}p(t - iT) \right) p(t - kT) \cdot 2 \sin(2 \pi f_{\mathrm{c}} t) \cos(2 \pi f_{\mathrm{c}} t) \dif t \hspace{-2em} & \text{（I 路干扰）} \\
-&\hspace{1em}+ \dint_{-\infty}^{+\infty} \left( \sum\limits_{i} x_{i}^{\mathrm{Q}}p(t - iT) \right) p(t - kT) \cdot 2 \sin^{2}(2 \pi f_{\mathrm{c}} t) \dif t &\text{（Q 路信号）} \\
-&\hspace{1em}+ \dint_{-\infty}^{+\infty} z(t) p(t - kT) \cdot \sqrt{2} \sin(2 \pi f_{\mathrm{c}} t) \dif t & \text{（噪声）}
+&= \dint_{-\infty}^{+\infty} \left( \sum\limits_{i} x_{i}^{\mathrm{I}}p(t - iT) \right) p(t - kT) \cdot 2 \sin(2 \pi f_{\mathrm{c}} t) \cos(2 \pi f_{\mathrm{c}} t) \dif t  \\
+&\hspace{1em}\begin{aligned} 
+&& \text{（I 路干扰）} \\
+&+ \dint_{-\infty}^{+\infty} \left( \sum\limits_{i} x_{i}^{\mathrm{Q}}p(t - iT) \right) p(t - kT) \cdot 2 \sin^{2}(2 \pi f_{\mathrm{c}} t) \dif t \hspace{-2em} &\text{（Q 路信号）} \\
+&+ \dint_{-\infty}^{+\infty} z(t) p(t - kT) \cdot \sqrt{2} \sin(2 \pi f_{\mathrm{c}} t) \dif t & \text{（噪声）} 
+\end{aligned}
 \end{align}
 $$
 + 噪声项服从分布 **$z_{k}^{\mathrm{Q}} \sim \mathscr{N}\left( 0, \cfrac{n_{0}}{2} \right)$**。

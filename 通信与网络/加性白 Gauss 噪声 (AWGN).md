@@ -38,9 +38,11 @@ $$
 \Pr \left\{ y < x - A \mid x \right\} &= \dint_{-\infty}^{x - A} p(y \mid x) \dif y 
 = \dint_{-\infty}^{-A} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{ - \tfrac{z^{2}}{2 \sigma^{2}} } \dif z \\
 &= \int_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{-\tfrac{z^{2}}{2 \sigma^{2}}} \dif z 
-= \dint_{A/\sigma}^{+\infty} \dfrac{1}{\sqrt{2 \pi}} \e^{-\tfrac{z^{2}}{2}} \dif z = Q\left( \dfrac{A}{\sigma} \right) \\
+= \dint_{A/\sigma}^{+\infty} \dfrac{1}{\sqrt{2 \pi}} \e^{-\tfrac{z^{2}}{2}} \dif z  \\
+&= Q\left( \dfrac{A}{\sigma} \right) \\
 \Pr \left\{ y > x + A \mid x \right\} &= \dint_{x + A}^{+\infty} p(y \mid x) \dif y
-= \dint_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{ - \tfrac{z^{2}}{2 \sigma^{2}} } \dif z = Q\left( \dfrac{A}{\sigma} \right)
+= \dint_{A}^{+\infty} \dfrac{1}{\sqrt{2 \pi \sigma^{2}}} \e^{ - \tfrac{z^{2}}{2 \sigma^{2}} } \dif z  \\
+&= Q\left( \dfrac{A}{\sigma} \right)
 \end{align}
 $$
 这里 $Q(x)$ 是 **Q 函数 (Q-function)**，定义为
