@@ -164,7 +164,7 @@ $$
 
 由 Poisson 过程的概率分布可知
 $$
-\mathbb{E}[N(t)] = \lambda t, \qquad \mathrm{Var}(N(t)) = \lambda t
+\mathbb{E}[N(t)] = \lambda t, \qquad \mathrm{Var}[N(t)] = \lambda t
 $$
 Poisson 过程的相关函数为
 $$
