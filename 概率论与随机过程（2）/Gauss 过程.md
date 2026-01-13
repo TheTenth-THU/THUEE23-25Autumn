@@ -386,3 +386,35 @@ Gauss 过程的 **Bussgang 性质 (Bussgang property)** 是 Price 定理的一�
 > \mathbb{E} \left[ X h(Y) \right] = C \mathbb{E} \left[ XY \right] 
 > $$
 > 其中 $C$ 是仅依赖于 $Y$ 的常数，具体为 $C = \cfrac{\mathbb{E} \left[ Y h(Y) \right]}{\mathbb{E} \left[ Y^{2} \right]} = \mathbb{E} \left[ \cfrac{\dif}{\dif Y} h(Y) \right]$。
+
+## † 窄带 Gauss 过程
+
+### 二维 Gauss 分布的幅度分布
+
+设 $\begin{pmatrix}X \\ Y\end{pmatrix} \sim \mathscr{N}\left( \v{\mu}, \sigma^{2} \boldsymbol{I} \right)$， 不失一般性地设 $\v{\mu} = \begin{pmatrix}A \cos \phi \\ A \sin \phi\end{pmatrix}$，则联合概率密度为
+$$
+\begin{align}
+f_{X,Y}(x,y) &= \dfrac{1}{2\pi \sigma^{2}} \exp\left( -\dfrac{1}{2\sigma^{2}} \left( (x - A \cos \phi)^{2} + (y - A \sin \phi)^{2} \right) \right) \\
+&= \dfrac{1}{2\pi \sigma^{2}} \exp\left( -\dfrac{1}{2\sigma^{2}} \left( x^{2} + y^{2} + A^{2} - 2A (x \cos \phi + y \sin \phi) \right) \right)
+\end{align}
+$$
+转换到**极坐标系 $(R, \varTheta)$**，其中 $R = \sqrt{X^{2} + Y^{2}}$、$\varTheta = \arctan \dfrac{Y}{X}$，则
+$$
+\begin{align}
+f_{R,\varTheta}(r,\theta) &= f_{X,Y}(r \cos \theta, r \sin \theta) \left| \dfrac{ D (x, y) }{ D (r, \theta) }  \right| \\
+&= \dfrac{r}{2\pi \sigma^{2}} \exp\left( -\dfrac{1}{2\sigma^{2}} \left( r^{2} + A^{2} - 2A r \cos(\theta - \phi) \right) \right)
+\end{align}
+$$
+对 $\theta$ 积分即得到幅度 $R$ 的概率密度
+$$
+\begin{align}
+f_{R}(r) &= \dint_{0}^{2\pi} f_{R,\varTheta}(r,\theta) \dif \theta  \\
+&= \dfrac{r}{2\pi \sigma^{2}} \exp\left( -\dfrac{r^{2} + A^{2}}{2\sigma^{2}} \right) \dint_{0}^{2\pi} \exp\left( \dfrac{A r}{\sigma^{2}} \cos(\theta - \phi) \right) \dif \theta \\
+&= \dfrac{r}{\sigma^{2}} \exp\left( -\dfrac{r^{2} + A^{2}}{2\sigma^{2}} \right) I_{0} \left( \dfrac{A r}{\sigma^{2}} \right), \quad r \ge 0
+\end{align}
+$$
+称 $R$ 服从 **Rician 分布**；当 $A=0$ 时，$R$ 的概率密度化为
+$$
+f
+$$
+

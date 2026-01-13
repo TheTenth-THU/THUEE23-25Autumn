@@ -7,9 +7,8 @@ longform:
   scenes:
     - 随机变量的基础概念
     - 随机过程的平稳性
-    - 循环平稳过程
     - Gauss 过程
-    - Hilbert 变换
+    - † Hilbert 变换
     - Poisson 过程
     - Markov 链
     - 例题
