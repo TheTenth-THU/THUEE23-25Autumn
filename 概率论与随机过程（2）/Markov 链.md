@@ -161,6 +161,8 @@ $f_{i,j}$ 即为**从状态 $i$ 出发「迟早」到达状态 $j$ 的概率**�
 
 > [!def.] 常返性
 > 对 Markov 链的状态空间 $E$ 中的状态 $i$，如果 $f_{i,i} = 1$，则称状态 $i$ 为**常返 (recurrent) 态**；否则，$f_{i,i} < 1$，称为**滑过 (transient) 态**或**非常返态**。
+> 
+> 从常返态 $i$ 出发，将**以概率 1** 返回到状态 $i$ 一次；而从非常返态 $i$ 出发，**有正的概率**永远不返回状态 $i$。
 
 #### 常返性的判据
 
@@ -223,7 +225,7 @@ $$
 $$
 $f_{i,i}$ 是否为 1 取决于左侧级数 $\sum\limits_{n=0}^{\infty} P_{i,i}{(n)}$ 的敛散性，由此给出常返性的第一判据。
 
-> [!theorem] 常返性判据 I
+> [!theorem] 常返性判据
 > 状态 $i$ 为常返态的**充分必要条件**为级数 $\sum\limits_{n=0}^{\infty} P_{i,i}{(n)}$ 发散。
 ^RecurrentCriterionI
 
@@ -309,7 +311,7 @@ $$
 对于 $i$ 的某一可达状态 $j$，由 $i \to j$ 可知 $\exists m$ 使得 $P_{i,j}(m) > 0$，因此 $g_{j,i}(\infty) = 1$，即 **$j \to i$**，从而 **$i \leftrightarrow j$** 且 **$j$ 亦为常返态**。
 
 > [!theorem] 可达状态的常返性
-> 若 Markov 链中存在常返态 $i$，则 $i$ 的**所有可达状态**均与 $i$ 相通，且均为常返态。
+> 若 Markov 链中存在常返态 $i$，则 $i$ 的**所有可达状态**均与 $i$ **相通**，且均为常返态。
 
 ## 转移概率的极限行为
 
@@ -342,7 +344,7 @@ $$
 
 #### 遍历性
 
-在**非周期**的[[#^Bukeyue|不可约 Markov 链]]中，有
+在**非周期**的[[#^Bukeyue|不可约 Markov 链]]中，直接有
 $$
 \lim_{n \to \infty} P_{i,j}{(n)} = \pi_{j}
 $$
@@ -352,7 +354,9 @@ $$
 $$
 \lim\limits_{ n \to \infty } \dfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)} = \dfrac{1}{a_{j}}
 $$
-称为**弱遍历性 (weak ergodicity) 定理**，其中 $a_{j} = \sum\limits_{k=1}^{\infty} f_{i,i}(k)\cdot k$ 为状态 $j$ 的**平均返回时间 (mean return time)**，与初始状态 $i$ 无关。此处 $\cfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)}$ 可写成
+称为**弱遍历性 (weak ergodicity) 定理**，其中 $a_{j} = \sum\limits_{k=1}^{\infty} f_{i,i}(k)\cdot k$ 为状态 $j$ 的**平均返回时间 (mean return time)**，与初始状态 $i$ 无关。由级数知识知，若存在 $\lim\limits_{n \to \infty} P_{i,j}{(n)} = \pi_{j}$，则 $\cfrac{1}{a_{j}} = \lim\limits_{ n \to \infty } \dfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)} = \pi_{j}$。
+
+另外，此处 $\cfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)}$ 可写成
 $$
 \begin{align} 
 \dfrac{1}{n} \sum\limits_{k=1}^{n} P_{i,j}{(k)} &= \dfrac{1}{n} \sum\limits_{k=1}^{n} \mathbb{E} \left[ \mathbb{1}_{\left\{ X_{k} = j \mid X_{0} = i \right\}} \right] 

@@ -131,9 +131,7 @@ G_{X(0)}(z) = \mathbb{E}\left[z^{X(0)}\right] = z^{0} = 1
 $$
 故解得
 $$
-\begin{align} 
-G_{X(t)}(z) &= \e^{(-\lambda + \lambda z) t} = \e^{-\lambda t} \cdot \e^{\lambda t z} = \e^{-\lambda t}  \sum\limits_{k=0}^{\infty} \dfrac{(\lambda t)^{k}}{k!}  z^{k}
-\end{align}
+G_{X(t)}(z) =  \mark{ \e^{(-\lambda + \lambda z) t} } = \e^{-\lambda t} \cdot \e^{\lambda t z} = \e^{-\lambda t}  \sum\limits_{k=0}^{\infty} \dfrac{(\lambda t)^{k}}{k!}  z^{k}
 $$
 对比[[#矩母函数]]的定义式，可知
 $$
@@ -164,11 +162,12 @@ $$
 
 由 Poisson 过程的概率分布可知
 $$
-\mathbb{E}[N(t)] = \lambda t, \qquad \mathrm{Var}[N(t)] = \lambda t
+\mathbb{E}[N(t)] = \lambda t, \qquad \mathrm{Var}[N(t)] = \lambda t, \qquad
+\mathbb{E} \left[ N^{2}(t) \right] = \lambda t + (\lambda t)^{2}
 $$
 Poisson 过程的相关函数为
 $$
-R_{N}(t_{1}, t_{2}) = \mathbb{E}[N(t_{1}) N(t_{2})] = \lambda \min(t_{1}, t_{2}) + \lambda^{2} t_{1} t_{2}
+R_{N}(t_{1}, t_{2}) = \mathbb{E}[N(t_{1}) N(t_{2})] = \underbrace{ \lambda \min(t_{1}, t_{2}) }_{ C_{N}(t, s) } + \lambda^{2} t_{1} t_{2}
 $$
 因此，Poisson 过程既不满足**均值平稳 (mean stationary)**，也不满足**相关平稳 (correlation stationary)**，故 Poisson 过程是一个**非宽平稳**的随机过程，我们需要借助其他方法来分析其性质。
 
@@ -182,7 +181,7 @@ $$
 &= \mathbb{E} \left[ N(t) - N(s) \right] + N(s) = \lambda (t - s) + N(s)
 \end{align}
 $$
-即 Poisson 过程的条件期望是时间线性的。
+即 Poisson 过程的条件期望是**时间线性**的，事件继续发生的速率仍为 $\lambda$。
 
 反过来，我们考虑**逆时间方向**的条件概率分布，有
 $$
@@ -200,9 +199,7 @@ $$
 $$
 同样也是时间线性的，但不同的是，此时的**系数与 Poisson 过程的强度 $\lambda$ 无关**，因为 Poisson 过程的增量独立性使得过去的信息无法影响未来的分布，但已知的信息可以推测过去的分布。
 
-### 事件间隔与等待时间
-
-#### 事件间隔分布
+### 事件间隔
 
 由增量独立性和增量平稳性，我们只需研究从初态开始到第一个事件的间隔 $T_{1}$ 的分布，其定义为
 $$
@@ -222,12 +219,14 @@ $$
 f_{T_{1}, T_{2}, \cdots, T_{k}}(t_{1}, t_{2}, \cdots, t_{k}) = \prod\limits_{i=1}^{k} f_{T_{i}}(t_{i}) = \lambda^{k} \e^{-\lambda \sum\limits_{i=1}^{k} t_{i}}, \qquad t_{i} \ge 0
 $$
 
-#### 等待时间分布
+### 等待时间
+
+#### 等待时间的边缘分布
 
 设第 $n$ 个事件发生的时间为 $S_{n} = \sum\limits_{k=1}^{n} T_{k}$。引入**特征函数 $\phi_{X}(\omega) = \mathbb{E}\left[ \e^{\J \omega X} \right]$**，则由事件间隔的独立性，有
 $$
 \phi_{T_{k}}(\omega) = \int_{0}^{\infty} \lambda \e^{-\lambda t} \cdot \e^{\J \omega t} \dif t = \dfrac{\lambda}{\lambda - \J \omega}  
-\quad\Longrightarrow\quad 
+\implies
 \phi_{S_{n}}(\omega) = \left( \phi_{T_{k}}(\omega) \right)^{n} = \left( \dfrac{\lambda}{\lambda - \J \omega} \right)^{n}
 $$
 因此可以通过逆变换求得 **$S_{n}$ 的概率密度函数**为
@@ -267,7 +266,102 @@ f_{S_{n}}(t) = \begin{cases}
 $$
 此即参数为 $(n, \lambda)$ 的 **$\boldsymbol{\varGamma}$ 分布 (Gamma distribution)**。
 
-可以用**微元法**导出 $S$
+#### 等待时间的联合分布
+
+可以用**微元法**导出 $S_{1},S_{2}, \cdots, S_{k}$ 的联合概率密度函数。设 $0 < t_{1} < t_{2} < \cdots < t_{k}$，并取足够小的正数 $h_{1}, \cdots, h_{k}$，有
+$$
+\begin{align}
+&P \left\{ t_{1} \le S_{1} < t_{1} + h_{1}, t_{2} \le S_{2} < t_{2} + h_{2}, \cdots, t_{k} \le S_{k} < t_{k} + h_{k} \right\} \\
+&= P \big\{ N(t_{1}) = 0, N(t_{1} + h_{1}) - N(t_{1}) = 1, N(t_{2}) - N(t_{1} + h_{1}) = 0, \cdots,  \\
+&\hspace{2.6em} N(t_{k}) - N(t_{k-1} + h_{k-1}) = 0,N(t_{k} + h_{k}) - N(t_{k}) = 1 \big\} \\
+&= P \left\{ N(t_{1}) = 0 \right\} \cdot P \left\{ N(t_{1} + h_{1}) - N(t_{1}) = 1 \right\}  \cdots \\
+&\hspace{1.2em} \cdot P \left\{ N(t_{k}) - N(t_{k-1} + h_{k-1}) = 0 \right\} \cdot P \left\{ N(t_{k} + h_{k}) - N(t_{k}) = 1 \right\} \\
+&= \e^{-\lambda t_{1}} \cdot (\lambda h_{1} \e^{-\lambda h_{1}}) \cdot \e^{-\lambda (t_{2} - t_{1} - h_{1})} \cdots (\lambda h_{k} \e^{-\lambda h_{k}}) \\
+&= \lambda^{k} \e^{-\lambda (t_{k} + h_{k})} \cdot h_{1} h_{2} \cdots h_{k}  \\
+&\xrightarrow{h_{i} \to 0} f_{S_{1}, S_{2}, \cdots, S_{k}}(t_{1}, t_{2}, \cdots, t_{k}) \cdot h_{1} h_{2} \cdots h_{k}
+\end{align}
+$$
+因此，得到 **$S_{1}, S_{2}, \cdots, S_{k}$ 的联合概率密度函数**
+$$
+f_{S_{1}, S_{2}, \cdots, S_{k}}(t_{1}, t_{2}, \cdots, t_{k}) = \begin{cases}
+\lambda^{k} \e^{-\lambda t_{k}}, & 0 < t_{1} < t_{2} < \cdots < t_{k}, \\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+#### 等待时间的条件分布
+
+给定 $N(t) = n$，考察前 $n$ 个事件发生时间的条件联合分布。同样由微元法，设 $0 < t_{1} < t_{2} < \cdots < t_{n} < t$，并取足够小的正数 $h_{1}, \cdots, h_{n}$，有
+$$
+\begin{align}
+&P \left\{ t_{1} \le S_{1} < t_{1} + h_{1}, t_{2} \le S_{2} < t_{2} + h_{2}, \cdots, t_{n} \le S_{n} < t_{n} + h_{n} \mid N(t) = n \right\} \\
+&= \dfrac{ P \left\{ t_{1} \le S_{1} < t_{1} + h_{1}, t_{2} \le S_{2} < t_{2} + h_{2}, \cdots, t_{n} \le S_{n} < t_{n} + h_{n}, N(t) = n \right\} }{ P \left\{ N(t) = n \right\} } \\
+&= \dfrac{ P \left\{ N(t_{1}) = 0, N(t_{1} + h_{1}) - N(t_{1}) = 1, \cdots, N(t) - N(t_{n} + h_{n}) = 0 \right\} }{ P \left\{ N(t) = n \right\} } \\
+&= \dfrac{ \lambda^{n} \e^{-\lambda (t_{n} + h_{n})} \cdot h_{1} h_{2} \cdots h_{n} \cdot \e^{-\lambda (t-t_{n} - h_{n})} }{ \dfrac{(\lambda t)^{n}}{n!} \e^{-\lambda t} } 
+= \dfrac{ n! }{ t^{n} } \cdot h_{1} h_{2} \cdots h_{n}  \\
+&\xrightarrow{h_{i} \to 0} f_{S_{1}, S_{2}, \cdots, S_{n} \mid N(t) = n}(t_{1}, t_{2}, \cdots, t_{n}) \cdot h_{1} h_{2} \cdots h_{n}
+\end{align}
+$$
+即得到**条件联合概率密度函数**
+$$
+f_{S_{1}, S_{2}, \cdots, S_{n} \mid N(t) = n}(t_{1}, t_{2}, \cdots, t_{n}) = \begin{cases}
+\cfrac{ n! }{ t^{n} }, & 0 < t_{1} < t_{2} < \cdots < t_{n} < t, \\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+> [!note] 顺序统计量
+> 设 $X_{1}, X_{2}, \cdots, X_{n}$ 是来自某一分布 $F_{X}(x)$ 的 $n$ 个**独立同分布**随机变量，则将它们按从小到大的顺序排列，记为 $Y_{1} \le Y_{2} \le \cdots \le Y_{n}$，即称 $\left\{ Y_{i} \right\}_{i=1}^{n}$ 为 $X_{1}, X_{2}, \cdots, X_{n}$ 的**顺序统计量 (order statistics)**。第 $k$ 顺序统计量 $Y_{k}$ 即为 $X_{1}, X_{2}, \cdots, X_{n}$ 中第 $k$ 小的值。
+> 
+> 对于两个极端情况，容易得到
+> $$
+> \begin{align}
+> &F_{Y_{n}}(x) = \prod\limits_{i=1}^{n} P\{ X_{i} \le x \} = \left( F_{X}(x) \right)^{n} \\
+> &F_{Y_{1}}(x) = 1 - \prod\limits_{i=1}^{n} P\{ X_{i} > x \} = 1 - \left( 1 - F_{X}(x) \right)^{n}
+> \end{align}
+> $$
+> 对于一般的 $Y_{k}$，设有充分小的 $h$ 使得 $x < Y_{k} \le x + h$，即 $k-1$ 个 $X_{i}$ 落在 $(-\infty, x]$，1 个 $X_{i}$ 落在 $(x, x+h]$，其余 $n-k$ 个 $X_{i}$ 落在 $(x+h, +\infty)$，则有
+> $$
+> \begin{align}
+> f_{Y_{k}}(x) &= \lim\limits_{ h \to 0 } \dfrac{ P \left\{ x < Y_{k} \le x + h \right\} }{ h } \\
+> &= \lim\limits_{ h \to 0 } \dfrac{1}{h} \binom{n}{k-1} \binom{n - k + 1}{1} \binom{n - k}{n - k} \\
+> &\hspace{3em} \cdot \left( F_{X}(x) \right)^{k - 1} \cdot \left( F_{X}(x + h) - F_{X}(x) \right) \cdot \left( 1 - F_{X}(x + h) \right)^{n - k} \\
+> &= \binom{n}{k-1} \binom{n - k + 1}{1} ( F_{X}(x) )^{k - 1} ( 1 - F_{X}(x) )^{n - k}  f_{X}(x) \\
+> \end{align}
+> $$
+> 同理，通过微元法拆分，可以得到**顺序统计量的联合概率密度函数**
+> $$
+> f_{Y_{1}, Y_{2}, \cdots, Y_{n}}(y_{1}, y_{2}, \cdots, y_{n}) = \begin{cases}
+> n! \prod\limits_{i=1}^{n} f_{X}(y_{i}), & y_{1} < y_{2} < \cdots < y_{n}, \\
+> 0, & \text{otherwise}
+> \end{cases}
+> $$
+> 
+> 注意到，$n$ 个在 $(0, t)$ 上**独立同分布**的**均匀分布**随机变量的**顺序统计量**的联合概率密度函数与上述条件联合概率密度函数形式完全相同，因此 **等待时间 $S_{1}, S_{2}, \cdots, S_{n}$ 在条件 $N(t) = n$ 下可视为 $n$ 个在 $(0, t)$ 上独立同分布的均匀分布随机变量的顺序统计量**。这意味着，就**总等待时间**而言，可以将 Poisson 过程视为在时间轴上随机均匀分布的事件集合。
+
+对条件联合概率密度函数进行边缘化，有
+$$
+\begin{align} 
+f_{S_{k} \mid N(t) = n}(s_{k}) &= \dint_{0}^{s_{k}} \dif s_{k-1} \dint_{0}^{s_{k-1}} \dif s_{k-2} \cdots \dint_{0}^{s_{2}} \dif s_{1} \cdot \dint_{s_{k}}^{t} \dif s_{k+1} \cdots \dint_{s_{n-1}}^{t} \dif s_{n} \\
+&\hspace{1em} \cdot f_{S_{1}, S_{2}, \cdots, S_{n} \mid N(t) = n}(s_{1}, s_{2}, \cdots, s_{n}) \\
+&= \dfrac{n!}{t^{n}} \cdot \dfrac{s_{k}^{k-1}}{(k-1)!} \dfrac{(t - s_{k})^{n - k}}{(n - k)!} \\
+&= \dfrac{1}{t} \dfrac{n!}{(k-1)! (n - k)!} \left( \dfrac{s_{k}}{t} \right)^{k-1} \left( 1 - \dfrac{s_{k}}{t} \right)^{n - k},
+\quad 0 < s_{k} < t
+\end{align}
+$$
+这即为参数为 $(k, n-k+1, t)$ 的 **Beta 分布 (Beta distribution)**。利用 Beta 函数与 Gamma 函数的关系
+$$
+B(\alpha, \beta) = \dint_{0}^{1} t^{\alpha - 1} (1 - t)^{\beta - 1} \dif t = \dfrac{\varGamma(\alpha) \varGamma(\beta)}{\varGamma(\alpha + \beta)}
+\stackrel{\alpha, \beta \in \mathbb{Z}_{+}}{=\!=\!=\!=\!=} \dfrac{(\alpha - 1)! (\beta - 1)!}{(\alpha + \beta - 1)!}
+$$
+可得
+$$
+\begin{align}
+&\mathbb{E} \left[ S_{k} \mid N(t) = n \right] = \dfrac{k}{n+1} t, \quad \mathbb{E} \left[ S_{k}^{2} \mid N(t) = n \right] = \dfrac{k (k+1)}{(n+1)(n+2)} t^{2} \\
+&\mathrm{Var} \left[ S_{k} \mid N(t) = n \right] = \dfrac{k (n - k + 1)}{(n + 1)^{2} (n + 2)} t^{2}
+\end{align}
+$$
+
 
 ## Poisson 过程的拓广
 
@@ -364,11 +458,41 @@ Y(t) = \sum\limits_{k=1}^{N(t)} h(t - S_{k}; X_{k})
 $$
 其中 $S_{k} = \sum\limits_{i=1}^{k} T_{i}$ 为第 $k$ 个事件发生的时间，$T_{i}$ 为事件间隔。
 
-$Y(t)$ 的特征函数为
+**$Y(t)$ 的特征函数**为
 $$
 \begin{align}
 \phi_{Y(t)}(\omega) &= \mathbb{E} \left[ \e^{\J \omega Y(t)} \right] = \mathbb{E} \left[ \exp\left( \J \omega \sum\limits_{k=1}^{N(t)} h(t - S_{k}; X_{k}) \right) \right] \\
-&= \mathbb{E}_{N(t)} \left[ \mathbb{E}_{\{S_{k}, X_{k}\} \mid N(t)} \left[ \exp\left( \J \omega \sum\limits_{k=1}^{n} h(t - S_{k}; X_{k}) \right) \mathop{\Bigg|} N(t) = n \right]  \right] \\
+&= \mathbb{E}_{N(t)} \left[ \mathbb{E}_{\{S_{k}, X_{k}\}} \left[ \exp\left( \J \omega \sum\limits_{k=1}^{n} h(t - S_{k}; X_{k}) \right) \mathop{\Bigg|} N(t) = n \right]  \right] \\
+&= \mathbb{E}_{N(t)} \left[ \mathbb{E}_{\{U_{k}, X_{k}\}} \left[ \prod\limits_{k=1}^{n} \e^{ \J \omega h(t - U_{k}; X_{k}) } \mathop{\Bigg|} N(t) = n \right]  \right] \\
+&= \mathbb{E}_{N(t)} \left[ \left( \dint_{0}^{t} \mathbb{E}_{X_{k}} \left[ \e^{ \J \omega h(t - u; X_{k}) } \right] \dfrac{1}{t} \dif u \right)^{N(t)}  \right] \\
+&\stackrel{\mathbb{E} \left[ z^{N(t)} \right] = \e^{\lambda t (z-1)}}{=\!=\!=\!=\!=\!=\!=\!=\!=} \exp\left( \lambda t \left( \dint_{0}^{t} \mathbb{E} \left[ \e^{ \J \omega h(t - u; X_{k}) } \right] \dfrac{1}{t} \dif u - 1 \right) \right) \\
+&= \exp\left( \lambda \dint_{0}^{t} \left( \mathbb{E} \left[ \e^{ \J \omega h(t - u; X_{k}) } \right] - 1 \right) \dif u \right)
 \end{align}
 $$
+其中 $\{U_{k}\}$ 为在 $(0, t)$ 上独立同分布的均匀分布随机变量，其顺序统计量即为条件 $N(t) = n$ 下的 $\{S_{k}\}$，在求和意义下二者等价。
 
+由特征函数，容易得到 $Y(t)$ 的**均值与方差**
+$$
+\mathbb{E} \left[ Y(t) \right] = \lambda \dint_{0}^{t} \mathbb{E} \left[ h(t - u; X_{k}) \right] \dif u, \quad
+\mathrm{Var} \left[ Y(t) \right] = \lambda \dint_{0}^{t} \mathbb{E} \left[ h^{2}(t - u; X_{k}) \right] \dif u
+$$
+若事件的影响是**因果**的，即 $h(t; x) = 0$ 对 $t < 0$ 成立，则用类似的方法可以计算过滤 Poisson 过程的二维特征函数
+$$
+\begin{align}
+\phi_{Y(t_{1}), Y(t_{2})}(\omega_{1}, \omega_{2}) &= \mathbb{E} \left[ \e^{\J \omega_{1} Y(t_{1}) + \J \omega_{2} Y(t_{2})} \right] \\
+&= \exp\left( \lambda \dint_{0}^{\max\{t_{1}, t_{2}\}} \left( \mathbb{E} \left[ \e^{ \J \omega_{1} h(t_{1} - u; X_{k}) + \J \omega_{2} h(t_{2} - u; X_{k}) } \right] - 1 \right) \dif u \right)
+\end{align}
+$$
+从而得到**协方差函数**
+$$
+C_{Y}(t_{1}, t_{2}) = \lambda \dint_{0}^{\min\{t_{1}, t_{2}\}} \mathbb{E} \left[ h(t_{1} - u; X_{k}) h(t_{2} - u; X_{k}) \right] \dif u
+$$
+
+特别地，**波形 $h$ 不具有随机性**时，有
+$$
+\begin{align}
+&\phi_{Y(t)}(\omega) = \exp\left( \lambda \dint_{0}^{t} \left( \e^{ \J \omega h(t - u) } - 1 \right) \dif u \right), \\
+&\mathbb{E} \left[ Y(t) \right] = \lambda \dint_{0}^{t} h(t - u) \dif u, \quad \mathrm{Var} \left[ Y(t) \right] = \lambda \dint_{0}^{t} h^{2}(t - u) \dif u, \\
+&C_{Y}(t_{1}, t_{2}) = \lambda \dint_{0}^{\min\{t_{1}, t_{2}\}} h(t_{1} - u) h(t_{2} - u) \dif u
+\end{align}
+$$

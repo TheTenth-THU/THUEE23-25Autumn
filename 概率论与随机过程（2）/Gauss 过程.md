@@ -313,6 +313,19 @@ $$
 \end{align}
 $$
 
+> [!example] [[例题#L10-1]] 至 [[例题#L10-7|L10-7]]：Gauss 条件分布算例
+> 设 $X_{1}, X_{2} \stackrel{\text{i.i.d.}}{\sim} \mathscr{N}(0, 1)$，尝试求解以下条件期望。
+> + 直接求解：
+> 	+ [[例题#L10-1]]　$\mathbb{E} \left[ X_{1}-X_{2}\mid X_{1}+X_{2} \right]$；
+> + 利用独立性简化计算：
+> 	+ [[例题#L10-2]]　$\mathbb{E} \left[ (X_{1}-X_{2})^{2} \mid X_{1}+X_{2} \right]$；
+> 	+ [[例题#L10-3]]　$\mathbb{E} \left[ (X_{1}-X_{2})^{2n} \mid X_{1}+X_{2} \right]$，$n \in \mathbb{N}^{*}$；
+> 	+ [[例题#L10-4]]　$\mathbb{E} \left[ X_1^2 + X_2^2 \mid X_1 + X_2 \right]$；
+> + 利用特征函数简化计算：
+> 	+ [[例题#L10-5]]　$\mathbb{E} \left[ \exp\left( 2X_1 - X_2 \right) \mid X_1 + X_2 \right]$；
+> 	+ [[例题#L10-6]]　$\mathbb{E} \left[ \exp(2X_{1}^{2} + X_{2}^{2}) \mid X_{1} - X_{2} \right]$；
+> 	+ [[例题#L10-7]]　$\mathbb{E} \left[ \sin (2X_{1} - X_{2}) \mid X_{1} + X_{2} \right]$。
+
 ### 条件分布的几何直观
 
 观察条件均值 $\v{\mu}_{Y\mid X}$ 的表达式
@@ -415,6 +428,47 @@ f_{R}(r) &= \dint_{0}^{2\pi} f_{R,\varTheta}(r,\theta) \dif \theta  \\
 $$
 称 $R$ 服从 **Rician 分布**；当 $A=0$ 时，$R$ 的概率密度化为
 $$
-f
+f_{R}(r) = \dfrac{r}{\sigma^{2}} \exp\left( -\dfrac{r^{2}}{2\sigma^{2}} \right), \quad r \ge 0
 $$
+称 $R$ 服从 **Rayleigh 分布**，此时 $f_{R, \varTheta}(r, \theta) = \cfrac{f_{R}(r)}{2\pi} = f_{R}(r) f_{\varTheta}(\theta)$，即幅度和相位**统计独立**。
 
+### 零均值窄带 Gauss 过程
+
+设联合平稳的零均值实宽平稳 Gauss 过程 $X(t)$、$Y(t)$ 满足：
++ 相关函数 $R_{X}(\tau) = R_{Y}(\tau)$，$R_{XY}(\tau) = -R_{YX}(\tau)$；
++ $|\omega|\ge \omega_{0}$ 上功率谱密度 $S_{X}(\omega) = S_{Y}(\omega) = 0$。
+
+则可构造 Gauss 过程
+$$
+Z(t) = X(t) \cos \omega_{\mathrm{c}} t - Y(t) \sin \omega_{\mathrm{c}} t
+= V(t) \cos \left( \omega_{\mathrm{c}} t + \varTheta(t) \right)
+$$
+称为零均值**窄带 Gauss 过程**，其中 $V(t) = \sqrt{X^{2}(t) + Y^{2}(t)}$ 为**包络过程**，$\varTheta(t) = \arctan \cfrac{Y(t)}{X(t)}$ 为**相位过程**，调制频率 $\omega_{\mathrm{c}} \gg \omega_{0}$。
+
+由[[#二维 Gauss 分布的幅度分布]]中的结论立得，**$V(t)$ 服从 Rayleigh 分布**，$\varTheta(t)$ 服从均匀分布，且 $V(t)$ 和 $\varTheta(t)$ 统计独立。
+
+### 非零均值窄带 Gauss 过程
+
+设窄带 Gauss 的非零均值是由**正弦波随机相位过程**叠加引入的，即考虑
+$$
+\xi(t) = p \sin \left( \omega_{\mathrm{c}} t + \varPhi \right) + Z(t)
+$$
+其中 $p$ 为常数，$\varPhi$ 为均匀分布在 $[0, 2\pi)$ 上的随机变量，$Z(t)$ 为[[#零均值窄带 Gauss 过程]]。
+
+$\xi(t)$ 可写成
+$$
+\begin{align}
+\xi(t) &= \underbrace{ p \sin \varPhi }_{ \mu_{X} } \cos \omega_{\mathrm{c}} t + \underbrace{ p \cos \varPhi }_{ \mu_{Y} } \sin \omega_{\mathrm{c}} t + X(t) \cos \omega_{\mathrm{c}} t - Y(t) \sin \omega_{\mathrm{c}} t \\
+&= \left( X(t) + \mu_{X} \right) \cos \omega_{\mathrm{c}} t - \left( Y(t) - \mu_{Y} \right) \sin \omega_{\mathrm{c}} t \\
+&= V_{\xi}(t) \cos \left( \omega_{\mathrm{c}} t + \varTheta_{\xi}(t) \right)
+\end{align}
+$$
+其中
+$$
+V_{\xi}(t) \cos \varTheta_{\xi}(t) = X(t) + p \sin \varPhi, \qquad
+V_{\xi}(t) \sin \varTheta_{\xi}(t) = Y(t) - p \cos \varPhi
+$$
+则 **$V_{\xi}(t)$ 服从 Rician 分布**，概率密度为
+$$
+f_{V_{\xi}}(v) = \dfrac{v}{\sigma^{2}} \exp\left( -\dfrac{v^{2} + p^{2}}{2\sigma^{2}} \right) I_{0} \left( \dfrac{p v}{\sigma^{2}} \right), \quad v \ge 0
+$$
