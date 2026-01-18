@@ -1,10 +1,14 @@
 # 随机变量的基础概念
 
+---
+
 ## 随机变量的统计特性
 
 ### 随机变量的分布
 
 离散随机变量 $X$ 可用其**概率质量函数 (probability mass function, PMF)** $P_{X}(x) = P \left\{ X = x \right\}$ 描述；连续随机变量 $X$ 可用其**累积分布函数 (cumulative distribution function, CDF)** $F_{X}(x) = P \left\{X \leq x\right\}$ 或**概率密度函数 (probability density function, PDF)** $f_{X}(x) = \cfrac{\dif F_{X}(x)}{\dif x}$ 描述。
+
+---
 
 **条件于 $Y$ 的随机变量 $X$** 表示为 $X \mid Y$，其 PMF 或 PDF、CDF 分别为
 $$
